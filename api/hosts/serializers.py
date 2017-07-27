@@ -3,9 +3,12 @@
 
 from rest_framework import serializers
 from hosts.models import Host, HostGroup, SaltServer, Upload
+from users.models import User
+
 
 class HostSerializer(serializers.HyperlinkedModelSerializer):
     group = serializers.SlugRelatedField(queryset=HostGroup.objects.all(), slug_field='name')
+
     class Meta:
         model = Host
         fields = ['url', 'hostname', 'ip', 'other_ip', 'group', 'asset_type', 'status', 'os', 'cpu_model', 'cpu_num',
@@ -20,12 +23,16 @@ class HostGroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class SaltServerSerializer(serializers.HyperlinkedModelSerializer):
     ip = serializers.SlugRelatedField(queryset=Host.objects.all(), slug_field='hostname')
+
     class Meta:
         model = SaltServer
         fields = ['url', 'ip', 'port', 'apiurl', 'username', 'password']
         read_only_fields = ('apiurl',)
 
+
 class UploadSerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
+
     class Meta:
         model = Upload
-        fields = ['url', 'username', 'headImg', 'date']
+        fields = ['url', 'username', 'file', 'date']

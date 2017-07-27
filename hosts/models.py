@@ -2,7 +2,7 @@
 # author: itimor
 
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 
 ASSET_STATUS = (
     (str(1), u"使用中"),
@@ -75,7 +75,7 @@ class SaltServer(models.Model):
 
 class Upload(models.Model):
     username = models.ForeignKey(User, verbose_name=u'用户')
-    headImg = models.FileField(upload_to='upload/', verbose_name=u'文件路径')
+    file = models.FileField(upload_to='ftp/', verbose_name=u'文件路径')
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
 
     def __unicode__(self):

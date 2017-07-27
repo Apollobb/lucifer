@@ -5,6 +5,7 @@ from rest_framework import serializers
 from jobs.models import Jobs, JobGroup
 from hosts.models import Host
 
+
 class JobsSerializer(serializers.HyperlinkedModelSerializer):
     hosts = serializers.SlugRelatedField(many=True, queryset=Host.objects.all(), slug_field='hostname')
     group = serializers.SlugRelatedField(queryset=JobGroup.objects.all(), slug_field='name')

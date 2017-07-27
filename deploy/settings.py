@@ -1,6 +1,8 @@
-
+# -*- coding: utf-8 -*-
+# author: itimor
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
     'django_filters',
     'hosts',
     'jobs',
+    'users',
 
 ]
 
@@ -110,19 +113,38 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
 MEDIA_URL = '/upload/'
 
+REST_USE_JWT = True
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
     ),
-
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
 }
+
+'''
+JWT_REFRESH_EXPIRATION_DELTA的确切含义是自从原始token被发布出去后，多长时间范围内它以及它的子孙token可以被用来刷新以获得新的子孙token。
+原始token，指的是通过用户名/密码验证后获得的token（即obtain_jwt_token接口返回的token），原始token刷新后获得的token1，以及token1继续刷新获得的token2、token2再获得token3……形成了一串token链，这些token的过期时间都是JWT_EXPIRATION_DELTA。
+然而这串token链不可能一直无限制刷新下去，直到原始token发布后的JWT_REFRESH_EXPIRATION_DELTA后，刷新操作将被终止，框架会返回HTTP 400。之后必须再次调用obtain_jwt_token来获得新的原始token。
+客户端首先调用obtain_jwt_token进行登录操作，之后必须每隔小于5分钟就刷新一次token，才能保证不掉线。然而即使一直保持在线，上限也只有7天，7天过后必须重新登录
+'''
+JWT_AUTH = {
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
+}
+
+# user model
+AUTH_USER_MODEL = "users.User"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
