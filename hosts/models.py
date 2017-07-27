@@ -32,7 +32,6 @@ class Host(models.Model):
     cpu_num = models.CharField(u"CPU数量", max_length=100, null=True, blank=True)
     memory = models.CharField(u"内存大小", max_length=30, null=True, blank=True)
     disk = models.CharField(u"硬盘信息", max_length=255, null=True, blank=True)
-    idc = models.ForeignKey('Idc', verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, null=True, blank=True)
 
     def __unicode__(self):
@@ -51,27 +50,10 @@ class HostGroup(models.Model):
         return self.name
 
 
-class Idc(models.Model):
-    name = models.CharField(u"机房名称", max_length=30, null=True)
-    address = models.CharField(u"机房地址", max_length=100, null=True)
-    tel = models.CharField(u"机房电话", max_length=30, null=True)
-    jigui = models.CharField(u"机柜信息", max_length=30, null=True)
-    ip_range = models.CharField(u"IP范围", max_length=30, null=True)
-    bandwidth = models.CharField(u"接入带宽", max_length=30, null=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = u'数据中心'
-        verbose_name_plural = verbose_name
-
-
 class SaltServer(models.Model):
-    idc = models.ForeignKey(Idc, verbose_name=u'所属机房')
     ip = models.ForeignKey(Host, verbose_name=u'服务器IP')
     port = models.IntegerField(verbose_name=u'端口号')
-    url = models.URLField(blank=True, verbose_name=u'URL地址')
+    apiurl = models.URLField(blank=True, verbose_name=u'api地址')
     username = models.CharField(max_length=20, verbose_name=u'用户名')
     password = models.CharField(max_length=50, verbose_name=u'密码')
 
