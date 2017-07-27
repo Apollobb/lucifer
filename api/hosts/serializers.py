@@ -19,10 +19,11 @@ class HostGroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SaltServerSerializer(serializers.HyperlinkedModelSerializer):
+    ip = serializers.SlugRelatedField(queryset=Host.objects.all(), slug_field='hostname')
     class Meta:
         model = SaltServer
         fields = ['url', 'ip', 'port', 'apiurl', 'username', 'password']
-
+        read_only_fields = ('apiurl',)
 
 class UploadSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

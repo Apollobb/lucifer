@@ -22,7 +22,7 @@ ASSET_TYPE = (
 
 class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
-    ip = models.GenericIPAddressField(u"管理IP", max_length=15)
+    ip = models.GenericIPAddressField(u"管理IP", unique=True, max_length=15)
     other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
     group = models.ForeignKey('HostGroup', verbose_name=u"设备组", on_delete=models.SET_NULL, null=True, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
@@ -49,16 +49,24 @@ class HostGroup(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name = u'服务器组'
+        verbose_name_plural = u'服务器组'
 
 class SaltServer(models.Model):
     ip = models.ForeignKey(Host, verbose_name=u'服务器IP')
     port = models.IntegerField(verbose_name=u'端口号')
-    apiurl = models.URLField(blank=True, verbose_name=u'api地址')
+    apiurl = models.URLField(max_length=20, null=True, blank=True, verbose_name=u'salt API地址')
     username = models.CharField(max_length=20, verbose_name=u'用户名')
     password = models.CharField(max_length=50, verbose_name=u'密码')
 
     def __unicode__(self):
         return self.ip
+
+    def save(self, *args, **kwargs):
+        self.apiurl = 'http://{}:{}'.format(self.ip, self.port)
+        super(SaltServer, self).save(*args, **kwargs)
+
 
     class Meta:
         verbose_name = u'Salt服务器'
