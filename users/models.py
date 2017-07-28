@@ -28,12 +28,6 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    ROLES = {
-        'superadmin': '超级管理员',
-        'admin': '普通管理员',
-        'user': '普通用户',
-    }
-
     username = models.CharField(max_length=32, unique=True, db_index=True, verbose_name=u'用户名')
     email = models.EmailField(max_length=255, unique=True, blank=True, verbose_name=u'邮箱')
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'中文名')
@@ -41,7 +35,7 @@ class User(AbstractBaseUser):
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    roles = models.CharField(max_length=100, default='user', choices=ROLES.items(), verbose_name=u'角色')
+    roles = models.ManyToManyField('Role', null=True, blank=True, verbose_name=u'角色')
 
     USERNAME_FIELD = 'username'  # 必须有一个唯一标识--USERNAME_FIELD
     REQUIRED_FIELDS = ['name']  # 创建superuser时的必须字段
@@ -57,16 +51,13 @@ class User(AbstractBaseUser):
     class Meta:
         verbose_name = u'用户'
         verbose_name_plural = u'用户'
-        permissions = (
-            ("report.view", "Can see available userlist"),
-        )
 
     objects = UserManager()  # 创建用户
 
 
 class Group(models.Model):
     name = models.CharField(max_length=64, verbose_name=u'部门')
-    desc = models.CharField(max_length=64, verbose_name=u'描述')
+    desc = models.CharField(max_length=64, null=True, blank=True, verbose_name=u'描述')
 
     def __unicode__(self):
         return self.name
@@ -74,3 +65,16 @@ class Group(models.Model):
     class Meta:
         verbose_name = u'组'
         verbose_name_plural = u'部门'
+
+
+class Role(models.Model):
+    name = models.CharField(max_length=64, verbose_name=u'角色')
+    cnname = models.CharField(max_length=64, verbose_name=u'中文名')
+    desc = models.CharField(max_length=64, null=True, blank=True, verbose_name=u'描述')
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = u'角色'
+        verbose_name_plural = u'角色'

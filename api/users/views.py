@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from users.models import Group, User
+from users.models import Group, User, Role
 from rest_framework import viewsets
-from serializers import UserSerializer, GroupSerializer
+from serializers import UserSerializer, GroupSerializer, RoleSerializer
 from filters import UserFilter
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -15,3 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class RoleViewSet(viewsets.ModelViewSet):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer

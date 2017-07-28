@@ -11,7 +11,7 @@ from rest_auth.views import PasswordChangeView
 
 from api.hosts.views import HostViewSet, HostGroupViewSet, SaltServerViewSet, UploadViewSet
 from api.jobs.views import JobsViewSet, JobGroupViewSet
-from api.users.views import UserViewSet, GroupViewSet
+from api.users.views import UserViewSet, GroupViewSet, RoleViewSet
 
 router = DefaultRouter()
 router.register(r'hosts', HostViewSet)
@@ -22,6 +22,7 @@ router.register(r'jobs', JobsViewSet)
 router.register(r'jobgroup', JobGroupViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
+router.register(r'roles', RoleViewSet)
 
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
