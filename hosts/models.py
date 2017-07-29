@@ -5,18 +5,18 @@ from django.db import models
 from users.models import User
 
 ASSET_STATUS = (
-    (str(1), u"使用中"),
-    (str(2), u"未使用"),
-    (str(3), u"故障"),
-    (str(4), u"其它"),
+    ('used', u"使用中"),
+    ('noused', u"未使用"),
+    ('broken', u"故障"),
+    ('other', u"其它"),
 )
 
 ASSET_TYPE = (
-    (str(1), u"物理机"),
-    (str(2), u"虚拟机"),
-    (str(3), u"容器"),
-    (str(4), u"网络设备"),
-    (str(5), u"其他")
+    ('physical', u"物理机"),
+    ('virtual', u"虚拟机"),
+    ('container', u"容器"),
+    ('network', u"网络设备"),
+    ('other', u"其他")
 )
 
 
