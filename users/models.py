@@ -5,22 +5,22 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, name=u'李逍遥', password=None):
+    def create_user(self, username, email, password=None):
         '''username 是唯一标识，没有会报错'''
         if not username:
             raise ValueError('Users must have an username')
 
         user = self.model(
             username=username,
-            name=name,
+            email=email,
         )
         user.set_password(password)  # 检测密码合理性
         user.save(using=self._db)  # 保存密码
         return user
 
-    def create_superuser(self, username, name, password):
+    def create_superuser(self, username, email, password):
         user = self.create_user(username=username,
-                                name=name,
+                                email=email,
                                 password=password,
                                 )
         user.is_admin = True  # 比创建用户多的一个字段
