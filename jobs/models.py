@@ -45,7 +45,7 @@ class Jobs(models.Model):
     deploy_vars = models.CharField(max_length=100, verbose_name=u'发布参数', null=True, blank=True)
     deploy_script = models.TextField(verbose_name=u'发布脚步', null=True, blank=True)
     deploy_test = models.TextField(verbose_name=u'发布测试', null=True, blank=True)
-    deploy_status = models.CharField(u"发布状态", choices=DEPLOY_STATUS, max_length=30, null=True, blank=True)
+    deploy_status = models.CharField(u"发布状态", choices=DEPLOY_STATUS, default=DEPLOY_STATUS[0][0], max_length=30, null=True, blank=True)
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
     update_time = models.DateTimeField(u'发布时间', null=True)
     cost_time = models.DateTimeField(u'发布耗时', null=True)

@@ -24,7 +24,7 @@ class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
     ip = models.GenericIPAddressField(u"管理IP", unique=True, max_length=15)
     other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
-    group = models.ForeignKey('HostGroup', verbose_name=u"设备组", null=True, blank=True)
+    group = models.ForeignKey('HostGroup', verbose_name=u"组", null=True, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
     os = models.CharField(u"操作系统", max_length=100, null=True, blank=True)
@@ -44,6 +44,7 @@ class Host(models.Model):
 
 class HostGroup(models.Model):
     name = models.CharField(u"组名", max_length=30, unique=True)
+    #hosts = models.CharField(u"主机", max_length=1000, blank=True, null=True)
     desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
 
     def __unicode__(self):

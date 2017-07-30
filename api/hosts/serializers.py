@@ -8,8 +8,6 @@ from users.models import User
 
 class HostSerializer(serializers.HyperlinkedModelSerializer):
     group = serializers.SlugRelatedField(queryset=HostGroup.objects.all(), slug_field='name')
-    asset_type = serializers.CharField(source='get_asset_type_display')
-    status = serializers.CharField(source='get_status_display')
 
     class Meta:
         model = Host
