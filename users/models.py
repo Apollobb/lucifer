@@ -28,8 +28,8 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=32, unique=True, db_index=True, verbose_name=u'用户名')
-    email = models.EmailField(max_length=255, unique=True, blank=True, verbose_name=u'邮箱')
+    username = models.CharField(max_length=32, unique=True, db_index=True)
+    email = models.EmailField(max_length=255, unique=True, blank=True)
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'中文名')
     group = models.ManyToManyField('Group', null=True, blank=True, verbose_name=u'部门或组')
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')
@@ -38,10 +38,9 @@ class User(AbstractBaseUser):
     roles = models.ManyToManyField('Role', null=True, blank=True, verbose_name=u'角色')
 
     USERNAME_FIELD = 'username'  # 必须有一个唯一标识--USERNAME_FIELD
-    REQUIRED_FIELDS = ['name']  # 创建superuser时的必须字段
+    REQUIRED_FIELDS = ['email']  # 创建superuser时的必须字段
 
-
-    def __unicode__(self):  # __unicode__ on Python 2
+    def __str__(self):  # __unicode__ on Python 2
         return self.username
 
     @property
@@ -49,8 +48,8 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     class Meta:
-        verbose_name = u'用户'
-        verbose_name_plural = u'用户'
+        verbose_name = '用户'
+        verbose_name_plural = '用户'
 
     objects = UserManager()  # 创建用户
 

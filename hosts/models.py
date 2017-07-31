@@ -24,7 +24,7 @@ class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
     ip = models.GenericIPAddressField(u"管理IP", unique=True, max_length=15)
     other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
-    group = models.ForeignKey('HostGroup', on_delete=models.SET_NULL, verbose_name=u"组", null=True, blank=True)
+    group = models.ManyToManyField('HostGroup', verbose_name=u"组", null=True, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
     os = models.CharField(u"操作系统", max_length=100, null=True, blank=True)
@@ -37,6 +37,18 @@ class Host(models.Model):
     def __unicode__(self):
         return self.hostname
 
+    # def save(self, *args, **kwargs):
+    #     hosts_obj = Host.objects.get(group=self.group)
+    #     print hosts_obj
+        # hosts = group_obj.hosts.all()
+        # host_obj = Host.objects.filter(hostname=self.hostname)
+        # if group_obj:
+        #     group_obj.hosts.add(*host_obj)
+        # else:
+        #     group_obj.hosts.remove(*host_obj)
+        #
+        # super(Host, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = u'服务器'
         verbose_name_plural = u'服务器列表'
@@ -44,7 +56,6 @@ class Host(models.Model):
 
 class HostGroup(models.Model):
     name = models.CharField(u"组名", max_length=30, unique=True)
-    #hosts = models.CharField(u"主机", max_length=1000, blank=True, null=True)
     desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
 
     def __unicode__(self):

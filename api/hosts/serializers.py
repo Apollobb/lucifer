@@ -7,8 +7,7 @@ from users.models import User
 
 
 class HostSerializer(serializers.HyperlinkedModelSerializer):
-    group = serializers.SlugRelatedField(queryset=HostGroup.objects.all(), slug_field='name')
-
+    group = serializers.SlugRelatedField(many=True, queryset=HostGroup.objects.all(), slug_field='name')
     class Meta:
         model = Host
         fields = ['url', 'hostname', 'ip', 'other_ip', 'group', 'asset_type', 'status', 'os', 'cpu_model', 'cpu_num',
