@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=32, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, blank=True)
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'中文名')
-    group = models.ManyToManyField('Group', null=True, blank=True, verbose_name=u'部门或组')
+    group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'部门或组')
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -48,8 +48,8 @@ class User(AbstractBaseUser):
         return self.is_admin
 
     class Meta:
-        verbose_name = '用户'
-        verbose_name_plural = '用户'
+        verbose_name = u'用户'
+        verbose_name_plural = u'用户'
 
     objects = UserManager()  # 创建用户
 

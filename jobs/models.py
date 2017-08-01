@@ -35,7 +35,7 @@ DEPLOY_STATUS = (
 
 class Jobs(models.Model):
     name = models.CharField(max_length=20, unique=True, verbose_name=u'任务名')
-    hosts = models.ManyToManyField(Host, verbose_name=u'被发布的主机')
+    hosts = models.ForeignKey(Host, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'被发布的主机')
     group = models.ForeignKey('JobGroup', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'任务组')
     jobs_type = models.CharField(u"项目语言类型", choices=JOBS_TYPE, max_length=30, null=True, blank=True)
     code_repo = models.CharField(u"代码仓库", choices=REPO_TYPE, max_length=30, null=True, blank=True)

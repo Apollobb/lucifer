@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    group = serializers.SlugRelatedField(many=True, queryset=Group.objects.all(), slug_field='name')
+    group = serializers.SlugRelatedField(queryset=Group.objects.all(), slug_field='name')
     roles = serializers.SlugRelatedField(many=True, queryset=Role.objects.all(), slug_field='name')
 
     class Meta:
