@@ -6,7 +6,7 @@ from hosts.models import Host, HostGroup, SaltServer, Upload
 from users.models import User
 
 
-class HostSerializer(serializers.HyperlinkedModelSerializer):
+class HostSerializer(serializers.ModelSerializer):
     group = serializers.SlugRelatedField(many=True, queryset=HostGroup.objects.all(), slug_field='name')
     class Meta:
         model = Host
@@ -14,13 +14,13 @@ class HostSerializer(serializers.HyperlinkedModelSerializer):
                   'memory', 'disk', 'memo']
 
 
-class HostGroupSerializer(serializers.HyperlinkedModelSerializer):
+class HostGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = HostGroup
         fields = ['url', 'name', 'desc']
 
 
-class SaltServerSerializer(serializers.HyperlinkedModelSerializer):
+class SaltServerSerializer(serializers.ModelSerializer):
     ip = serializers.SlugRelatedField(queryset=Host.objects.all(), slug_field='hostname')
 
     class Meta:
@@ -29,7 +29,7 @@ class SaltServerSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ('apiurl',)
 
 
-class UploadSerializer(serializers.HyperlinkedModelSerializer):
+class UploadSerializer(serializers.ModelSerializer):
     username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
     class Meta:

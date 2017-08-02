@@ -5,7 +5,7 @@ from users.models import User, Group, Role
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     group = serializers.SlugRelatedField(queryset=Group.objects.all(), slug_field='name')
     roles = serializers.SlugRelatedField(many=True, queryset=Role.objects.all(), slug_field='name')
 
@@ -14,12 +14,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'name', 'group', 'is_admin', 'roles')
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ('url', 'name', 'desc')
 
-class RoleSerializer(serializers.HyperlinkedModelSerializer):
+class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Role
         fields = ('url', 'name', 'cnname', 'desc')
