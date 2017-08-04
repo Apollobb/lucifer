@@ -21,7 +21,7 @@ class Jobs(models.Model):
     code_repo = models.CharField(u"代码仓库", max_length=30, null=True, blank=True)
     code_url = models.CharField(u"代码地址", max_length=100, null=True, blank=True)
     code_branch = models.CharField(max_length=20, verbose_name=u'代码分支', default='master', null=True, blank=True)
-    deploy_env = models.CharField(u"发布环境", max_length=30, null=True, blank=True)
+    deploy_env = models.CharField(u"发布环境", max_length=100, null=True, blank=True)
     deploy_script = models.TextField(verbose_name=u'发布脚步', null=True, blank=True)
     deploy_test = models.TextField(verbose_name=u'发布测试', null=True, blank=True)
     deploy_status = models.CharField(u"发布状态", choices=DEPLOY_STATUS, default=DEPLOY_STATUS[0][0], max_length=30, null=True, blank=True)
@@ -32,13 +32,6 @@ class Jobs(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        self.jobs_type = self.jobs_type.split(',')
-        self.code_repo = self.code_repo.split(',')
-        self.deploy_env = self.deploy_env.split(',')
-        self.code_branch = self.code_branch.split(',')
-        super(Jobs, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = u'项目或任务'
