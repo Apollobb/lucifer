@@ -13,6 +13,5 @@ class UserFilter(filters.FilterSet):
             'name': ['exact'],
             'group__name': ['exact'],
             'is_active': ['exact'],
-            'is_admin': ['exact'],
             'roles': ['exact'],
         }
