@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     roles = serializers.SlugRelatedField(many=True, queryset=Role.objects.all(), slug_field='name')
     class Meta:
         model = User
-        fields = ('url', 'id', 'username', 'email', 'name', 'avatar', 'group', 'is_active', 'roles', 'password')
+        fields = ('url', 'id', 'username', 'email', 'name', 'avatar', 'group', 'is_active', 'roles', 'avatar', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
