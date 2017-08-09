@@ -36,7 +36,7 @@ class User(AbstractBaseUser):
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    roles = models.ManyToManyField('Role', null=True, blank=True, verbose_name=u'角色')
+    roles = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'角色')
 
     USERNAME_FIELD = 'username'  # 必须有一个唯一标识--USERNAME_FIELD
     REQUIRED_FIELDS = ['email']  # 创建superuser时的必须字段

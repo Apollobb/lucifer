@@ -10,6 +10,8 @@ from api.users.views import CreateUserView
 from rest_auth.views import PasswordChangeView
 from api.router import router
 
+
+
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^api/', include(router.urls)),

@@ -79,7 +79,6 @@ class SaltServer(models.Model):
         self.apiurl = 'http://{}:{}'.format(self.ip, self.port)
         super(SaltServer, self).save(*args, **kwargs)
 
-
     class Meta:
         verbose_name = u'Salt服务器'
         verbose_name_plural = u'Salt服务器列表'
