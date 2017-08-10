@@ -5,9 +5,10 @@ from users.models import Group, User, Role
 from rest_framework import viewsets
 from serializers import UserSerializer, GroupSerializer, RoleSerializer
 from filters import UserFilter
+from django.db.models import Q
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all().filter(~Q(username = 'admin'))   #不列出 admin用户
     serializer_class = UserSerializer
     filter_class = UserFilter
     ordering_fields = ('-create_date',)

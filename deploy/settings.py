@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'hosts',
     'jobs',
     'users',
-    'channels',
+    #'channels',
 ]
 
 MIDDLEWARE = [
