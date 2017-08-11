@@ -8,7 +8,7 @@ import datetime
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/1.11/howto/meteorment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'libti7mq=88d+s!ds$c7lvg8e38jo*pqwywogpqf_=fl#xl8%4'
@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'hosts',
     'jobs',
     'users',
-    #'channels',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +46,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'deploy.urls'
+ROOT_URLCONF = 'meteor.urls'
 
 TEMPLATES = [
     {
@@ -65,7 +64,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'deploy.wsgi.application'
+WSGI_APPLICATION = 'meteor.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -171,26 +170,5 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-    }
-}
-
-
-# Redis
-REDIS_OPTIONS = {
-    'HOST': '127.0.0.1',
-    'PORT': 6379,
-    'DB': 0
-}
-
-USE_REDIS = True
-# Channel settings
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": ['redis://{}:{}'.format(REDIS_OPTIONS['HOST'],
-                                             REDIS_OPTIONS['PORT'])]
-        },
-        "ROUTING": "deploy.routing.channel_routing"
     }
 }

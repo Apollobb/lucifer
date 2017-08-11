@@ -5,6 +5,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "deploy.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meteor.settings")
 
 application = get_wsgi_application()
