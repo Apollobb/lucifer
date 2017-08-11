@@ -1,0 +1,19 @@
+2434:C 10 Aug 08:02:15.009 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2434:C 10 Aug 08:02:15.010 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=2434, just started
+2434:C 10 Aug 08:02:15.010 # Warning: no config file specified, using the default config. In order to specify a config file use /data/package/redis-4.0.1/src/redis-server /path/to/redis.conf
+2434:M 10 Aug 08:02:15.016 * Running mode=standalone, port=6379.
+2434:M 10 Aug 08:02:15.016 # Server initialized
+2434:M 10 Aug 08:02:15.016 * DB loaded from disk: 0.001 seconds
+2434:M 10 Aug 08:02:15.016 * Ready to accept connections
+2434:signal-handler (1502323340) Received SIGINT scheduling shutdown...
+2434:M 10 Aug 08:02:20.936 # User requested shutdown...
+2434:M 10 Aug 08:02:20.936 * Saving the final RDB snapshot before exiting.
+2434:M 10 Aug 08:02:20.941 * DB saved on disk
+2434:M 10 Aug 08:02:20.941 # Redis is now ready to exit, bye bye...
+2477:C 10 Aug 08:02:24.621 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2477:C 10 Aug 08:02:24.625 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=2477, just started
+2477:C 10 Aug 08:02:24.625 # Warning: no config file specified, using the default config. In order to specify a config file use /data/package/redis-4.0.1/src/redis-server /path/to/redis.conf
+2477:M 10 Aug 08:02:24.636 * Running mode=standalone, port=6379.
+2477:M 10 Aug 08:02:24.636 # Server initialized
+2477:M 10 Aug 08:02:24.637 * DB loaded from disk: 0.000 seconds
+2477:M 10 Aug 08:02:24.637 * Ready to accept connections
