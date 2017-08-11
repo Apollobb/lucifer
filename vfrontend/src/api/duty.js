@@ -10,6 +10,10 @@ export function postDuty(data) {
     });
 }
 export function getDutyList(query) {
+    if ( query.time_lte == 'NaN-aN-aN' || query.time_lte == '1970-01-01') {
+        delete query.time_gte;
+        delete query.time_lte;
+    }
     return fetch({
         url: apiURL.dutys,
         method: 'get',
