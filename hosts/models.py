@@ -37,18 +37,6 @@ class Host(models.Model):
     def __unicode__(self):
         return self.hostname
 
-    # def save(self, *args, **kwargs):
-    #     hosts_obj = Host.objects.get(group=self.group)
-    #     print hosts_obj
-        # hosts = group_obj.hosts.all()
-        # host_obj = Host.objects.filter(hostname=self.hostname)
-        # if group_obj:
-        #     group_obj.hosts.add(*host_obj)
-        # else:
-        #     group_obj.hosts.remove(*host_obj)
-        #
-        # super(Host, self).save(*args, **kwargs)
-
     class Meta:
         verbose_name = u'服务器'
         verbose_name_plural = u'服务器列表'

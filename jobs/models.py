@@ -3,7 +3,6 @@
 
 from django.db import models
 from hosts.models import Host
-import json
 
 DEPLOY_STATUS = (
     ("unexecuted", u"未执行"),
