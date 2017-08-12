@@ -31,18 +31,6 @@ export const routes = [
         children: [{path: 'dashboard', component: require('@/views/dashboard/index')}]
     },
     {
-        path: '/errorpage',
-        component: Layout,
-        redirect: 'noredirect',
-        name: '错误页面',
-        icon: 'fire',
-        meta: {requiresAuth: true},
-        children: [
-            {path: '401', component: require('@/views/error/404'), name: '401'},
-            {path: '404', component: require('@/views/error/401'), name: '404'}
-        ]
-    },
-    {
         path: '/users',
         component: Layout,
         redirect: '/user/index',
@@ -53,18 +41,6 @@ export const routes = [
             {path: 'user', component: require('@/views/users/user'), name: '用户列表'},
             {path: 'groups', component: require('@/views/users/usergroups'), name: '用户组列表'},
             {path: 'roles', component: require('@/views/users/roles'), name: '角色列表'},
-        ]
-    },
-    {
-        path: '/tools',
-        component: Layout,
-        redirect: '/tools/index',
-        name: '工具管理',
-        icon: 'upload',
-        meta: {requiresAuth: true},
-        children: [
-            {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
-            {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
         ]
     },
     {
@@ -88,6 +64,18 @@ export const routes = [
         meta: {requiresAuth: true},
         children: [
             {path: 'runcmd', component: require('@/views/ansible/runcmd'), name: '执行命令'},
+        ]
+    },
+    {
+        path: '/tools',
+        component: Layout,
+        redirect: '/tools/index',
+        name: '工具管理',
+        icon: 'upload',
+        meta: {requiresAuth: true},
+        children: [
+            {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
+            {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
         ]
     },
     {

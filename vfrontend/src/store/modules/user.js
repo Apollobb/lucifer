@@ -1,5 +1,5 @@
 import {login, logout, getInfo} from 'api/auth';
-import {getToken, setToken, removeToken, setTokenTime, getTokenTime, removeTokenTime} from 'utils/auth';
+import {getToken, setToken, removeToken, setTokenTime, getTokenTime, removeTokenTime, setAvatar, getAvatar} from 'utils/auth';
 
 const user = {
     state: {
@@ -11,7 +11,7 @@ const user = {
         islogin: false,
         name: '',
         token_time: getTokenTime(),
-        avatar: '',
+        avatar: getAvatar(),
         roles: []
     },
 
@@ -100,6 +100,7 @@ const user = {
                     commit('SET_ROLES', data.roles);
                     commit('SET_NAME', data.name);
                     commit('SET_AVATAR', data.avatar);
+                    setAvatar(data.avatar);
                     resolve(response);
                 }).catch(error => {
                     reject(error);

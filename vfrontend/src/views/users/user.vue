@@ -105,10 +105,10 @@
             handleEdit(row) {
                 this.editForm = true;
                 this.rowdata = row;
-                setTimeout(this.fetchData, 3000);
+                setTimeout(this.fetchData, 1000);
             },
             getEdit(data) {
-                setTimeout(this.fetchData, 3000);
+                setTimeout(this.fetchData, 1000);
                 this.editForm = data;
                 this.addForm = data;
                 this.runForm = data;

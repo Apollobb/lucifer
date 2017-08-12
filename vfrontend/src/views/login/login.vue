@@ -4,10 +4,10 @@
                  label-width="0px"
                  class="card-box login-form">
             <h3 class="title">系统登录</h3>
-            <el-form-item prop="email">
+            <el-form-item prop="username">
                 <span class="svg-container"><icon name="user"></icon></span>
-                <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on"
-                          placeholder="邮箱"></el-input>
+                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on"
+                          placeholder="用户名"></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <span class="svg-container"><icon name="key"></icon></span>
@@ -33,7 +33,7 @@
         data() {
             return {
                 loginForm: {
-                    username: 'admin',
+                    username: '',
                     password: ''
                 },
                 loginRules: {
@@ -51,12 +51,13 @@
             }
         },
         methods: {
-            ...mapActions(['Login']),
+            ...mapActions(['Login', 'GetInfo']),
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
                         this.loading = true;
                         this.Login(this.loginForm).then(response => {
+                            this.GetInfo();
                             this.$router.push('/')
                         }).catch(error => {
                             console.log(error);

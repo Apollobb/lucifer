@@ -26,3 +26,11 @@ export function getTokenTime() {
 export function removeTokenTime() {
       return Cookies.remove(TokenTime)
 }
+
+export function setAvatar(avatar) {
+      return Cookies.set(TokenKey, avatar)
+}
+
+export function getAvatar() {
+      return Cookies.get(TokenKey)
+}

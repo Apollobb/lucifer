@@ -3,7 +3,6 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addForm=true"></el-button>
                 </div>
                 <div class="table-search">
                     <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
