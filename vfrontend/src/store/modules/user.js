@@ -1,4 +1,4 @@
-import {login, logout, getInfo} from 'api/login';
+import {login, logout, getInfo} from 'api/auth';
 import {getToken, setToken, removeToken, setTokenTime, getTokenTime, removeTokenTime} from 'utils/auth';
 
 const user = {

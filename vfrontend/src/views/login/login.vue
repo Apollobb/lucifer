@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import {Login} from "@/api/login"
+    import {Login} from "@/api/auth"
     import {mapState, mapActions} from 'vuex'
 
     export default {

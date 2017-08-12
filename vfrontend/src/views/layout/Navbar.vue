@@ -1,31 +1,46 @@
 <template>
-    <el-menu class="navbar" mode="horizontal">
-        <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+    <div>
+        <el-menu class="navbar" mode="horizontal">
+            <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
 
-        <tabs-view></tabs-view>
-        <error-log v-if="log.length>0" class="errLog-container" :logsList="log"></error-log>
-        <screenfull class='screenfull'></screenfull>
-        <el-dropdown class="avatar-container" trigger="hover">
-            <div class="avatar-wrapper">
-                <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
-                <i class="el-icon-caret-bottom"></i>
-            </div>
-            <el-dropdown-menu class="user-dropdown" slot="dropdown">
-                <router-link class='inlineBlock' to="/">
-                    <el-dropdown-item>
-                        改头换面
+            <tabs-view></tabs-view>
+            <screenfull class='screenfull'></screenfull>
+            <el-dropdown class="avatar-container" trigger="hover">
+                <div class="avatar-wrapper">
+                    <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+                    <i class="el-icon-caret-bottom"></i>
+                </div>
+                <el-dropdown-menu class="user-dropdown" slot="dropdown">
+                    <router-link class='inlineBlock' to="/">
+                        <el-dropdown-item>
+                            修改头像
+                        </el-dropdown-item>
+                    </router-link>
+                    <el-dropdown-item @click.native="changepw=true">
+                        修改密码
                     </el-dropdown-item>
-                </router-link>
-                <router-link class='inlineBlock' to="/">
-                    <el-dropdown-item>
-                        偷天改密
+                    <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span>
                     </el-dropdown-item>
-                </router-link>
-                <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span>
-                </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-    </el-menu>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-menu>
+
+        <el-dialog title="修改密码" :visible.sync="changepw" size="small">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="密码" prop="new_password1">
+                    <el-input type="password" v-model="ruleForm.new_password1"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码" prop="new_password2">
+                    <el-input type="password" v-model="ruleForm.new_password2"></el-input>
+                </el-form-item>
+                <el-form-item class="btn">
+                    <el-button type="primary" @click="ChangePasswd('ruleForm')">提交</el-button>
+                    <el-button type="danger" @click="resetForm('ruleForm')">清空</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
+
+    </div>
 </template>
 
 <script>
@@ -34,20 +49,55 @@
     import TabsView from './TabsView';
     import Hamburger from 'components/Hamburger';
     import Screenfull from 'components/Screenfull';
-    import ErrorLog from 'components/ErrLog';
-    import errLogStore from 'store/errLog';
+    import {changePassword} from 'api/auth'
+
 
     export default {
         components: {
             Levelbar,
             TabsView,
             Hamburger,
-            ErrorLog,
             Screenfull,
         },
         data() {
+            const validatePass = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请输入新密码'));
+                } else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])/.test(value)) {
+                    callback(new Error('密码中必须包含字母、数字、特称字符'));
+                } else {
+                    if (this.ruleForm.new_password2 !== '') {
+                        // 对第二个密码框单独验证
+                        this.$refs.ruleForm.validateField('new_password2');
+                    }
+                    callback();
+                }
+            };
+            const validatePassCheck = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'));
+                } else if (value !== this.ruleForm.new_password1) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
             return {
-                log: errLogStore.state.errLog
+                ruleForm: {
+                    new_password1: '',
+                    new_password2: ''
+                },
+                rules: {
+                    new_password1: [
+                        {required: true, trigger: 'blur', validator: validatePass},
+                        {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'}
+                    ],
+                    new_password2: [
+                        {required: true, trigger: 'blur', validator: validatePassCheck},
+                        {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'}
+                    ],
+                },
+                changepw: false,
             }
         },
         computed: {
@@ -66,7 +116,34 @@
                 this.$store.dispatch('LogOut').then(() => {
                     location.reload();// 为了重新实例化vue-router对象 避免bug
                 });
-            }
+            },
+            ChangePasswd(formName) {
+                this.changepw = true;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        changePassword({
+                            new_password1: this.ruleForm.new_password1,
+                            new_password2: this.ruleForm.new_password2
+                        }).then(response => {
+                            if (response.statusText = 'ok') {
+                                this.$message({
+                                    type: 'success',
+                                    message: '恭喜你，密码更改成功'
+                                });
+                            }
+                        }).catch(error => {
+                            this.$message.error('更改失败');
+                            console.log(error);
+                        });
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            },
         }
     }
 </script>
@@ -81,11 +158,6 @@
             height: 50px;
             float: left;
             padding: 0 10px;
-        }
-        .errLog-container {
-            display: inline-block;
-            position: absolute;
-            right: 150px;
         }
         .screenfull {
             position: absolute;

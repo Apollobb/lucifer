@@ -29,7 +29,7 @@ module.exports = {
 
     //登录
     login: `${url}/api-token-auth/`,
-    changePassword: `${url}/api/change_password`,
+    changePassword: `${url}/api/changepasswd`,
 
     //主机
     hosts: `${url}/api/hosts/`,

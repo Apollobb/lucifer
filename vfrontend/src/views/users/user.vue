@@ -61,11 +61,10 @@
 </template>
 
 <script>
-    import {getUserList, deleteUser} from 'api/user'
+    import {getUserList, deleteUser, getGroupList} from 'api/user'
     import {LIMIT} from '@/config'
     import addUser from './adduser.vue'
     import editUser from './edituser.vue'
-    import {getGroupList} from 'api/user'
 
     export default {
         components: {addUser, editUser},

@@ -14,7 +14,6 @@ export function logout() {
 }
 
 export function getInfo(username) {
-  console.log(username);
   return fetch({
     url: apiURL.users,
     method: 'get',
@@ -24,3 +23,13 @@ export function getInfo(username) {
   });
 }
 
+
+//password
+export function changePassword(data) {
+    console.log(data);
+    return fetch({
+        url: apiURL.changePassword,
+        method: 'post',
+        data
+    });
+}

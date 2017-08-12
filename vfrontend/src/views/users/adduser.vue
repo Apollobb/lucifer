@@ -23,10 +23,12 @@
             </el-select>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="passwdCheck">
-            <el-input type="password" v-model="ruleForm.passwdCheck" auto-complete="off"></el-input>
+            <el-input v-model="ruleForm.password" :disabled="true">
+                <template slot="append">
+                    <el-button type="info" size="small" @click="setPasswd()">生成密码</el-button>
+                </template>
+            </el-input>
+
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="postForm('ruleForm')">提交</el-button>
@@ -41,28 +43,6 @@
         components: {},
 
         data() {
-            const validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请输入新密码'));
-                } else if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])/.test(value)) {
-                    callback(new Error('密码中必须包含字母、数字、特称字符'));
-                } else {
-                    if (this.ruleForm.passwdCheck !== '') {
-                        // 对第二个密码框单独验证
-                        this.$refs.ruleForm.validateField('passwdCheck');
-                    }
-                    callback();
-                }
-            };
-            const validatePassCheck = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error('请再次输入密码'));
-                } else if (value !== this.ruleForm.password) {
-                    callback(new Error('两次输入密码不一致!'));
-                } else {
-                    callback();
-                }
-            };
             return {
                 ruleForm: {
                     username: '',
@@ -72,7 +52,6 @@
                     group: '',
                     roles: '',
                     password: '',
-                    passwdCheck: ''
                 },
                 rules: {
                     username: [
@@ -89,15 +68,7 @@
                     ],
                     roles: [
                         {required: true, message: '请选择角色', trigger: 'blur'},
-                    ],
-                    password: [
-                        {required: true, trigger: 'blur', validator: validatePass},
-                        {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'}
-                    ],
-                    passwdCheck: [
-                        {required: true, trigger: 'blur', validator: validatePassCheck},
-                        {min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur'}
-                    ],
+                    ]
                 },
                 groups: '',
                 roles: '',
@@ -112,7 +83,6 @@
             postForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        delete this.ruleForm.passwdCheck;
                         postUser(this.ruleForm).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
@@ -148,6 +118,9 @@
                 getRoleList().then(response => {
                     this.roles = response.data.results;
                 })
+            },
+            setPasswd() {
+                this.ruleForm.password = Math.random().toString(35).slice(2);
             },
         }
     }
