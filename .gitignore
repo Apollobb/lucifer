@@ -7,6 +7,7 @@
 node_modules/
 gifs/
 dist/
+upload/
 migrations/
 npm-debug.log*
 yarn-debug.log*
