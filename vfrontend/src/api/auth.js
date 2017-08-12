@@ -26,10 +26,9 @@ export function getInfo(username) {
 
 //password
 export function changePassword(data) {
-    console.log(data);
     return fetch({
         url: apiURL.changePassword,
         method: 'post',
         data
-    });
+    })
 }

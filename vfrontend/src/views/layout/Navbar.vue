@@ -121,11 +121,9 @@
                 this.changepw = true;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        changePassword({
-                            new_password1: this.ruleForm.new_password1,
-                            new_password2: this.ruleForm.new_password2
-                        }).then(response => {
+                        changePassword(this.ruleForm).then(response => {
                             if (response.statusText = 'ok') {
+                                this.changepw = false;
                                 this.$message({
                                     type: 'success',
                                     message: '恭喜你，密码更改成功'
