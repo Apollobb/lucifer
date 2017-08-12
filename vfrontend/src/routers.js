@@ -60,10 +60,11 @@ export const routes = [
         component: Layout,
         redirect: '/tools/index',
         name: '工具管理',
-        icon: 'wrench',
+        icon: 'upload',
         meta: {requiresAuth: true},
         children: [
             {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
+            {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
         ]
     },
     {

@@ -47,7 +47,7 @@
             </div>
             <div class="table-footer">
                 <div class="table-button">
-                    <el-button type="danger" icon="delete" :disabled="butstatus" @click="deleteUser">删除记录</el-button>
+                    <el-button type="danger" icon="delete" :disabled="butstatus" @click="deleteForm">删除记录</el-button>
                 </div>
                 <div class="table-pagination">
                     <el-pagination
@@ -156,7 +156,7 @@
                     this.butstatus = true;
                 }
             },
-            deleteUser() {
+            deleteForm() {
                 for (var i = 0, len = this.selectId.length; i < len; i++) {
                     deleteDuty(this.selectId[i]).then(response => {
                         delete this.selectId[i]

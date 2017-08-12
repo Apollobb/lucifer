@@ -3,85 +3,85 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addForm=true">新建用户</el-button>
+                    <el-button type="info" icon="plus" @click="addForm=true"></el-button>
                 </div>
                 <div class="table-search">
-                    <el-input
-                            placeholder="搜索 ..."
-                            icon="search"
-                            v-model="searchdata"
-                            @keyup.enter.native="searchClick"
-                            :on-icon-click="searchClick">
+                    <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
+                              placeholder="上传人员"
+                              v-model="listQuery.username__contains" icon="circle-close"
+                              :on-icon-click="handleIconClick">
                     </el-input>
+                    <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
+                              placeholder="文件类型"
+                              v-model="listQuery.type" icon="circle-close"
+                              :on-icon-click="handleIconClick">
+                    </el-input>
+                    <el-date-picker
+                            class="filter-item"
+                            v-model="datefilter"
+                            type="daterange"
+                            placeholder="选择日期范围">
+                    </el-date-picker>
+                    <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
+                    </el-button>
                 </div>
             </div>
             <div>
                 <el-table :data="tableData" @select="handleSelect" order style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
-                    <el-table-column prop='username' label='用户名' sortable>
-                        <template scope="scope">
-                            <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.username }}
-                                </el-button>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column prop='name' label='姓名' sortable></el-table-column>
-                    <el-table-column prop='email' label='邮箱'></el-table-column>
-                    <el-table-column prop='group' label='所在组' sortable></el-table-column>
-                    <el-table-column prop='roles' label='角色' sortable></el-table-column>
-                    <el-table-column prop='avatar' label='头像'></el-table-column>
+                    <el-table-column prop='username' label='用户名' sortable></el-table-column>
+                    <el-table-column prop='type' label='文件类型' sortable></el-table-column>
+                    <el-table-column prop='size' label='文件大小'></el-table-column>
+                    <el-table-column prop='file' label='文件地址' sortable></el-table-column>
+                    <el-table-column prop='date' label='创建时间' sortable></el-table-column>
                 </el-table>
             </div>
             <div class="table-footer">
                 <div class="table-button">
-                    <el-button type="danger" icon="delete" :disabled="butstatus" @click="deleteForm">删除用户</el-button>
+                    <el-button type="danger" icon="delete" :disabled="butstatus" @click="deleteForm">删除记录</el-button>
                 </div>
                 <div class="table-pagination">
                     <el-pagination
                             small
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page.sync="currentPage"
+                            :current-page.sync="listQuery.offset"
                             :page-sizes="pagesize"
-                            :page-size="limit"
+                            :page-size="listQuery.limit"
                             layout="prev, pager, next, sizes"
                             :total="tabletotal">
                     </el-pagination>
                 </div>
             </div>
         </el-card>
-        <el-dialog :visible.sync="addForm" size="small">
-            <add-user @getedit="getEdit"></add-user>
-        </el-dialog>
-        <el-dialog :visible.sync="editForm" size="small">
-            <edit-user :rowdata="rowdata" @getedit="getEdit"></edit-user>
-        </el-dialog>
     </div>
 </template>
 
 <script>
-    import {getUserList, deleteUser, getGroupList} from 'api/user'
+    import {getUploadList, deleteUpload} from 'api/tool'
     import {LIMIT} from '@/config'
-    import addUser from './adduser.vue'
-    import editUser from './edituser.vue'
+    import format from '@/utils/dateformat'
 
     export default {
-        components: {addUser, editUser},
+        components: {},
         data() {
             return {
                 tableData: [],
                 tabletotal: 0,
                 searchdata: '',
-                currentPage: 1,
-                limit: LIMIT,
-                offset: '',
                 pagesize: [10, 25, 50, 100],
-                addForm: false,
-                editForm: false,
                 rowdata: {},
                 selectId: [],
-                butstatus: true
+                butstatus: true,
+                listQuery: {
+                    offset: 0,
+                    limit: LIMIT,
+                    username__contains: '',
+                    type: '',
+                    date_lte: '',
+                    date_gte: '',
+                },
+                datefilter: [],
             }
         },
 
@@ -91,37 +91,30 @@
 
         methods: {
             fetchData() {
-                const parms = {
-                    limit: this.limit,
-                    offset: this.offset,
-                    username__contains: this.searchdata
-                };
-                getUserList(parms).then(response => {
+                getUploadList(this.listQuery).then(response => {
                     this.tableData = response.data.results;
                     this.tabletotal = response.data.count;
                 })
             },
 
-            handleEdit(row) {
-                this.editForm = true;
-                this.rowdata = row;
-                setTimeout(this.fetchData, 3000);
-            },
             getEdit(data) {
                 setTimeout(this.fetchData, 3000);
-                this.editForm = data;
                 this.addForm = data;
-                this.runForm = data;
+            },
+            handleIconClick() {
+                this.listQuery.username__contains = ''
             },
             searchClick() {
+                this.listQuery.date_gte = format(new Date(this.datefilter[0]), 'YYYY-MM-DD');
+                this.listQuery.date_lte = format(new Date(this.datefilter[1]), 'YYYY-MM-DD');
                 this.fetchData();
             },
             handleSizeChange(val) {
-                this.limit = val;
+                this.listQuery.limit = val;
                 this.fetchData();
             },
             handleCurrentChange(val) {
-                this.offset = val - 1;
+                this.listQuery.offset = val - 1;
                 this.fetchData();
             },
             handleSelect(val, row) {
@@ -148,9 +141,10 @@
                     this.butstatus = true;
                 }
             },
-            deleteForm(){
+            deleteForm() {
+                console.log(this.selectId);
                 for (var i = 0, len = this.selectId.length; i < len; i++) {
-                    deleteUser(this.selectId[i]).then(response => {
+                    deleteUpload(this.selectId[i]).then(response => {
                         delete this.selectId[i]
                     })
                 }

@@ -38,10 +38,37 @@ export function deleteDuty(id) {
 
 
 //upload
-export function uploadFile(data) {
+export function postUpload(data) {
     return fetch({
         url: apiURL.uploads,
         method: 'post',
         data
+    });
+}
+
+export function getUploadList(query) {
+    if ( query.time_lte == 'NaN-aN-aN' || query.time_lte == '1970-01-01') {
+        delete query.time_gte;
+        delete query.time_lte;
+    }
+    return fetch({
+        url: apiURL.uploads,
+        method: 'get',
+        params: query
+    });
+}
+
+export function putUpload(id, data) {
+    return fetch({
+        url: apiURL.uploads + id + '/',
+        method: 'put',
+        data
+    });
+}
+
+export function deleteUpload(id) {
+    return fetch({
+        url: apiURL.uploads + id,
+        method: 'delete',
     });
 }

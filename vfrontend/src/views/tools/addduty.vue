@@ -39,7 +39,7 @@
     </el-form>
 </template>
 <script>
-    import {uploadFile} from 'api/tool'
+    import {postUpload} from 'api/tool'
 
     export default {
         props: ['shiftOptions'],
@@ -101,7 +101,7 @@
                 formData.append('file',fileList.raw);
                 formData.append('type',fileList.raw.type.split("/")[0]);
                 formData.append('size',fileList.raw.size);
-                uploadFile(formData).then(response => {
+                postUpload(formData).then(response => {
                     console.log(response.data);
                     if (response.statusText = 'ok') {
                         this.$message({

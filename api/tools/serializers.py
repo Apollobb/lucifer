@@ -15,4 +15,4 @@ class DutySerializer(serializers.ModelSerializer):
 class UploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Upload
-        fields = ['url', 'username', 'file', 'type', 'size', 'date']
+        fields = ['url', 'id', 'username', 'file', 'type', 'size', 'date']
