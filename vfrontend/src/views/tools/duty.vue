@@ -63,14 +63,14 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog :visible.sync="addForm" size="small">
+        <el-dialog :visible.sync="addForm" size="larger">
             <add-duty :shiftOptions="shiftOptions" @getedit="getEdit"></add-duty>
         </el-dialog>
     </div>
 </template>
 
 <script>
-    import {getDutyList, deleteDuty} from 'api/duty'
+    import {getDutyList, deleteDuty} from 'api/tool'
     import {LIMIT} from '@/config'
     import addDuty from './addduty.vue'
     import format from '@/utils/dateformat'

@@ -2,8 +2,8 @@
 # author: itimor
 
 from rest_framework import viewsets
-from hosts.models import Host, HostGroup, SaltServer, Upload
-from serializers import HostSerializer, HostGroupSerializer, SaltServerSerializer, UploadSerializer
+from hosts.models import Host, HostGroup, SaltServer
+from serializers import HostSerializer, HostGroupSerializer, SaltServerSerializer
 from filters import HostFilter
 
 
@@ -23,6 +23,3 @@ class SaltServerViewSet(viewsets.ModelViewSet):
     serializer_class = SaltServerSerializer
 
 
-class UploadViewSet(viewsets.ModelViewSet):
-    queryset = Upload.objects.all()
-    serializer_class = UploadSerializer

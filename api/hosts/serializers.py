@@ -2,8 +2,7 @@
 # author: itimor
 
 from rest_framework import serializers
-from hosts.models import Host, HostGroup, SaltServer, Upload
-from users.models import User
+from hosts.models import Host, HostGroup, SaltServer
 
 
 class HostSerializer(serializers.ModelSerializer):
@@ -28,10 +27,3 @@ class SaltServerSerializer(serializers.ModelSerializer):
         fields = ['url', 'ip', 'port', 'apiurl', 'username', 'password']
         read_only_fields = ('apiurl',)
 
-
-class UploadSerializer(serializers.ModelSerializer):
-    username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
-
-    class Meta:
-        model = Upload
-        fields = ['url', 'username', 'file', 'date']

@@ -35,3 +35,13 @@ export function deleteDuty(id) {
         method: 'delete',
     });
 }
+
+
+//upload
+export function uploadFile(data) {
+    return fetch({
+        url: apiURL.uploads,
+        method: 'post',
+        data
+    });
+}

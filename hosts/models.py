@@ -70,16 +70,3 @@ class SaltServer(models.Model):
     class Meta:
         verbose_name = u'Salt服务器'
         verbose_name_plural = u'Salt服务器列表'
-
-
-class Upload(models.Model):
-    username = models.ForeignKey(User, verbose_name=u'用户')
-    file = models.FileField(upload_to='ftp/', verbose_name=u'文件路径')
-    date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
-
-    def __unicode__(self):
-        return self.file
-
-    class Meta:
-        verbose_name = u'文件上传'
-        verbose_name_plural = u'文件上传'

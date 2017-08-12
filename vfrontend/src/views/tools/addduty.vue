@@ -16,28 +16,36 @@
             </el-col>
             <el-col :span="12">
                 <el-upload
-                        class="avatar-uploader"
+                        class="upload-demo"
+                        ref="upload"
+                        list-type="picture-card"
                         action="https://jsonplaceholder.typicode.com/posts/"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        :on-success="handleSuccess"
+                        :file-list="fileList"
+                        :auto-upload="false">
+                    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                    <div slot="tip" class="el-upload__tip">
+                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器
+                        </el-button>
+                        <a>只能上传jpg/png文件，且不超过500kb</a>
+                    </div>
                 </el-upload>
             </el-col>
         </el-row>
         <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <el-button type="warning" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
     </el-form>
 </template>
 <script>
+    import {uploadFile} from 'api/tool'
+
     export default {
         props: ['shiftOptions'],
         data() {
             return {
-                imageUrl: '',
+                fileList: [],
                 ruleForm: {
                     username: '',
                     shift: '',
@@ -66,6 +74,7 @@
         },
         methods: {
             submitForm(formName) {
+                this.$refs.upload.submit();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$message({
@@ -83,45 +92,32 @@
                 this.$refs[formName].resetFields();
                 this.$refs.upload.clearFiles();
             },
-            handleAvatarSuccess(res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+            submitUpload() {
+                this.$refs.upload.submit();
             },
-            beforeAvatarUpload(file) {
-                const isLt2M = file.size / 1024 / 1024 < 2;
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!');
-                }
-                return isLt2M;
-            }
+            handleSuccess(file, fileList) {
+                let formData=new FormData();
+                formData.append('username', this.ruleForm.username);
+                formData.append('file',fileList.raw);
+                formData.append('type',fileList.raw.type.split("/")[0]);
+                formData.append('size',fileList.raw.size);
+                uploadFile(formData).then(response => {
+                    console.log(response.data);
+                    if (response.statusText = 'ok') {
+                        this.$message({
+                            type: 'success',
+                            message: '恭喜你，新建成功'
+                        });
+                    }
+                }).catch(error => {
+                    this.$message.error('新建失败');
+                    console.log(error);
+                });
+            },
         }
     }
 </script>
 
 <style>
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
 
-    .avatar-uploader .el-upload:hover {
-        border-color: #20a0ff;
-    }
-
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
-        text-align: center;
-    }
-
-    .avatar {
-        width: 178px;
-        height: 178px;
-        display: block;
-    }
 </style>

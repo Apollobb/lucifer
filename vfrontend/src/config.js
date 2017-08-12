@@ -23,9 +23,12 @@ module.exports = {
     //数据分页限制
     LIMIT: 10,
 
-    //qiniu 上传
+    //qiniu 上传到七牛
     qn_ack: 'Q0IABHxpUZfWiUxzWdT6cMXQKusAmTsfX_fiCWC2',
     qn_sek: 'qQ6Rjq3Kz8k05xEI9GG1T74BHg-EThAfgwJbaw8S',
+
+    //本地上传到服务器
+    uploads: `${url}/api/upload/`,
 
     //登录
     login: `${url}/api-token-auth/`,
