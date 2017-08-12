@@ -8,7 +8,7 @@
 - [ ] 上传头像，更改头像，头像裁剪组件
 - [ ] 菜单权限问题，增加一个菜单管理列表，根据用户权限动态显示菜单， 参考:
      > 1、 [根据需求动态加载路由](https://blog.yqiu.net/2017/07/06/vue-dynamic-load-router/)
-     2、 [vue-router2.2.0新增特性addRoutes实现路由动态加载，菜单动态加载，运用于后台管理系统，路由数据取自数据库]（http://blog.csdn.net/s8460049/article/details/61190709）
+     > 2、 [vue-router2.2.0新增特性addRoutes实现路由动态加载，菜单动态加载，运用于后台管理系统，路由数据取自数据库]（http://blog.csdn.net/s8460049/article/details/61190709）
 - [ ] markdown显示问题
 - [ ]
 - [ ]
