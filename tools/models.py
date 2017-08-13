@@ -4,6 +4,7 @@
 from django.db import models
 from users.models import User
 from storage import FileStorage
+from filesize import convert_size
 
 SHIFT = (
     ("M", u"早班"),
@@ -22,20 +23,26 @@ class Duty(models.Model):
         return self.username
 
     class Meta:
-        verbose_name = u'项目或任务'
-        verbose_name_plural = u'项目或任务'
+        verbose_name = u'值班交接'
+        verbose_name_plural = u'值班交接'
 
 
 class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
-    file = models.FileField(upload_to='./',  blank=True, storage=FileStorage(), verbose_name=u'上传文件')
-    #archive = models.CharField(max_length=20, verbose_name=u'文件归档')
-    type = models.CharField(max_length=20, verbose_name=u'文件类型')
-    size = models.CharField(max_length=20, verbose_name=u'文件大小')
+    file = models.FileField(upload_to='./', blank=True, storage = FileStorage(), verbose_name=u'上传文件')
+    archive = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件归档')
+    filename = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件名')
+    type = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件类型')
+    size = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件大小')
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
 
+    def save(self, *args, **kwargs):
+        self.filename = '{}'.format(self.file.name)
+        self.size = '{}'.format(convert_size(self.file.size))
+        super(Upload, self).save(*args, **kwargs)
+
     def __str__(self):
-        return self.file
+        return self.filename
 
     class Meta:
         verbose_name = u'文件上传'

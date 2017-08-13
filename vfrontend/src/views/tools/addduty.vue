@@ -19,7 +19,7 @@
                         class="upload-demo"
                         ref="upload"
                         list-type="picture-card"
-                        action="https://httpbin.org/post"
+                        action="https://jsonplaceholder.typicode.com/posts/"
                         :on-success="handleSuccess"
                         :file-list="fileList"
                         :auto-upload="false">
@@ -33,13 +33,15 @@
             </el-col>
         </el-row>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-tooltip content="注意是否有上传图片到服务器" placement="top">
+                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            </el-tooltip>
             <el-button type="warning" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
     </el-form>
 </template>
 <script>
-    import {postUpload} from 'api/tool'
+    import {postUpload, postDuty} from 'api/tool'
 
     export default {
         props: ['shiftOptions'],
@@ -77,11 +79,18 @@
                 this.$refs.upload.submit();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$message({
-                            message: '恭喜你，添加成功',
-                            type: 'success'
+                        postDuty(this.ruleForm).then(response => {
+                            if (response.statusText = 'ok') {
+                                this.$message({
+                                    type: 'success',
+                                    message: '恭喜你，新建成功'
+                                });
+                                this.$emit('getedit', false);
+                            }
+                        }).catch(error => {
+                            this.$message.error('新建失败');
+                            console.log(error);
                         });
-                        this.$emit('formdata', this.ruleForm)
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -96,21 +105,22 @@
                 this.$refs.upload.submit();
             },
             handleSuccess(file, fileList) {
-                let formData=new FormData();
+                let formData = new FormData();
                 formData.append('username', this.ruleForm.username);
-                formData.append('file',fileList.raw);
-                formData.append('type',fileList.raw.type.split("/")[0]);
-                formData.append('size',fileList.raw.size);
+                formData.append('file', fileList.raw);
+                formData.append('type', fileList.raw.type.split("/")[0]);
+                formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
                     console.log(response.data);
                     if (response.statusText = 'ok') {
                         this.$message({
                             type: 'success',
-                            message: '恭喜你，新建成功'
+                            message: '恭喜你，上传成功'
                         });
                     }
                 }).catch(error => {
-                    this.$message.error('新建失败');
+                    this.$message.error('上传失败');
+                    this.$refs.upload.clearFiles();
                     console.log(error);
                 });
             },

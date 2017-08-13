@@ -28,7 +28,9 @@
             <div>
                 <el-table :data="tableData" @select="handleSelect" order style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
-                    <el-table-column prop='username' label='用户名' sortable></el-table-column>
+                    <el-table-column prop='username' label='上传用户' sortable></el-table-column>
+                    <el-table-column prop='filename' label='原文件名' sortable></el-table-column>
+                    <el-table-column prop='archive' label='文件归档' sortable></el-table-column>
                     <el-table-column prop='type' label='文件类型' sortable></el-table-column>
                     <el-table-column prop='size' label='文件大小'></el-table-column>
                     <el-table-column prop='file' label='文件地址' sortable></el-table-column>
@@ -147,7 +149,7 @@
                         delete this.selectId[i]
                     })
                 }
-                setTimeout(this.fetchData, 3000);
+                setTimeout(this.fetchData, 1000);
             },
         }
     }
