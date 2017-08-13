@@ -11,11 +11,9 @@
                     <i class="el-icon-caret-bottom"></i>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
-                    <router-link class='inlineBlock' to="/">
-                        <el-dropdown-item>
-                            修改头像
-                        </el-dropdown-item>
-                    </router-link>
+                    <el-dropdown-item @click.native="changeava=true">
+                        修改头像
+                    </el-dropdown-item>
                     <el-dropdown-item @click.native="changepw=true">
                         修改密码
                     </el-dropdown-item>
@@ -25,7 +23,7 @@
             </el-dropdown>
         </el-menu>
 
-        <el-dialog title="修改密码" :visible.sync="changepw" size="small">
+        <el-dialog title="修改密码" :visible.sync="changepw" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="密码" prop="new_password1">
                     <el-input type="password" v-model="ruleForm.new_password1"></el-input>
@@ -98,18 +96,17 @@
                     ],
                 },
                 changepw: false,
+                changeava: false,
             }
         },
         computed: {
             ...mapGetters([
                 'sidebar',
-                'name',
                 'avatar'
             ])
         },
         methods: {
             toggleSideBar() {
-                console.log(this.avatar);
                 this.$store.dispatch('ToggleSideBar')
             },
             logout() {
@@ -140,6 +137,7 @@
                 });
             },
             resetForm(formName) {
+                console.log(this.avatar);
                 this.$refs[formName].resetFields();
             },
         }

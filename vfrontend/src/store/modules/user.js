@@ -1,18 +1,19 @@
 import {login, logout, getInfo} from 'api/auth';
-import {getToken, setToken, removeToken, setTokenTime, getTokenTime, removeTokenTime, setAvatar, getAvatar} from 'utils/auth';
+import * as CookiesApi from 'utils/auth';
 
 const user = {
     state: {
         code: '',
-        token: getToken(),
+        token: CookiesApi.getToken(),
         uid: '',
         username: '',
         email: '',
         islogin: false,
-        name: '',
-        token_time: getTokenTime(),
-        avatar: getAvatar(),
-        roles: []
+        name: CookiesApi.getName(),
+        token_time: CookiesApi.getTokenTime(),
+        avatar: CookiesApi.getAvatar(),
+        roles: CookiesApi.getRoles(),
+        userinfo: ''
     },
 
     mutations: {
@@ -43,6 +44,9 @@ const user = {
         SET_ROLES: (state, roles) => {
             state.roles = roles;
         },
+        SET_USERINFO: (state, userinfo) => {
+            state.userinfo = userinfo;
+        },
         SET_TOKEN_TIME: (state, token_time) => {
             state.token_time = token_time;
         },
@@ -59,37 +63,40 @@ const user = {
             return new Promise((resolve, reject) => {
                 login(userInfo).then(response => {
                     const cur_date = new Date().getTime();
-                    setToken(response.data.token);
-                    setTokenTime(cur_date);
+                    CookiesApi.setToken(response.data.token);
+                    CookiesApi.setTokenTime(cur_date);
                     commit('SET_TOKEN', response.data.token);
                     commit('SET_USERNAME', userInfo.username);
                     commit('SET_ISLOGIN', true);
                     commit('SET_TOKEN_TIME', cur_date);
                     resolve();
                 }).catch(error => {
-                    reject(error);
-                });
+                    reject(error)
+                })
             })
         },
 
         // 登出
         LogOut({commit, state}) {
             return new Promise((resolve, reject) => {
-                commit('SET_TOKEN', '');
+                commit('SET_TOKEN', ''),
                 commit('SET_ROLES', []);
-                removeToken();
-                removeTokenTime();
+                CookiesApi.removeToken();
+                CookiesApi.removeTokenTime();
+                CookiesApi.removeName();
+                CookiesApi.removeAvatar();
+                CookiesApi.removeRoles();
                 resolve();
-            });
+            })
         },
 
         // 前端 登出
         FedLogOut({commit}) {
             return new Promise(resolve => {
                 commit('SET_TOKEN', '');
-                removeToken();
+                CookiesApi.removeToken();
                 resolve();
-            });
+            })
         },
 
         // 获取用户信息
@@ -97,21 +104,22 @@ const user = {
             return new Promise((resolve, reject) => {
                 getInfo(state.username).then(response => {
                     const data = response.data.results[0];
-                    commit('SET_ROLES', data.roles);
-                    commit('SET_NAME', data.name);
-                    commit('SET_AVATAR', data.avatar);
-                    setAvatar(data.avatar);
+                    commit('SET_USERINFO', data);
+                    CookiesApi.setAvatar(data.avatar);
+                    CookiesApi.setName(data.name);
+                    CookiesApi.setRoles(data.roles);
+                    console.log(CookiesApi.getAvatar());
                     resolve(response);
                 }).catch(error => {
                     reject(error);
-                });
-            });
+                })
+            })
         },
 
         // 动态修改权限
         ChangeRole({commit}, role) {
             return new Promise(resolve => {
-                commit('SET_ROLES', [role]);
+                commit('SET_ROLES', [role])
                 resolve();
             })
         }

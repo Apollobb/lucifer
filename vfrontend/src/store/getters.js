@@ -9,5 +9,6 @@ const getters = {
   islogin: state => state.user.islogin,
   roles: state => state.user.roles,
   token_time: state => state.user.token_time,
+  userinfo: state => state.user.userinfo,
 };
 export default getters

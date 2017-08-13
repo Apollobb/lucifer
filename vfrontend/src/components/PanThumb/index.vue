@@ -10,28 +10,29 @@
 </template>
 <script>
     export default {
-      name: 'PanThumb',
-      props: {
-        image: {
-          type: String,
-          required: true
+        name: 'PanThumb',
+        props: {
+            image: {
+                type: String,
+                required: true,
+                default: 'http://obbqb7m24.bkt.clouddn.com/avatar.jpg'
+            },
+            zIndex: {
+                type: Number,
+                default: 100
+            },
+            width: {
+                type: String,
+                default: '150px'
+            },
+            height: {
+                type: String,
+                default: '150px'
+            }
         },
-        zIndex: {
-          type: Number,
-          default: 100
-        },
-        width: {
-          type: String,
-          default: '150px'
-        },
-        height: {
-          type: String,
-          default: '150px'
+        data() {
+            return {};
         }
-      },
-      data() {
-        return {};
-      }
     };
 </script>
 

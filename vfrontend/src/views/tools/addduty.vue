@@ -19,7 +19,7 @@
                         class="upload-demo"
                         ref="upload"
                         list-type="picture-card"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        action="https://httpbin.org/post"
                         :on-success="handleSuccess"
                         :file-list="fileList"
                         :auto-upload="false">
