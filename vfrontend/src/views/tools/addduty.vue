@@ -14,23 +14,30 @@
                 <el-form-item label="值班内容" prop="content">
                     <mavon-editor default_open='edit' v-model="ruleForm.content" :toolbars="toolbars"/>
                 </el-form-item>
+                <el-form-item label="上传图片" prop="content">
+                    <el-switch
+                            v-model="showUpload"
+                            on-color="#13ce66"
+                            off-color="#ff4949">
+                    </el-switch>
+                </el-form-item>
             </el-col>
             <el-col :span="12">
                 <el-upload
-                        v-show="ruleForm.username?true:false"
+                        v-show="ruleForm.username&&showUpload?true:false"
                         class="upload-demo"
                         ref="upload"
                         list-type="picture-card"
                         action="https://jsonplaceholder.typicode.com/posts/"
                         :on-success="handleSuccess"
                         :file-list="fileList"
-                        :auto-upload="false"
                         :disabled="count>1?true:false">
-                    <el-button slot="trigger" size="small" type="primary" :disabled="count>1?true:false">选取文件</el-button>
+                    <el-button slot="trigger" size="small" type="primary" :disabled="count>1?true:false">选择图片
+                    </el-button>
                     <div slot="tip" class="el-upload__tip">
-                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload"
-                                   :disabled="ruleForm.username?false:true">上传到服务器</el-button>
-                        <p><a style="color: red">请填写完值班人员</a>；只能上传jpg/png文件，且不超过500kb</p>
+                        <!--<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload"-->
+                        <!--:disabled="ruleForm.username?false:true">上传到服务器</el-button>-->
+                        <p>只能上传jpg/png文件，且不超过500kb，<a style="color: red">最多只能上传两张图片</a></p>
                     </div>
                 </el-upload>
             </el-col>
@@ -52,6 +59,7 @@
             return {
                 fileList: [],
                 count: 0,
+                showUpload: false,
                 ruleForm: {
                     username: '',
                     shift: '',
@@ -88,12 +96,12 @@
                                     type: 'success',
                                     message: '恭喜你，新建成功'
                                 });
-                                this.$emit('getedit', false);
                             }
                         }).catch(error => {
                             this.$message.error('新建失败');
                             console.log(error);
                         });
+                        this.$emit('getedit', false);
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -118,7 +126,6 @@
                     this.ruleForm.images.push(response.data.file);
                     if (response.statusText = 'ok') {
                         this.count += 1;
-                        console.log(this.count);
                         this.$message({
                             type: 'success',
                             message: '恭喜你，上传成功'

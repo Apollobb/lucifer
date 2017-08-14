@@ -23,6 +23,7 @@
                             placeholder="选择日期范围">
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
+
                     </el-button>
                 </div>
             </div>
@@ -35,6 +36,7 @@
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-tag :type="shiftOptions[scope.row.shift].type">
                                     {{shiftOptions[scope.row.shift].key}}
+
                                 </el-tag>
                             </div>
                         </template>
@@ -43,7 +45,8 @@
                     <el-table-column prop='img' label='截图' sortable>
                         <template scope="scope">
                             <el-popover trigger="hover" placement="top">
-                                <img style="padding-right: 2px" v-if="scope.row.img" v-for="item in scope.row.img" :key=item.id :src="'http://127.0.0.1:8000'+ item" height="200">
+                                <img style="padding-right: 2px" v-for="item in scope.row.img" :key=item.id
+                                     :src="'http://127.0.0.1:8000'+ item" height="50" @click="bigPhoto(item)">
                                 <div slot="reference" class="name-wrapper" style="text-align: center">
                                     <img :src="'http://127.0.0.1:8000'+ scope.row.img[0]" height="50">
                                 </div>
@@ -80,6 +83,9 @@
         <el-dialog :visible.sync="addForm" size="larger">
             <add-duty :shiftOptions="shiftOptions" @getedit="getEdit"></add-duty>
         </el-dialog>
+        <el-dialog :visible.sync="showPhoto" size="small">
+            <img :src="photo" class="photo-align">
+        </el-dialog>
     </div>
 </template>
 
@@ -96,8 +102,10 @@
                 tableData: [],
                 tabletotal: 0,
                 searchdata: '',
+                photo: '',
                 pagesize: [10, 25, 50, 100],
                 addForm: false,
+                showPhoto: false,
                 rowdata: {},
                 selectId: [],
                 butstatus: true,
@@ -126,6 +134,7 @@
             fetchData() {
                 getDutyList(this.listQuery).then(response => {
                     this.tableData = response.data.results;
+                    //console.log(this.tableData);
                     this.tabletotal = response.data.count;
                 })
             },
@@ -182,6 +191,10 @@
                 }
                 setTimeout(this.fetchData, 3000);
             },
+            bigPhoto(img) {
+                this.showPhoto = true
+                this.photo = 'http://127.0.0.1:8000' + img
+            }
         }
     }
 </script>
@@ -204,5 +217,11 @@
     .table-pagination {
         padding: 10px 0;
         float: right;
+    }
+
+    .photo-align {
+        clear: both;
+        display: block;
+        margin: auto;
     }
 </style>
