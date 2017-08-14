@@ -131,11 +131,9 @@
             },
 
             handleEdit(row) {
-                const self = this;
-                self.editForm = true;
-                row.code_branch = row.code_branch.split(",");
-                row.deploy_env = row.deploy_env.split(",");
-                self.rowdata = row
+                console.log(row);
+                this.editForm = true;
+                this.rowdata = row;
             },
             getEdit(data) {
                 this.editForm = data;
@@ -144,8 +142,6 @@
             },
             handleRun(row) {
                 this.runForm = true;
-                row.code_branch = row.code_branch.split(",");
-                row.deploy_env = row.deploy_env.split(",");
                 this.rowdata = row
             },
             searchClick() {

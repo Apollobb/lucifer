@@ -28,9 +28,9 @@
         data() {
             return {
                 ruleForm: {
-                    deploy_env: '',
+                    deploy_env: this.rowdata.deploy_env.split(","),
                     hosts: '',
-                    code_branch: '',
+                    code_branch: this.rowdata.code_branch.split(","),
                 },
                 rules: {
                     deploy_env: [

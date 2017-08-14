@@ -46,8 +46,7 @@
     </el-form>
 </template>
 <script>
-    import {deleteJob, putJob} from 'api/job';
-    import {getJobGroupList} from 'api/job';
+    import {deleteJob, putJob, getJobGroupList} from 'api/job';
     import sesectHosts from '../components/hosttransfer.vue'
 
     export default {
@@ -58,13 +57,13 @@
             return {
                 ruleForm: {
                     name: this.rowdata.name,
-                    deploy_env: this.rowdata.deploy_env,
+                    deploy_env: this.rowdata.deploy_env.split(","),
                     jobs_type: this.rowdata.jobs_type,
                     hosts: this.rowdata.hosts,
                     group: this.rowdata.group,
                     code_repo: this.rowdata.code_repo,
                     code_url: this.rowdata.code_url,
-                    code_branch: this.rowdata.code_branch,
+                    code_branch: this.rowdata.code_branch.split(","),
                     deploy_script: this.rowdata.deploy_script,
                     desc: this.rowdata.desc
                 },
