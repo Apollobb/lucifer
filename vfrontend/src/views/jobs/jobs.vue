@@ -131,18 +131,17 @@
             },
 
             handleEdit(row) {
-                this.rowdata = Object.assign({}, row);
-                console.log(this.rowdata);
+                this.rowdata = row;
                 this.editForm = true;
+            },
+            handleRun(row) {
+                this.rowdata = row;
+                this.runForm = true;
             },
             getEdit(data) {
                 this.editForm = data;
                 this.addForm = data;
                 this.runForm = data;
-            },
-            handleRun(row) {
-                this.rowdata = Object.assign({}, row);
-                this.runForm = true;
             },
             searchClick() {
                 this.fetchData();
