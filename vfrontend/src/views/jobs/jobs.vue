@@ -131,8 +131,9 @@
             },
 
             handleEdit(row) {
+                this.rowdata = Object.assign({}, row);
+                console.log(this.rowdata);
                 this.editForm = true;
-                this.rowdata = row
             },
             getEdit(data) {
                 this.editForm = data;
