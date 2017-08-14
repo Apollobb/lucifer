@@ -24,6 +24,7 @@
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
 
+
                     </el-button>
                 </div>
             </div>
@@ -55,9 +56,7 @@
                     </el-table-column>
                     <el-table-column prop='create_time' label='创建时间' sortable>
                         <template scope="scope">
-                            <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <p v-text="scope.row.create_time"></p>
-                            </div>
+                            <span>{{scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
                         </template>
                     </el-table-column>
                 </el-table>

@@ -22,6 +22,7 @@
                             placeholder="选择日期范围">
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
+
                     </el-button>
                 </div>
             </div>
@@ -34,7 +35,11 @@
                     <el-table-column prop='type' label='文件类型' sortable></el-table-column>
                     <el-table-column prop='size' label='文件大小'></el-table-column>
                     <el-table-column prop='file' label='文件地址' sortable></el-table-column>
-                    <el-table-column prop='date' label='创建时间' sortable></el-table-column>
+                    <el-table-column prop='date' label='创建时间' sortable>
+                        <template scope="scope">
+                            <span>{{scope.row.date | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="table-footer">

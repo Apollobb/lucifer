@@ -37,7 +37,7 @@
                         {required: true, message: '请选择发布环境', trigger: 'change'}
                     ],
                     hosts: [
-                        {required: true, type: 'array', message: '请选择仓库类型', trigger: 'change'}
+                        {required: true, type: 'array', message: '请选择发布主机', trigger: 'change'}
                     ],
                     code_branch: [
                         {required: true, message: '请选择代码分支', trigger: 'change'}

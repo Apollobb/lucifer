@@ -131,9 +131,8 @@
             },
 
             handleEdit(row) {
-                console.log(row);
                 this.editForm = true;
-                this.rowdata = row;
+                this.rowdata = row
             },
             getEdit(data) {
                 this.editForm = data;
@@ -141,8 +140,8 @@
                 this.runForm = data;
             },
             handleRun(row) {
+                this.rowdata = Object.assign({}, row);
                 this.runForm = true;
-                this.rowdata = row
             },
             searchClick() {
                 this.fetchData();
