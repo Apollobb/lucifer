@@ -17,18 +17,20 @@
             </el-col>
             <el-col :span="12">
                 <el-upload
+                        v-show="ruleForm.username?true:false"
                         class="upload-demo"
                         ref="upload"
                         list-type="picture-card"
                         action="https://jsonplaceholder.typicode.com/posts/"
                         :on-success="handleSuccess"
                         :file-list="fileList"
-                        :auto-upload="false">
-                    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                        :auto-upload="false"
+                        :disabled="count>1?true:false">
+                    <el-button slot="trigger" size="small" type="primary" :disabled="count>1?true:false">选取文件</el-button>
                     <div slot="tip" class="el-upload__tip">
-                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器
-                        </el-button>
-                        <a>只能上传jpg/png文件，且不超过500kb</a>
+                        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload"
+                                   :disabled="ruleForm.username?false:true">上传到服务器</el-button>
+                        <p><a style="color: red">请填写完值班人员</a>；只能上传jpg/png文件，且不超过500kb</p>
                     </div>
                 </el-upload>
             </el-col>
@@ -49,6 +51,7 @@
         data() {
             return {
                 fileList: [],
+                count: 0,
                 ruleForm: {
                     username: '',
                     shift: '',
@@ -77,7 +80,6 @@
         },
         methods: {
             submitForm(formName) {
-                this.$refs.upload.submit();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         postDuty(this.ruleForm).then(response => {
@@ -112,9 +114,11 @@
                 formData.append('type', fileList.raw.type.split("/")[0]);
                 formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
-                    //console.log(response.data);
-                    this.ruleForm.images.push(response.data.filename);
+                    console.log(response.data);
+                    this.ruleForm.images.push(response.data.file);
                     if (response.statusText = 'ok') {
+                        this.count += 1;
+                        console.log(this.count);
                         this.$message({
                             type: 'success',
                             message: '恭喜你，上传成功'

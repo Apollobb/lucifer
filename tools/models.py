@@ -2,8 +2,6 @@
 # author: itimor
 
 from django.db import models
-from users.models import User
-from storage import FileStorage
 from filesize import convert_size
 
 SHIFT = (
@@ -27,20 +25,18 @@ class Duty(models.Model):
         verbose_name = u'值班交接'
         verbose_name_plural = u'值班交接'
 
-import os, time, random
-def get_upload_path(instance, filename):
-    path = './'
-    # 文件扩展名
-    fileext = os.path.splitext(filename)[1]
-    # 定义文件名，年月日时分秒随机数
-    fntime = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100)
-    # 重写合成文件名
-    upload_filename = os.path.join(fntime + fileext)
-    return os.path.join(path, upload_filename)
+import os, uuid
+fntime = str(uuid.uuid1())
+def get_upload_path(path):
+    def wrapper(instance, filename):
+        fileext = os.path.splitext(instance.filename)[1]
+        filename = os.path.join(fntime + fileext)
+        return os.path.join(path, filename)
+    return wrapper
 
 class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
-    file = models.FileField(upload_to=get_upload_path, blank=True, verbose_name=u'上传文件')
+    file = models.FileField(upload_to=get_upload_path('./'), blank=True, verbose_name=u'上传文件')
     archive = models.CharField(max_length=101, default=u'其他', null=True, blank=True, verbose_name=u'文件归档')
     filename = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
     type = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件类型')
@@ -48,7 +44,9 @@ class Upload(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
 
     def save(self, *args, **kwargs):
-        self.filename = '{}'.format(self.file.name)
+        ext = os.path.splitext(self.file.name)[1]
+        path = os.path.split(self.file.url)[0]
+        self.filename = '{}/{}{}'.format(path,fntime,ext)
         self.size = '{}'.format(convert_size(self.file.size))
         super(Upload, self).save(*args, **kwargs)
 

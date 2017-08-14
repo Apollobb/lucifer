@@ -43,9 +43,9 @@
                     <el-table-column prop='img' label='截图' sortable>
                         <template scope="scope">
                             <el-popover trigger="hover" placement="top">
-                                <img v-if="scope.row.img" v-for="item in scope.row.img" :key=item.id :src="item" height="200">
+                                <img style="padding-right: 2px" v-if="scope.row.img" v-for="item in scope.row.img" :key=item.id :src="'http://127.0.0.1:8000'+ item" height="200">
                                 <div slot="reference" class="name-wrapper" style="text-align: center">
-                                    <img :src="scope.row.img[0]" height="50">
+                                    <img :src="'http://127.0.0.1:8000'+ scope.row.img[0]" height="50">
                                 </div>
                             </el-popover>
                         </template>
