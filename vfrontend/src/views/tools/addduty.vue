@@ -4,7 +4,8 @@
             <el-col :span="12">
                 <el-form-item label="班次" prop="shift">
                     <el-select v-model="ruleForm.shift" placeholder="请选择班次">
-                        <el-option v-for="item in shiftOptions" :key="item" :label="item" :value="item"></el-option>
+                        <el-option v-for="item in shiftOptions" :key="item.value" :label="item.key" :value="item.value">
+                        </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="值班人员" prop="username">
@@ -111,7 +112,8 @@
                 formData.append('type', fileList.raw.type.split("/")[0]);
                 formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
-                    this.ruleForm.images.push(response.data.file.filename);
+                    //console.log(response.data);
+                    this.ruleForm.images.push(response.data.filename);
                     if (response.statusText = 'ok') {
                         this.$message({
                             type: 'success',

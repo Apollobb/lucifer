@@ -13,7 +13,7 @@
                     </el-input>
                     <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.shift"
                                placeholder="班次">
-                        <el-option v-for="item in shiftOptions" :key="item" :label="item" :value="item">
+                        <el-option v-for="item in shiftOptions" :key="item.value" :label="item.key" :value="item.value">
                         </el-option>
                     </el-select>
                     <el-date-picker
@@ -33,8 +33,8 @@
                     <el-table-column prop='shift' label='班次' sortable>
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <el-tag :type="SHIFT[scope.row.shift].type">
-                                    {{SHIFT[scope.row.shift].status}}
+                                <el-tag :type="shiftOptions[scope.row.shift].type">
+                                    {{shiftOptions[scope.row.shift].key}}
                                 </el-tag>
                             </div>
                         </template>
@@ -101,7 +101,6 @@
                 rowdata: {},
                 selectId: [],
                 butstatus: true,
-                shiftOptions: ['早班', '中班', '晚班'],
                 listQuery: {
                     offset: 0,
                     limit: LIMIT,
@@ -111,10 +110,10 @@
                     time_gte: '',
                 },
                 datefilter: [],
-                SHIFT: {
-                    'M': {"status": "早班", "type": "success"},
-                    'A': {"status": "中班", "type": "primary"},
-                    'N': {"status": "晚班", "type": "danger"},
+                shiftOptions: {
+                    'M': {"key": "早班", "type": "success", "value": "M"},
+                    'A': {"key": "中班", "type": "primary", "value": "A"},
+                    'N': {"key": "晚班", "type": "danger", "value": "N"}
                 },
             }
         },
