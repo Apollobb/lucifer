@@ -27,22 +27,36 @@
                 </div>
             </div>
             <div>
-                <el-table :data="tableData" @select="handleSelect" order style="width: 100%">
+                <el-table :data="tableData" @select="handleSelect" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='username' label='用户名' sortable></el-table-column>
-                    <el-table-column prop='shift' label='班次' sortable></el-table-column>
+                    <el-table-column prop='shift' label='班次' sortable>
+                        <template scope="scope">
+                            <div slot="reference" class="name-wrapper" style="text-align: center">
+                                <el-tag :type="SHIFT[scope.row.shift].type">
+                                    {{SHIFT[scope.row.shift].status}}
+                                </el-tag>
+                            </div>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop='content' label='值班内容'></el-table-column>
                     <el-table-column prop='img' label='截图' sortable>
                         <template scope="scope">
                             <el-popover trigger="hover" placement="top">
-                                <img :src="scope.row.img">
+                                <img v-if="scope.row.img" v-for="item in scope.row.img" :key=item.id :src="item" height="200">
                                 <div slot="reference" class="name-wrapper" style="text-align: center">
-                                    <img :src="scope.row.img">
+                                    <img :src="scope.row.img[0]" height="50">
                                 </div>
                             </el-popover>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='create_time' label='创建时间' sortable></el-table-column>
+                    <el-table-column prop='create_time' label='创建时间' sortable>
+                        <template scope="scope">
+                            <div slot="reference" class="name-wrapper" style="text-align: center">
+                                <p v-text="scope.row.create_time"></p>
+                            </div>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="table-footer">
@@ -97,6 +111,11 @@
                     time_gte: '',
                 },
                 datefilter: [],
+                SHIFT: {
+                    'M': {"status": "早班", "type": "success"},
+                    'A': {"status": "中班", "type": "primary"},
+                    'N': {"status": "晚班", "type": "danger"},
+                },
             }
         },
 

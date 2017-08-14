@@ -111,7 +111,7 @@
                 formData.append('type', fileList.raw.type.split("/")[0]);
                 formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
-                    console.log(response.data);
+                    this.ruleForm.images.push(response.data.file.filename);
                     if (response.statusText = 'ok') {
                         this.$message({
                             type: 'success',

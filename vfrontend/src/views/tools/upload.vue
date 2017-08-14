@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div>
-                <el-table :data="tableData" @select="handleSelect" order style="width: 100%">
+                <el-table :data="tableData" @select="handleSelect" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='username' label='上传用户' sortable></el-table-column>
                     <el-table-column prop='filename' label='原文件名' sortable></el-table-column>

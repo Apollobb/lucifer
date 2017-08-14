@@ -12,11 +12,12 @@ SHIFT = (
     ("N", u"晚班"),
 )
 
+
 class Duty(models.Model):
     username = models.CharField(max_length=20, unique=True, verbose_name=u'用户名')
     shift = models.CharField(choices=SHIFT, max_length=30, verbose_name=u'班次')
     content = models.TextField(verbose_name=u'值班内容', null=True, blank=True)
-    img = models.ForeignKey('Upload', null=True, blank=True, verbose_name=u'图片')
+    img = models.ManyToManyField('Upload', null=True, blank=True, verbose_name=u'图片')
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
 
     def __unicode__(self):
@@ -26,12 +27,22 @@ class Duty(models.Model):
         verbose_name = u'值班交接'
         verbose_name_plural = u'值班交接'
 
+import os, time, random
+def get_upload_path(instance, filename):
+    path = './'
+    # 文件扩展名
+    fileext = os.path.splitext(filename)[1]
+    # 定义文件名，年月日时分秒随机数
+    fntime = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100)
+    # 重写合成文件名
+    upload_filename = os.path.join(fntime + fileext)
+    return os.path.join(path, upload_filename)
 
 class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
-    file = models.FileField(upload_to='./', blank=True, storage = FileStorage(), verbose_name=u'上传文件')
-    archive = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件归档')
-    filename = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件名')
+    file = models.FileField(upload_to=get_upload_path, blank=True, verbose_name=u'上传文件')
+    archive = models.CharField(max_length=101, default=u'其他', null=True, blank=True, verbose_name=u'文件归档')
+    filename = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
     type = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件类型')
     size = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件大小')
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')

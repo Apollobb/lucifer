@@ -3,6 +3,7 @@ import apiURL from '@/config'
 
 //jobs
 export function postDuty(data) {
+    console.log(data);
     return fetch({
         url: apiURL.dutys,
         method: 'post',
