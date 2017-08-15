@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
