@@ -28,7 +28,6 @@
                     <el-button type="info" size="small" @click="setPasswd()">生成密码</el-button>
                 </template>
             </el-input>
-
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="postForm('ruleForm')">提交</el-button>

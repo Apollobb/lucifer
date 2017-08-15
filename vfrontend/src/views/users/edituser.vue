@@ -1,30 +1,37 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form :model="rowdata" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="username">
-            <el-input v-model="ruleForm.username"></el-input>
+            <el-input v-model="rowdata.username"></el-input>
         </el-form-item>
         <el-form-item label="Email" prop="email">
-            <el-input v-model="ruleForm.email"></el-input>
+            <el-input v-model="rowdata.email"></el-input>
         </el-form-item>
         <el-form-item label="中文名" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
+            <el-input v-model="rowdata.name"></el-input>
         </el-form-item>
         <el-form-item label="用户分组" prop="group">
-            <el-select v-model="ruleForm.group" placeholder="请选择用户分组">
+            <el-select v-model="rowdata.group" placeholder="请选择用户分组">
                 <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="是否激活" prop="is_active">
-            <el-switch on-text="oo" off-text="xx" v-model="ruleForm.is_active"></el-switch>
+            <el-switch on-text="oo" off-text="xx" v-model="rowdata.is_active"></el-switch>
         </el-form-item>
         <el-form-item label="角色" prop="group">
-            <el-select v-model="ruleForm.roles" placeholder="请选择用户角色">
+            <el-select v-model="rowdata.roles" placeholder="请选择用户角色">
                 <el-option v-for="item in roles" :key="item.name" :value="item.name"></el-option>
             </el-select>
         </el-form-item>
+        <el-form-item label="密码" prop="password">
+            <el-input v-model="rowdata.password">
+                <template slot="append">
+                    <el-button type="info" size="small" @click="setPasswd()">生成密码</el-button>
+                </template>
+            </el-input>
+        </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="postForm('ruleForm')">提交</el-button>
-            <el-button type="danger" @click="changePassForm('ruleForm')">更改密码</el-button>
+            <el-button type="danger" @click="changePass=!changePass">更改密码</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -37,14 +44,7 @@
         props: ['rowdata'],
         data() {
             return {
-                ruleForm: {
-                    username: this.rowdata.username,
-                    email: this.rowdata.email,
-                    name: this.rowdata.name,
-                    is_active: this.rowdata.is_active,
-                    group: this.rowdata.group,
-                    roles: this.rowdata.roles,
-                },
+                changePass: false,
                 rules: {
                     username: [
                         {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -75,16 +75,15 @@
             postForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        delete this.ruleForm.passwdCheck;
-                        patchUser(this.rowdata.id, this.ruleForm).then(response => {
+                        patchUser(this.rowdata.id, this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
-                                    message: '恭喜你，新建成功'
+                                    message: '恭喜你，更新成功'
                                 });
                             }
                         }).catch(error => {
-                            this.$message.error('新建失败');
+                            this.$message.error('更新失败');
                             console.log(error);
                         });
                     } else {
@@ -92,14 +91,11 @@
                         return false;
                     }
                 });
-                this.$emit('getedit', false);
+                this.$emit('DialogStatus', false);
             },
 
-            changePassForm(formName) {
-                this.$message.error('修改密码功能未做');
-            },
             getHosts(data) {
-                this.ruleForm.hosts = data
+                this.rowdata.hosts = data
             },
             getGroups() {
                 getGroupList().then(response => {
@@ -110,6 +106,10 @@
                 getRoleList().then(response => {
                     this.roles = response.data.results;
                 })
+            },
+            setPasswd() {
+                this.rowdata.password = Math.random().toString(35).slice(2);
+                console.log(this.rowdata.password)
             },
         }
     }

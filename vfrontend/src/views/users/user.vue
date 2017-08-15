@@ -22,6 +22,7 @@
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.username }}
+
                                 </el-button>
                             </div>
                         </template>
@@ -51,11 +52,11 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog :visible.sync="addForm" size="small">
-            <add-user @getedit="getEdit"></add-user>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+            <add-user @DialogStatus="getDialogStatus"></add-user>
         </el-dialog>
-        <el-dialog :visible.sync="editForm" size="small">
-            <edit-user :rowdata="rowdata" @getedit="getEdit"></edit-user>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+            <edit-user :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-user>
         </el-dialog>
     </div>
 </template>
@@ -81,7 +82,13 @@
                 editForm: false,
                 rowdata: {},
                 selectId: [],
-                butstatus: true
+                butstatus: true,
+                dialogStatus: '',
+                textMap: {
+                    create: '新建',
+                    edit: '编辑',
+                    run: '构建'
+                }
             }
         },
 
@@ -102,17 +109,23 @@
                 })
             },
 
-            handleEdit(row) {
-                this.editForm = true;
-                this.rowdata = row;
-                setTimeout(this.fetchData, 1000);
-            },
-            getEdit(data) {
-                setTimeout(this.fetchData, 1000);
+            getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
-                this.runForm = data;
             },
+
+            handleCreate() {
+                this.reseRowdata();
+                this.dialogStatus = 'create';
+                this.addForm = true;
+                setTimeout(this.fetchData, 1000);
+            },
+            handleEdit(row) {
+                this.editForm = true;
+                this.rowdata = row
+                setTimeout(this.fetchData, 1000);
+            },
+
             searchClick() {
                 this.fetchData();
             },
@@ -155,6 +168,17 @@
                     })
                 }
                 setTimeout(this.fetchData, 3000);
+            },
+            reseRowdata() {
+                this.rowdata = {
+                    username: '',
+                    email: '',
+                    name: '',
+                    is_active: '',
+                    group: '',
+                    roles: '',
+                    password: '',
+                }
             },
         }
     }

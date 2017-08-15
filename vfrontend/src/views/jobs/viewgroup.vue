@@ -16,13 +16,14 @@
                 <el-table :data="tableData" border style="width: 100%">
                     <el-table-column prop='name' label='项目名'></el-table-column>
                     <el-table-column prop='deploy_status' label='发布状态' sortable='custom'
-                                  :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
-                                  :filter-method="filterTag"
-                                  filter-placement="bottom-end">
+                                     :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
+                                     :filter-method="filterTag"
+                                     filter-placement="bottom-end">
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-tag :type="DEPLOY_STATUS[scope.row.deploy_status].type">
                                     {{DEPLOY_STATUS[scope.row.deploy_status].status}}
+
                                 </el-tag>
                             </div>
                         </template>
@@ -50,6 +51,8 @@
     import {LIMIT} from '@/config'
 
     export default {
+
+        props: ['groupName'],
         data() {
             return {
                 tableData: [],
@@ -77,6 +80,7 @@
                 const parms = {
                     limit: this.limit,
                     offset: this.offset,
+                    group__name: this.groupName,
                     name__contains: this.searchdata
                 };
                 getJobList(parms).then(response => {

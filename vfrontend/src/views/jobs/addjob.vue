@@ -1,47 +1,37 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form :model="rowdata" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="项目名称" prop="name">
-            <el-input v-model="ruleForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="发布环境" prop="deploy_env">
-            <el-select v-model="ruleForm.deploy_env" multiple placeholder="请选择发布环境">
-                <el-option v-for="item in deploy_env" :key="item.id" :value="item"></el-option>
-            </el-select>
+            <el-input v-model="rowdata.name"></el-input>
         </el-form-item>
         <el-form-item label="项目类型" prop="jobs_type">
-            <el-select v-model="ruleForm.jobs_type" placeholder="请选择项目类型">
+            <el-select v-model="rowdata.jobs_type" placeholder="请选择项目类型">
                 <el-option v-for="item in jobs_type" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <div>
-            <sesect-hosts :selecthost="ruleForm.hosts" @gethosts="getHosts"></sesect-hosts>
+            <sesect-hosts :selecthost="rowdata.hosts" @gethosts="getHosts"></sesect-hosts>
         </div>
         <el-form-item label="项目分组" prop="group">
-            <el-select v-model="ruleForm.group" placeholder="请选择项目分组">
+            <el-select v-model="rowdata.group" placeholder="请选择项目分组">
                 <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="仓库类型" prop="code_repo">
-            <el-select v-model="ruleForm.code_repo" placeholder="请选择仓库类型">
+            <el-select v-model="rowdata.code_repo" placeholder="请选择仓库类型">
                 <el-option v-for="item in repo_type" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="代码地址" prop="code_url">
-            <el-input v-model="ruleForm.code_url"></el-input>
-        </el-form-item>
-        <el-form-item label="代码分支" prop="code_branch">
-            <el-select v-model="ruleForm.code_branch" multiple placeholder="请选择代码分支">
-                <el-option v-for="item in code_branch" :key="item.id" :value="item"></el-option>
-            </el-select>
+            <el-input v-model="rowdata.code_url"></el-input>
         </el-form-item>
         <el-form-item label="发布脚步" prop="deploy_script">
             <el-input type="textarea"
                       :autosize="{ minRows: 4, maxRows: 10}"
                       placeholder="请输入内容"
-                      v-model="ruleForm.deploy_script"></el-input>
+                      v-model="rowdata.deploy_script"></el-input>
         </el-form-item>
         <el-form-item label="项目描述" prop="desc">
-            <el-input v-model="ruleForm.desc"></el-input>
+            <el-input v-model="rowdata.desc"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="postForm('ruleForm')">提交</el-button>
@@ -59,24 +49,19 @@
 
         data() {
             return {
-                ruleForm: {
+                rowdata: {
                     name: '',
-                    deploy_env: '',
                     jobs_type: '',
                     hosts: [],
                     group: '',
                     code_repo: '',
                     code_url: '',
-                    code_branch: '',
                     deploy_script: '',
                     desc: ''
                 },
                 rules: {
                     name: [
                         {required: true, message: '请输入活动名称', trigger: 'blur'},
-                    ],
-                    deploy_env: [
-                        {required: true, type: 'array', message: '请选择发布环境', trigger: 'blur'}
                     ],
                     jobs_type: [
                         {required: true, message: '请选择项目类型', trigger: 'blur'}
@@ -90,18 +75,13 @@
                     code_url: [
                         {required: true, message: '请输入代码地址', trigger: 'blur'},
                     ],
-                    code_branch: [
-                        {required: true, type: 'array', message: '请选择代码分支', trigger: 'blur'}
-                    ],
                     deploy_script: [
                         {required: true, message: '请填写发布脚步', trigger: 'blur'}
                     ]
                 },
-                deploy_env: ['test', 'stagging', 'pre', 'prod'],
                 jobs_type: ['php', 'python', 'java', 'nodejs'],
                 repo_type: ['git', 'svn', 'ftp'],
                 groups: '',
-                code_branch: ['master', 'dev']
             };
         },
 
@@ -112,9 +92,7 @@
             postForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.ruleForm.code_branch = this.ruleForm.code_branch.toString();
-                        this.ruleForm.deploy_env = this.ruleForm.deploy_env.toString();
-                        postJob(this.ruleForm).then(response => {
+                        postJob(this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
@@ -130,15 +108,15 @@
                         return false;
                     }
                 });
-                this.$emit('getedit', false);
+                this.$emit('DialogStatus', false);
             },
 
             resetForm(formName) {
-                this.ruleForm.hosts = [];
+                this.rowdata.hosts = [];
                 this.$refs[formName].resetFields();
             },
             getHosts(data) {
-                this.ruleForm.hosts = data
+                this.rowdata.hosts = data
             },
             getGroups() {
                 getJobGroupList().then(response => {

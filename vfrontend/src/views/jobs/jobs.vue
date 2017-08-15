@@ -3,7 +3,7 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addForm=true" disabled>新建项目</el-button>
+                    <el-button type="info" icon="plus" @click="handleCreate">新建项目</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -36,13 +36,14 @@
                     </el-table-column>
                     <el-table-column prop='group' label='所在组' sortable></el-table-column>
                     <el-table-column prop='deploy_status' label='发布状态' sortable='custom'
-                                  :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
-                                  :filter-method="filterTag"
-                                  filter-placement="bottom-end">
+                                     :filters="[{ text: '未执行', value: 'unexecuted' }, { text: '发布中', value: 'deploy' }, { text: '发布成功', value: 'succed' }, { text: '发布失败', value: 'failed' }]"
+                                     :filter-method="filterTag"
+                                     filter-placement="bottom-end">
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-tag :type="DEPLOY_STATUS[scope.row.deploy_status].type">
                                     {{DEPLOY_STATUS[scope.row.deploy_status].status}}
+
                                 </el-tag>
                             </div>
                         </template>
@@ -70,14 +71,14 @@
                 </el-pagination>
             </div>
         </el-card>
-        <el-dialog :visible.sync="addForm" size="small">
-            <add-project @getedit="getEdit"></add-project>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+            <add-project @DialogStatus="getDialogStatus"></add-project>
         </el-dialog>
-        <el-dialog :visible.sync="editForm" size="small">
-            <edit-project :rowdata="rowdata" @getedit="getEdit"></edit-project>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+            <edit-project :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-project>
         </el-dialog>
-        <el-dialog :visible.sync="runForm" size="tiny">
-            <run-project :rowdata="rowdata" @getedit="getEdit"></run-project>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="runForm" size="tiny">
+            <run-project :hosts="rowdata.hosts" :deploy_env="deploy_env" :code_branch="code_branch" @DialogStatus="getDialogStatus"></run-project>
         </el-dialog>
     </div>
 </template>
@@ -110,7 +111,15 @@
                 addForm: false,
                 editForm: false,
                 runForm: false,
-                rowdata: {}
+                rowdata: {},
+                dialogStatus: '',
+                textMap: {
+                    create: '新建',
+                    edit: '编辑',
+                    run: '构建'
+                },
+                deploy_env: ['test','stagging','pre','prod'],
+                code_branch: ['master','dev','test'],
             }
         },
 
@@ -130,19 +139,42 @@
                 })
             },
 
-            handleEdit(row) {
-                this.rowdata = Object.assign({}, row);
-                console.log(this.rowdata);
-                this.editForm = true;
-            },
-            getEdit(data) {
+            getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
                 this.runForm = data;
             },
+
+            handleCreate() {
+                this.reseRowdata();
+                this.dialogStatus = 'create';
+                this.addForm = true;
+            },
+
+            handleEdit(row) {
+                this.rowdata = Object.assign({}, row);
+                this.dialogStatus = 'edit';
+                this.editForm = true;
+            },
+
             handleRun(row) {
                 this.rowdata = Object.assign({}, row);
+                this.dialogStatus = 'run';
                 this.runForm = true;
+            },
+            reseRowdata() {
+                this.rowdata = {
+                    name: '',
+                    deploy_env: '',
+                    jobs_type: '',
+                    hosts: [],
+                    group: '',
+                    code_repo: '',
+                    code_url: '',
+                    code_branch: '',
+                    deploy_script: '',
+                    desc: ''
+                }
             },
             searchClick() {
                 this.fetchData();

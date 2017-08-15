@@ -2,17 +2,17 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="发布环境" prop="deploy_env">
             <el-select v-model="ruleForm.deploy_env" placeholder="请选择发布环境">
-                <el-option v-for="item in rowdata.deploy_env" :key="item.id" :value="item"></el-option>
+                <el-option v-for="item in deploy_env" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="选择发布机器" prop="hosts">
             <el-select v-model="ruleForm.hosts" multiple placeholder="请选择发布机器">
-                <el-option v-for="item in rowdata.hosts" :key="item.id" :value="item"></el-option>
+                <el-option v-for="item in hosts" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="代码分支" prop="code_branch">
             <el-select v-model="ruleForm.code_branch" placeholder="请选择代码分支">
-                <el-option v-for="item in rowdata.code_branch" :key="item.id" :value="item"></el-option>
+                <el-option v-for="item in code_branch" :key="item.id" :value="item"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item>
@@ -24,13 +24,13 @@
     export default {
         components: {},
 
-        props: ['rowdata'],
+        props: ['hosts', 'deploy_env', 'code_branch'],
         data() {
             return {
                 ruleForm: {
-                    deploy_env: this.rowdata.deploy_env.split(","),
-                    hosts: '',
-                    code_branch: this.rowdata.code_branch.split(","),
+                    deploy_env: '',
+                    hosts: [],
+                    code_branch: ''
                 },
                 rules: {
                     deploy_env: [
@@ -58,8 +58,8 @@
                         return false;
                     }
                 });
-                this.$emit('getedit', false);
-            },
+                this.$emit('DialogStatus', false);
+            }
         }
     }
 </script>

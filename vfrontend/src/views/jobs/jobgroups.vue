@@ -21,7 +21,7 @@
                     <el-table-column prop='desc' label='描述'></el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
-                            <el-button @click="showGroup(scope.row)" type="success" size="small">查看</el-button>
+                            <el-button @click="showGroup(scope.row.name)" type="success" size="small">查看</el-button>
                             <el-button @click="deleteGroup(scope.row.id)" type="danger" size="small">删除</el-button>
                         </template>
                     </el-table-column>
@@ -44,7 +44,7 @@
             <add-group @formdata="addGroupSubmit"></add-group>
         </el-dialog>
         <el-dialog :visible.sync="viewGroup" size="tiny">
-            <view-group :data="viewForm"></view-group>
+            <view-group :groupName="groupName"></view-group>
         </el-dialog>
     </div>
 </template>
@@ -68,7 +68,7 @@
                 pagesize: [10, 25, 50, 100],
                 addGroup: false,
                 viewGroup: false,
-                viewForm: {}
+                groupName: '',
             }
         },
 
@@ -116,9 +116,9 @@
                     console.log(error);
                 });
             },
-            showGroup(row){
+            showGroup(groupName){
                 this.viewGroup = true;
-                this.viewForm = row
+                this.groupName = groupName
             },
             searchClick() {
                 this.fetchData();

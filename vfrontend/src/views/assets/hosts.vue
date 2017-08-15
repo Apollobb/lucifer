@@ -3,7 +3,7 @@
         <el-card>
             <div class="head-lavel">
                 <div class="table-button">
-                    <el-button type="info" icon="plus" @click="addForm=true">新建项目</el-button>
+                    <el-button type="info" icon="plus" @click="handleCreate">新建项目</el-button>
                 </div>
                 <div class="table-search">
                     <el-input
@@ -84,11 +84,11 @@
             </div>
         </el-card>
 
-        <el-dialog :visible.sync="addForm" size="small">
-            <add-host @getedit="getEdit"></add-host>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+            <add-host @DialogStatus="getDialogStatus"></add-host>
         </el-dialog>
-        <el-dialog :visible.sync="editForm" size="small">
-            <edit-host :rowdata="rowdata" @getedit="getEdit"></edit-host>
+        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+            <edit-host :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-host>
         </el-dialog>
     </div>
 </template>
@@ -125,7 +125,13 @@
                 },
                 addForm: false,
                 editForm: false,
-                rowdata: {}
+                rowdata: {},
+                dialogStatus: '',
+                textMap: {
+                    create: '新建',
+                    edit: '编辑',
+                    run: '构建'
+                },
             }
         },
 
@@ -146,14 +152,19 @@
                 })
             },
 
+            getDialogStatus(data) {
+                this.editForm = data;
+                this.addForm = data;
+            },
+
+            handleCreate() {
+                this.reseRowdata();
+                this.dialogStatus = 'create';
+                this.addForm = true;
+            },
             handleEdit(row) {
                 this.editForm = true;
                 this.rowdata = row
-            },
-            getEdit(data) {
-                this.fetchData();
-                this.editForm = data;
-                this.addForm = data;
             },
             searchClick() {
                 this.fetchData();
@@ -165,6 +176,22 @@
             handleCurrentChange(val) {
                 this.offset = val - 1;
                 this.fetchData();
+            },
+            reseRowdata() {
+                this.rowdata = {
+                    hostname: '',
+                    ip: '',
+                    other_ip: '',
+                    group: '',
+                    asset_type: '',
+                    status: '',
+                    os: '',
+                    cpu_model: '',
+                    cpu_num: '',
+                    memory: '',
+                    disk: '',
+                    memo: ''
+                }
             }
         },
     }

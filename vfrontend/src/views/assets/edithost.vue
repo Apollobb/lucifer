@@ -1,46 +1,46 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form :model="rowdata" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="主机名" prop="hostname">
-            <el-input v-model="ruleForm.hostname"></el-input>
+            <el-input v-model="rowdata.hostname"></el-input>
         </el-form-item>
         <el-form-item label="主机ip" prop="ip">
-            <el-input v-model="ruleForm.ip"></el-input>
+            <el-input v-model="rowdata.ip"></el-input>
         </el-form-item>
         <el-form-item label="其他ip" prop="other_ip">
-            <el-input v-model="ruleForm.other_ip"></el-input>
+            <el-input v-model="rowdata.other_ip"></el-input>
         </el-form-item>
         <el-form-item label="分组" prop="group">
-            <el-select v-model="ruleForm.group" multiple placeholder="请选择分组">
+            <el-select v-model="rowdata.group" multiple placeholder="请选择分组">
                 <el-option v-for="item in groups" :key="item.name" :value="item.name"></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="设备类型" prop="asset_type">
-            <el-select v-model="ruleForm.asset_type" placeholder="请选择设备类型">
+            <el-select v-model="rowdata.asset_type" placeholder="请选择设备类型">
                 <el-option v-for="item in ASSET_TYPE" :key="item.id" :value="item.key">{{item.name}}</el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="主机状态" prop="status">
-            <el-select v-model="ruleForm.status" placeholder="请选择主机状态">
+            <el-select v-model="rowdata.status" placeholder="请选择主机状态">
                 <el-option v-for="item in ASSET_STATUS" :key="item.id" :value="item.key">{{item.name}}</el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="系统" prop="os">
-            <el-input v-model="ruleForm.os"></el-input>
+            <el-input v-model="rowdata.os"></el-input>
         </el-form-item>
         <el-form-item label="cpu型号" prop="cpu_model">
-            <el-input v-model="ruleForm.cpu_model"></el-input>
+            <el-input v-model="rowdata.cpu_model"></el-input>
         </el-form-item>
         <el-form-item label="cpu个数" prop="cpu_num">
-            <el-input v-model="ruleForm.cpu_num"></el-input>
+            <el-input v-model="rowdata.cpu_num"></el-input>
         </el-form-item>
         <el-form-item label="内存" prop="memory">
-            <el-input v-model="ruleForm.memory"></el-input>
+            <el-input v-model="rowdata.memory"></el-input>
         </el-form-item>
         <el-form-item label="磁盘" prop="disk">
-            <el-input v-model="ruleForm.disk"></el-input>
+            <el-input v-model="rowdata.disk"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="memo">
-            <el-input v-model="ruleForm.memo"></el-input>
+            <el-input v-model="rowdata.memo"></el-input>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="putForm('ruleForm')">提交</el-button>
@@ -56,20 +56,6 @@
         props: ['rowdata'],
         data() {
             return {
-                ruleForm: {
-                    hostname: this.rowdata.hostname,
-                    ip: this.rowdata.ip,
-                    other_ip: this.rowdata.other_ip,
-                    group: this.rowdata.group,
-                    asset_type: this.rowdata.asset_type,
-                    status: this.rowdata.status,
-                    os: this.rowdata.os,
-                    cpu_model: this.rowdata.cpu_model,
-                    cpu_num: this.rowdata.cpu_num,
-                    memory: this.rowdata.memory,
-                    disk: this.rowdata.disk,
-                    memo: this.rowdata.memo
-                },
                 rules: {
                     hostname: [
                         {required: true, message: '请输入主机名', trigger: 'blur'},
@@ -114,7 +100,7 @@
             putForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        putHost(this.rowdata.id, this.ruleForm).then(response => {
+                        putHost(this.rowdata.id, this.rowdata).then(response => {
                             if (response.statusText = 'ok') {
                                 this.$message({
                                     type: 'success',
@@ -134,7 +120,7 @@
             },
 
             resetForm(formName) {
-                this.ruleForm.hosts = [];
+                this.rowdata.hosts = [];
                 this.$refs[formName].resetFields();
             },
             getGroups() {

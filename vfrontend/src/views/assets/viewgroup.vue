@@ -48,6 +48,8 @@
     import {LIMIT} from '@/config'
 
     export default {
+
+        props: ['groupName'],
         data() {
             return {
                 tableData: [],
@@ -75,6 +77,7 @@
                 const parms = {
                     limit: this.limit,
                     offset: this.offset,
+                    group__name: this.groupName,
                     name__contains: this.searchdata
                 };
                 getHostList(parms).then(response => {
