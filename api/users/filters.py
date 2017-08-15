@@ -8,6 +8,7 @@ class UserFilter(filters.FilterSet):
     class Meta:
         model = User
         fields = {
+            'id': ['gt'],
             'username': ['exact', 'contains'],
             'email': ['exact'],
             'name': ['exact'],
