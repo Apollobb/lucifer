@@ -4,8 +4,6 @@
 from django.db import models
 from filesize import convert_size
 from storage import FileStorage
-import os, time, random
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 SHIFT = (
     ("M", u"早班"),
@@ -39,7 +37,7 @@ class Upload(models.Model):
 
     def save(self, *args, **kwargs):
         self.size = '{}'.format(convert_size(self.file.size))
-        self.filename = '{}'.format(self.file.name)
+        #self.filename = '{}'.format(self.file.name)
         super(Upload, self).save(*args, **kwargs)
 
 

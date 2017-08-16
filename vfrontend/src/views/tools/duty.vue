@@ -4,7 +4,6 @@
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addForm=true">新建值班记录</el-button>
-                    <el-checkbox v-model="showimg"> 显示图片</el-checkbox>
                 </div>
                 <div class="table-search">
                     <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
@@ -27,6 +26,8 @@
 
 
 
+
+
                     </el-button>
                 </div>
             </div>
@@ -39,22 +40,16 @@
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-tag :type="shiftOptions[scope.row.shift].type">
                                     {{shiftOptions[scope.row.shift].key}}
-
-
                                 </el-tag>
                             </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop='content' label='值班内容'></el-table-column>
-                    <el-table-column v-if="showimg" prop='images' label='截图' sortable>
+                    <el-table-column prop='images' label='截图' sortable>
                         <template scope="scope">
-                            <el-popover trigger="hover" placement="top">
-                                <img style="padding-right: 2px" v-for="item in scope.row.images" :key=item.id
-                                     :src="'http://127.0.0.1:8000'+ item" height="50" @click="bigPhoto(item)">
-                                <div slot="reference" class="name-wrapper" style="text-align: center">
-                                    <img :src="'http://127.0.0.1:8000'+ scope.row.images[0]" height="50">
-                                </div>
-                            </el-popover>
+                            <div v-for="item in images" :key=item.id>
+                                <p :v-text="showImg(item)"></p>
+                            </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop='create_time' label='创建时间' sortable>
@@ -92,7 +87,7 @@
 </template>
 
 <script>
-    import {getDutyList, deleteDuty} from 'api/tool'
+    import {getDutyList, deleteDuty, getUploadList} from 'api/tool'
     import {LIMIT} from '@/config'
     import addDuty from './addduty.vue'
     import format from '@/utils/dateformat'
@@ -105,7 +100,7 @@
                 tabletotal: 0,
                 searchdata: '',
                 photo: '',
-                showimg: false,
+                images: [],
                 pagesize: [10, 25, 50, 100],
                 addForm: false,
                 showPhoto: false,
@@ -120,6 +115,7 @@
                     time_lte: '',
                     time_gte: '',
                 },
+                parms: {},
                 datefilter: [],
                 shiftOptions: {
                     'M': {"key": "早班", "type": "success", "value": "M"},
@@ -129,6 +125,7 @@
             }
         },
 
+        computed: {},
         created() {
             this.fetchData();
         },
@@ -193,9 +190,16 @@
                 }
                 setTimeout(this.fetchData, 3000);
             },
+
+            showImg(id) {
+                getUploadList(this.parms, id).then(res => {
+                    console.log(res.data.file);
+                    return res.data.file
+                });
+            },
             bigPhoto(img) {
-                this.showPhoto = true
-                this.photo = 'http://127.0.0.1:8000' + img
+                this.showPhoto = true;
+                this.photo = img
             }
         }
     }
@@ -225,5 +229,9 @@
         clear: both;
         display: block;
         margin: auto;
+    }
+
+    .showimg {
+        padding: 1px 10px;
     }
 </style>

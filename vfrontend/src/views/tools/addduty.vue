@@ -33,6 +33,7 @@
                         :file-list="fileList"
                         :disabled="count>1?true:false">
                     <el-button slot="trigger" size="small" type="primary" :disabled="count>1?true:false">选择图片
+
                     </el-button>
                     <div slot="tip" class="el-upload__tip">
                         <p>只能上传jpg/png文件，且不超过500kb，<a style="color: red">最多只能上传两张图片</a></p>
@@ -107,6 +108,7 @@
             resetForm(formName) {
                 this.$refs[formName].resetFields();
                 this.$refs.upload.clearFiles();
+                this.count = 0
             },
             submitUpload() {
                 this.$refs.upload.submit();
@@ -115,10 +117,14 @@
                 let formData = new FormData();
                 formData.append('username', this.ruleForm.username);
                 formData.append('file', fileList.raw);
-                formData.append('type', fileList.raw.type.split("/")[0]);
+                formData.append('filename', fileList.raw.uid);
+                formData.append('type', fileList.raw.type);
+                formData.append('size', fileList.raw.size);
                 formData.append('archive', this.$route.name);
+                console.log(formData);
+
                 postUpload(formData).then(response => {
-                    console.log(response.data);
+                    console.log(fileList.raw);
                     this.ruleForm.images.push(response.data.id);
                     if (response.statusText = 'ok') {
                         this.count += 1;

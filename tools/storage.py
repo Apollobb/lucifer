@@ -7,6 +7,7 @@ import os, time, random
 
 class FileStorage(FileSystemStorage):
     def _save(self, name=settings.MEDIA_ROOT, content=settings.MEDIA_URL):
+        print content.file.name
         # 文件扩展名
         fileext = os.path.splitext(name)[1]
         # 文件目录

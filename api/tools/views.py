@@ -4,7 +4,7 @@
 from rest_framework import viewsets
 from tools.models import Duty, Upload
 from serializers import DutySerializer, UploadSerializer
-from filters import DutyFilter
+from filters import DutyFilter, UploadFilter
 
 
 class DutyViewSet(viewsets.ModelViewSet):
@@ -16,3 +16,4 @@ class DutyViewSet(viewsets.ModelViewSet):
 class UploadViewSet(viewsets.ModelViewSet):
     queryset = Upload.objects.all()
     serializer_class = UploadSerializer
+    filter_class = UploadFilter

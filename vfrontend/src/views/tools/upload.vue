@@ -23,6 +23,7 @@
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
 
+
                     </el-button>
                 </div>
             </div>
@@ -34,7 +35,11 @@
                     <el-table-column prop='archive' label='文件归档' sortable></el-table-column>
                     <el-table-column prop='type' label='文件类型' sortable></el-table-column>
                     <el-table-column prop='size' label='文件大小'></el-table-column>
-                    <el-table-column prop='file' label='文件地址' sortable></el-table-column>
+                    <el-table-column prop='file' label='文件预览' sortable>
+                        <template scope="scope">
+                            <img class="img" :src="scope.row.file" width="50" @click="bigPhoto(scope.row.file)">
+                        </template>
+                    </el-table-column>
                     <el-table-column prop='date' label='创建时间' sortable>
                         <template scope="scope">
                             <span>{{scope.row.date | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
@@ -60,6 +65,9 @@
                 </div>
             </div>
         </el-card>
+        <el-dialog :visible.sync="showPhoto" size="small">
+            <img :src="photo" class="photo-align">
+        </el-dialog>
     </div>
 </template>
 
@@ -88,6 +96,8 @@
                     date_gte: '',
                 },
                 datefilter: [],
+                photo: '',
+                showPhoto: false,
             }
         },
 
@@ -156,6 +166,10 @@
                 }
                 setTimeout(this.fetchData, 1000);
             },
+            bigPhoto(img) {
+                this.showPhoto = true;
+                this.photo = img
+            }
         }
     }
 </script>
@@ -178,5 +192,16 @@
     .table-pagination {
         padding: 10px 0;
         float: right;
+    }
+
+    .img {
+        padding: 2px;
+        text-align: center;
+    }
+
+    .photo-align {
+        clear: both;
+        display: block;
+        margin: auto;
     }
 </style>
