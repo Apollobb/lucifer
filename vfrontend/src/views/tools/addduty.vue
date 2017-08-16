@@ -119,7 +119,7 @@
                 formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
                     console.log(response.data);
-                    this.ruleForm.images.push(response.data);
+                    this.ruleForm.images.push(response.data.id);
                     if (response.statusText = 'ok') {
                         this.count += 1;
                         this.$message({
