@@ -99,6 +99,7 @@
         methods: {
             fetchData() {
                 const parms = {
+                    id__gt: 1,   //排除admin用户
                     limit: this.limit,
                     offset: this.offset,
                     username__contains: this.searchdata

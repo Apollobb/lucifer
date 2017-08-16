@@ -108,7 +108,6 @@ const user = {
                     CookiesApi.setAvatar(data.avatar);
                     CookiesApi.setName(data.name);
                     CookiesApi.setRoles(data.roles);
-                    console.log(CookiesApi.getAvatar());
                     resolve(response);
                 }).catch(error => {
                     reject(error);

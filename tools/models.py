@@ -3,6 +3,9 @@
 
 from django.db import models
 from filesize import convert_size
+from storage import FileStorage
+import os, time, random
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 SHIFT = (
     ("M", u"早班"),
@@ -15,7 +18,7 @@ class Duty(models.Model):
     username = models.CharField(max_length=20, unique=True, verbose_name=u'用户名')
     shift = models.CharField(choices=SHIFT, max_length=30, verbose_name=u'班次')
     content = models.TextField(verbose_name=u'值班内容', null=True, blank=True)
-    img = models.ManyToManyField('Upload', null=True, blank=True, verbose_name=u'图片')
+    images = models.ManyToManyField('Upload', null=True, blank=True, verbose_name=u'图片')
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
 
     def __unicode__(self):
@@ -25,18 +28,9 @@ class Duty(models.Model):
         verbose_name = u'值班交接'
         verbose_name_plural = u'值班交接'
 
-import os, uuid
-fntime = str(uuid.uuid1())
-def get_upload_path(path):
-    def wrapper(instance, filename):
-        fileext = os.path.splitext(instance.filename)[1]
-        filename = os.path.join(fntime + fileext)
-        return os.path.join(path, filename)
-    return wrapper
-
 class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
-    file = models.FileField(upload_to=get_upload_path('./'), blank=True, verbose_name=u'上传文件')
+    file = models.FileField(upload_to=('./'), storage=FileStorage(), blank=True, verbose_name=u'上传文件')
     archive = models.CharField(max_length=101, default=u'其他', null=True, blank=True, verbose_name=u'文件归档')
     filename = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
     type = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件类型')
@@ -44,13 +38,12 @@ class Upload(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
 
     def save(self, *args, **kwargs):
-        ext = os.path.splitext(self.file.name)[1]
-        path = os.path.split(self.file.url)[0]
-        self.filename = '{}/{}{}'.format(path,fntime,ext)
         self.size = '{}'.format(convert_size(self.file.size))
+        self.filename = '{}'.format(self.file.name)
         super(Upload, self).save(*args, **kwargs)
 
-    def __str__(self):
+
+    def __unicode__(self):
         return self.filename
 
     class Meta:

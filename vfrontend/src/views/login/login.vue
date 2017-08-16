@@ -50,6 +50,7 @@
                 showDialog: false
             }
         },
+
         methods: {
             ...mapActions(['Login', 'GetInfo']),
             handleLogin() {

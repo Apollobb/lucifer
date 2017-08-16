@@ -8,7 +8,7 @@ from filters import UserFilter
 from django.db.models import Q
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().filter(~Q(username = 'admin'))   #不列出 admin用户
+    queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_class = UserFilter
     ordering_fields = ('-create_date',)

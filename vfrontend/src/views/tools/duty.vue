@@ -4,6 +4,7 @@
             <div class="head-lavel">
                 <div class="table-button">
                     <el-button type="info" icon="plus" @click="addForm=true">新建值班记录</el-button>
+                    <el-checkbox v-model="showimg"> 显示图片</el-checkbox>
                 </div>
                 <div class="table-search">
                     <el-input @keyup.enter.native="handleFilter" style="width: 110px;" class="filter-item"
@@ -25,6 +26,7 @@
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
 
 
+
                     </el-button>
                 </div>
             </div>
@@ -38,18 +40,19 @@
                                 <el-tag :type="shiftOptions[scope.row.shift].type">
                                     {{shiftOptions[scope.row.shift].key}}
 
+
                                 </el-tag>
                             </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop='content' label='值班内容'></el-table-column>
-                    <el-table-column prop='img' label='截图' sortable>
+                    <el-table-column v-if="showimg" prop='images' label='截图' sortable>
                         <template scope="scope">
                             <el-popover trigger="hover" placement="top">
-                                <img style="padding-right: 2px" v-for="item in scope.row.img" :key=item.id
+                                <img style="padding-right: 2px" v-for="item in scope.row.images" :key=item.id
                                      :src="'http://127.0.0.1:8000'+ item" height="50" @click="bigPhoto(item)">
                                 <div slot="reference" class="name-wrapper" style="text-align: center">
-                                    <img :src="'http://127.0.0.1:8000'+ scope.row.img[0]" height="50">
+                                    <img :src="'http://127.0.0.1:8000'+ scope.row.images[0]" height="50">
                                 </div>
                             </el-popover>
                         </template>
@@ -80,7 +83,7 @@
             </div>
         </el-card>
         <el-dialog :visible.sync="addForm" size="larger">
-            <add-duty :shiftOptions="shiftOptions" @getedit="getEdit"></add-duty>
+            <add-duty :shiftOptions="shiftOptions" @DialogStatus="getDialogStatus"></add-duty>
         </el-dialog>
         <el-dialog :visible.sync="showPhoto" size="small">
             <img :src="photo" class="photo-align">
@@ -102,6 +105,7 @@
                 tabletotal: 0,
                 searchdata: '',
                 photo: '',
+                showimg: false,
                 pagesize: [10, 25, 50, 100],
                 addForm: false,
                 showPhoto: false,
@@ -133,15 +137,14 @@
             fetchData() {
                 getDutyList(this.listQuery).then(response => {
                     this.tableData = response.data.results;
-                    //console.log(this.tableData);
                     this.tabletotal = response.data.count;
                 })
             },
 
-            getEdit(data) {
-                setTimeout(this.fetchData, 3000);
+            getDialogStatus(data) {
                 this.addForm = data;
             },
+
             handleIconClick() {
                 this.listQuery.username__contains = ''
             },

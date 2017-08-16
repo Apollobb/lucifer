@@ -12,8 +12,8 @@ class UploadSerializer(serializers.ModelSerializer):
 
 
 class DutySerializer(serializers.ModelSerializer):
-    img = serializers.SlugRelatedField(many=True, queryset=Upload.objects.all(), slug_field='filename')
+    #images = serializers.SlugRelatedField(many=True, queryset=Upload.objects.all(), slug_field='filename')
     class Meta:
         model = Duty
-        fields = ['url', 'id', 'username', 'shift', 'content', 'img', 'create_time']
+        fields = ['url', 'id', 'username', 'shift', 'content', 'images', 'create_time']
         read_only_fields = ('create_time', )

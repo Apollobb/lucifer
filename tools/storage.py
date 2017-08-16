@@ -5,9 +5,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os, time, random
 
-
-upload_filename = ''
-
 class FileStorage(FileSystemStorage):
     def _save(self, name=settings.MEDIA_ROOT, content=settings.MEDIA_URL):
         # 文件扩展名
@@ -17,7 +14,6 @@ class FileStorage(FileSystemStorage):
         # 定义文件名，年月日时分秒随机数
         fntime = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100)
         # 重写合成文件名
-        global upload_filename
         upload_filename = os.path.join(d, fntime + fileext)
         # 调用父类方法
         return super(FileStorage, self)._save(upload_filename, content)

@@ -35,17 +35,13 @@
                     <el-button slot="trigger" size="small" type="primary" :disabled="count>1?true:false">选择图片
                     </el-button>
                     <div slot="tip" class="el-upload__tip">
-                        <!--<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload"-->
-                        <!--:disabled="ruleForm.username?false:true">上传到服务器</el-button>-->
                         <p>只能上传jpg/png文件，且不超过500kb，<a style="color: red">最多只能上传两张图片</a></p>
                     </div>
                 </el-upload>
             </el-col>
         </el-row>
         <el-form-item>
-            <el-tooltip content="注意是否有上传图片到服务器" placement="top">
-                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-            </el-tooltip>
+            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
             <el-button type="warning" @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
     </el-form>
@@ -101,7 +97,7 @@
                             this.$message.error('新建失败');
                             console.log(error);
                         });
-                        this.$emit('getedit', false);
+                        this.$emit('DialogStatus', false);
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -123,7 +119,7 @@
                 formData.append('archive', this.$route.name);
                 postUpload(formData).then(response => {
                     console.log(response.data);
-                    this.ruleForm.images.push(response.data.file);
+                    this.ruleForm.images.push(response.data);
                     if (response.statusText = 'ok') {
                         this.count += 1;
                         this.$message({
