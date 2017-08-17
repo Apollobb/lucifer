@@ -7,14 +7,23 @@ import os
 
 class FileStorage(FileSystemStorage):
     def _save(self, name=settings.MEDIA_ROOT, content=settings.MEDIA_URL):
-        def path_and_rename():
-            def wrapper(instance, filename):
-                ext = os.path.splitext(filename)[1]
-                filename = "%s-%s%s" % (instance.username, instance.pid, ext)
-                archive = instance.archive.split('/')
-                if len(archive) > 1:
-                    return os.path.join(archive[0], archive[1], filename)
-                else:
-                    return os.path.join(archive[0], filename)
-            return wrapper
-        return super(FileStorage, self)._save(path_and_rename, content)
+        def wrapper(instance, filename):
+            ext = os.path.splitext(filename)[1]
+            filename = "%s-%s%s" % (instance.username, instance.pid, ext)
+            archive = instance.archive.split('/')
+            if len(archive) > 1:
+                path_and_rename = os.path.join(archive[0], archive[1], filename)
+            else:
+                path_and_rename = os.path.join(archive[0], filename)
+            return super(FileStorage, self)._save(path_and_rename, content)
+
+def path_and_rename(path):
+    def wrapper(instance, filename):
+        ext = os.path.splitext(filename)[1]
+        filename = "%s-%s%s" % (instance.username, instance.pid, ext)
+        archive = instance.archive.split('/')
+        if len(archive)>1:
+            return os.path.join(path, archive[0], archive[1], filename)
+        else:
+            return os.path.join(path, archive[0], filename)
+    return wrapper

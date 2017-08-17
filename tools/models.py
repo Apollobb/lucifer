@@ -3,7 +3,8 @@
 
 from django.db import models
 from filesize import convert_size
-from storage import FileStorage
+from storage import FileStorage, path_and_rename
+import os
 
 SHIFT = (
     ("M", u"早班"),
@@ -26,19 +27,8 @@ class Duty(models.Model):
         verbose_name = u'值班交接'
         verbose_name_plural = u'值班交接'
 
-import os
-class Upload(models.Model):
-    def path_and_rename(path):
-        def wrapper(instance, filename):
-            ext = os.path.splitext(filename)[1]
-            filename = "%s-%s%s" % (instance.username, instance.pid, ext)
-            archive = instance.archive.split('/')
-            if len(archive)>1:
-                return os.path.join(path, archive[0], archive[1], filename)
-            else:
-                return os.path.join(path, archive[0], filename)
-        return wrapper
 
+class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
     pid = models.IntegerField(u'图片id', null=True, blank=True)
     file = models.FileField(upload_to=path_and_rename('./'), blank=True, verbose_name=u'上传文件')
@@ -54,9 +44,8 @@ class Upload(models.Model):
         self.filepath = '{}/{}-{}{}'.format(self.archive, self.username, self.pid, ext)
         super(Upload, self).save(*args, **kwargs)
 
-
     def __unicode__(self):
-        return u'{}'.format(self.filepath)
+        return self.filepath
 
     class Meta:
         verbose_name = u'文件上传'
