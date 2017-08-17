@@ -13,9 +13,11 @@
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
                     <el-dropdown-item @click.native="changeava=true">
                         修改头像
+
                     </el-dropdown-item>
                     <el-dropdown-item @click.native="changepw=true">
                         修改密码
+
                     </el-dropdown-item>
                     <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span>
                     </el-dropdown-item>
@@ -38,6 +40,19 @@
             </el-form>
         </el-dialog>
 
+        <el-dialog title="修改头像" :visible.sync="changeava" size="tiny">
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    list-type="picture"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    multiple>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+            <el-button class="btnAvatar" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+        </el-dialog>
     </div>
 </template>
 
@@ -140,6 +155,9 @@
                 console.log(this.avatar);
                 this.$refs[formName].resetFields();
             },
+            submitUpload() {
+                this.$refs.upload.submit();
+            },
         }
     }
 </script>
@@ -182,6 +200,9 @@
                     font-size: 12px;
                 }
             }
+        }
+
+        .btnAvatar {
         }
     }
 </style>
