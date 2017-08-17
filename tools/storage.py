@@ -3,18 +3,18 @@
 
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-import os, time, random
+import os
 
 class FileStorage(FileSystemStorage):
     def _save(self, name=settings.MEDIA_ROOT, content=settings.MEDIA_URL):
-        print content.file.name
-        # 文件扩展名
-        fileext = os.path.splitext(name)[1]
-        # 文件目录
-        d = os.path.dirname(name)
-        # 定义文件名，年月日时分秒随机数
-        fntime = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100)
-        # 重写合成文件名
-        upload_filename = os.path.join(d, fntime + fileext)
-        # 调用父类方法
-        return super(FileStorage, self)._save(upload_filename, content)
+        def path_and_rename():
+            def wrapper(instance, filename):
+                ext = os.path.splitext(filename)[1]
+                filename = "%s-%s%s" % (instance.username, instance.pid, ext)
+                archive = instance.archive.split('/')
+                if len(archive) > 1:
+                    return os.path.join(archive[0], archive[1], filename)
+                else:
+                    return os.path.join(archive[0], filename)
+            return wrapper
+        return super(FileStorage, self)._save(path_and_rename, content)

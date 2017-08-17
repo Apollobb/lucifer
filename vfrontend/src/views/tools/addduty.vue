@@ -117,9 +117,9 @@
                 let formData = new FormData();
                 formData.append('username', this.ruleForm.username);
                 formData.append('file', fileList.raw);
-                formData.append('filename', fileList.raw.uid);
+                formData.append('pid', fileList.raw.uid);
                 formData.append('type', fileList.raw.type);
-                formData.append('archive', this.$route.name);
+                formData.append('archive', this.$route.path);
                 postUpload(formData).then(response => {
                     console.log(fileList.raw);
                     this.ruleForm.images.push(response.data.id);
