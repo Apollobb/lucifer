@@ -44,7 +44,7 @@
                             <span @click="bigContent(scope.row.content)">{{scope.row.content}}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='images' label='截图' sortable>
+                    <el-table-column prop='images' label='截图'>
                         <template scope="scope">
                             <div v-for="item in scope.row.images" :key="item">
                                 <img :src="'http://127.0.0.1:8000/upload' + item" height="50" @click="bigPhoto('http://127.0.0.1:8000/upload' + item)">
@@ -53,7 +53,7 @@
                     </el-table-column>
                     <el-table-column prop='create_time' label='创建时间' sortable>
                         <template scope="scope">
-                            <span>{{scope.row.create_time | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                            <span>{{scope.row.create_time | parseDate}}</span>
                         </template>
                     </el-table-column>
                 </el-table>

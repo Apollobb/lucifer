@@ -31,7 +31,7 @@
                 <el-table :data="tableData" @select="handleSelect" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='username' label='上传用户' sortable></el-table-column>
-                    <el-table-column prop='filepath' label='文件路径' sortable></el-table-column>
+                    <el-table-column prop='filename' label='文件名' sortable></el-table-column>
                     <el-table-column prop='archive' label='文件归档' sortable></el-table-column>
                     <el-table-column prop='type' label='文件类型' sortable></el-table-column>
                     <el-table-column prop='size' label='文件大小'></el-table-column>
@@ -42,7 +42,7 @@
                     </el-table-column>
                     <el-table-column prop='date' label='创建时间' sortable>
                         <template scope="scope">
-                            <span>{{scope.row.date | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+                            <span>{{scope.row.date | parseDate}}</span>
                         </template>
                     </el-table-column>
                 </el-table>

@@ -52,6 +52,13 @@ export function parseTime(time, cFormat) {
   return time_str;
 }
 
+export function parseDate(datestr) {
+  let datetime = datestr.split('T');
+  let date = datetime[0];
+  let time = datetime[1].split('.')[0];
+  return date + ' ' + time
+}
+
 export function formatTime(time, option) {
   time = +time * 1000;
   const d = new Date(time);

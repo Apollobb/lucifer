@@ -33,7 +33,8 @@ class Upload(models.Model):
     pid = models.IntegerField(u'图片id', null=True, blank=True)
     file = models.FileField(upload_to=path_and_rename('./'), blank=True, verbose_name=u'上传文件')
     archive = models.CharField(max_length=101, default=u'其他', null=True, blank=True, verbose_name=u'文件归档')
-    filepath = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
+    filename = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
+    filepath = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件路径')
     type = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件类型')
     size = models.CharField(max_length=20, null=True, blank=True, verbose_name=u'文件大小')
     date = models.DateTimeField(auto_now_add=True, verbose_name=u'上传时间')
@@ -41,7 +42,8 @@ class Upload(models.Model):
     def save(self, *args, **kwargs):
         self.size = '{}'.format(convert_size(self.file.size))
         ext = os.path.splitext(self.file.name)[1]
-        self.filepath = '{}/{}-{}{}'.format(self.archive, self.username, self.pid, ext)
+        self.filename = '{}-{}{}'.format(self.username, self.pid, ext)
+        self.filepath = '{}/{}'.format(self.archive, self.filename)
         super(Upload, self).save(*args, **kwargs)
 
     def __unicode__(self):
