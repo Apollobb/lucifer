@@ -23,11 +23,6 @@
                             placeholder="选择日期范围">
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
-
-
-
-
-
                     </el-button>
                 </div>
             </div>
@@ -44,11 +39,15 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop='content' label='值班内容'></el-table-column>
+                    <el-table-column prop='content' label='值班内容'>
+                        <template scope="scope">
+                            <span @click="bigContent(scope.row.content)">{{scope.row.content}}</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop='images' label='截图' sortable>
                         <template scope="scope">
-                            <div v-for="item in images" :key=item.id>
-                                <p :v-text="showImg(item)"></p>
+                            <div v-for="item in scope.row.images" :key="item">
+                                <img :src="'http://127.0.0.1:8000/upload' + item" height="50" @click="bigPhoto('http://127.0.0.1:8000/upload' + item)">
                             </div>
                         </template>
                     </el-table-column>
@@ -83,6 +82,9 @@
         <el-dialog :visible.sync="showPhoto" size="small">
             <img :src="photo" class="photo-align">
         </el-dialog>
+        <el-dialog :visible.sync="showContent" size="small">
+            <p class="content-align">{{content}}</p>
+        </el-dialog>
     </div>
 </template>
 
@@ -100,10 +102,12 @@
                 tabletotal: 0,
                 searchdata: '',
                 photo: '',
+                content: '',
                 images: [],
                 pagesize: [10, 25, 50, 100],
                 addForm: false,
                 showPhoto: false,
+                showContent: false,
                 rowdata: {},
                 selectId: [],
                 butstatus: true,
@@ -200,6 +204,10 @@
             bigPhoto(img) {
                 this.showPhoto = true;
                 this.photo = img
+            },
+            bigContent(content) {
+                this.showContent = true;
+                this.content = content
             }
         }
     }
@@ -231,6 +239,9 @@
         margin: auto;
     }
 
+    .content-align {
+        text-align: center;
+    }
     .showimg {
         padding: 1px 10px;
     }
