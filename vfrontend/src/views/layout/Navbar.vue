@@ -41,17 +41,7 @@
         </el-dialog>
 
         <el-dialog title="修改头像" :visible.sync="changeava" size="tiny">
-            <el-upload
-                    class="upload-demo"
-                    drag
-                    list-type="picture"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    multiple>
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload>
-            <el-button class="btnAvatar" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+            <avatar-upload></avatar-upload>
         </el-dialog>
     </div>
 </template>
@@ -62,6 +52,7 @@
     import TabsView from './TabsView';
     import Hamburger from 'components/Hamburger';
     import Screenfull from 'components/Screenfull';
+    import avatarUpload from '../components/avatarUpload';
     import {changePassword} from 'api/auth'
 
 
@@ -71,6 +62,7 @@
             TabsView,
             Hamburger,
             Screenfull,
+            avatarUpload,
         },
         data() {
             const validatePass = (rule, value, callback) => {
@@ -154,9 +146,6 @@
             resetForm(formName) {
                 console.log(this.avatar);
                 this.$refs[formName].resetFields();
-            },
-            submitUpload() {
-                this.$refs.upload.submit();
             },
         }
     }

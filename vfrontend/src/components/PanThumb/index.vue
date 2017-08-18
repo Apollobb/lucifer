@@ -5,14 +5,14 @@
                 <slot></slot>
             </div>
         </div>
-        <img class="pan-thumb" :src="image">
+        <img class="pan-thumb" :src="avatar">
     </div>
 </template>
 <script>
     export default {
         name: 'PanThumb',
         props: {
-            image: {
+            avatar: {
                 type: String,
                 required: true,
                 default: 'http://obbqb7m24.bkt.clouddn.com/avatar.jpg'
