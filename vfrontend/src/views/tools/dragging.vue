@@ -24,7 +24,7 @@
                         v-dragging="{ item: item, list: jsondata, group: 'item'}"
                         :key="item.name"
                 >
-                    <a>{{index + 1}}、</a>
+                    <a>{{index + 1}} </a>
                     <el-button class="color-item">{{item.name}}</el-button>
                 </div>
             </el-col>
@@ -35,12 +35,8 @@
                         <div slot="header" class="clearfix">
                             <span style="line-height: 12px;">{{item.name}}</span>
                         </div>
-                        <div class="text item">
-                            <ul>
-                                <li>{{item.data}}</li>
-                                <li>{{item.color}}</li>
-                                <li>{{item.like}}</li>
-                            </ul>
+                        <div>
+                            <img :src="'http://game.gtimg.cn/images/yxzj/img201606/heroimg/' + item.img + '/' + item.img + '.jpg'" class="image">
                         </div>
                     </el-card>
                 </div>
@@ -79,13 +75,13 @@
             handleRemove(file, fileList) {
                 this.count = 0;
                 this.jsonUrl = '';
+                this.jsondata = [];
             },
             readJson() {
                 fetch({
                     url: this.jsonUrl,
                     method: 'get',
                 }).then(res => {
-                    this.jsondata = [];
                     let results = res.data;
                     let len = Object.keys(results).length;
                     for (var i = 0; i < len; i++) {
@@ -148,6 +144,10 @@
     .box-card {
         width: 150px;
         float: left;
+    }
+    .image {
+        width: 100%;
+        display: block;
     }
 
     .headerbtn {
