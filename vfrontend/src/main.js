@@ -28,25 +28,15 @@ Vue.use(mavonEditor);
 import imgUpload from 'vue-image-crop-upload'
 Vue.use(imgUpload);
 
-/* 拖拽 */
-import VueDND from 'awe-dnd'
-Vue.use(VueDND);
-
-import NProgress from 'nprogress'; // Progress 进度条
-import 'nprogress/nprogress.css';// Progress 进度条 样式
-import 'normalize.css/normalize.css';// normalize.css 样式格式化
-
-import * as filters from './filters'; // 全局vue filter
-
-
-Vue.use(ElementUI);
-
-Vue.config.productionTip = false;
-
-// register global utility filters.
+/* 注册全局vue filter */
+import * as filters from './filters';
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 });
+
+Vue.use(ElementUI);
+Vue.config.productionTip = false;
+
 
 // 生产环境错误日志
 if (process.env === 'production') {
