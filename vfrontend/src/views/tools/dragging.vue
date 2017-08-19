@@ -1,5 +1,6 @@
 <template>
     <div class="color-list">
+        <el-button class="showjson" type="info" @click="dialogJsonVisible=true">json数据</el-button>
         <el-row :gutter="20">
             <el-col :span="4" class="left">
                 <div
@@ -8,6 +9,7 @@
                         v-dragging="{ item: item, list: jsondata, group: 'item'}"
                         :key="item.name"
                 >
+                    <a>{{item.id}}</a>
                     <el-button class="color-item">{{item.name}}</el-button>
                 </div>
             </el-col>
@@ -26,17 +28,28 @@
                 </el-card>
             </el-col>
         </el-row>
+
+        <el-dialog title="查看json数据" :visible.sync="dialogJsonVisible">
+            <code>
+                <pre>{{ jsonstr | prettyJson }}</pre>
+            </code>
+        </el-dialog>
     </div>
 </template>
 
 <script>
     import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
+    import ElInput from "../../../node_modules/element-ui/packages/input/src/input.vue";
 
     export default {
-        components: {ElButton},
+        components: {
+            ElInput,
+            ElButton
+        },
         data() {
             return {
-                otherData: "aaa",
+                dialogJsonVisible: false,
+                jsonstr: {"data": "没有数据"},
                 jsondata: [{
                     name: "aaa",
                     color: "#FF88C2",
@@ -89,14 +102,12 @@
 
         mounted() {
             this.$dragging.$on('dragged', ({value}) => {
-                const str = value.item;
-                console.log(str);
-                const code = parseInt(str, 16);
-                console.log(code)
-            })
-            this.$dragging.$on('dragend', () => {
-
-            })
+                const results = value.list;
+                this.jsonstr = {};
+                for (var i = 0, len = results.length; i < len; i++) {
+                        this.jsonstr[i] = results[i]
+                    }
+            });
         }
     }
 </script>
@@ -140,5 +151,9 @@
     .box-card {
         width: 150px;
         float: left;
+    }
+
+    .showjson {
+        margin-bottom: 20px;
     }
 </style>
