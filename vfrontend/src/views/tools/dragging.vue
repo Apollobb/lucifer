@@ -14,6 +14,7 @@
                 </div>
             </el-col>
             <el-col :span="16" :offset="2" class="right">
+                <div class="right-item">
                 <el-card class="box-card" v-for="item in jsondata" :key="item" :style="{'background-color':item.color}">
                     <div slot="header" class="clearfix">
                         <span style="line-height: 12px;">{{item.name}}</span>
@@ -26,6 +27,7 @@
                         </ul>
                     </div>
                 </el-card>
+                    </div>
             </el-col>
         </el-row>
 
@@ -62,7 +64,7 @@
                     like: "游戏"
                 }, {
                     name: "ccc",
-                    color: "#FFFF33",
+                    color: "#ff6011",
                     data: "1993",
                     like: "唱歌"
                 }, {
@@ -82,12 +84,12 @@
                     like: "跑步"
                 }, {
                     name: "ttt",
-                    color: "#FF3EFF",
+                    color: "#faff0a",
                     data: "5634",
                     like: "旅行"
                 }, {
                     name: "fff",
-                    color: "#E63F00",
+                    color: "#d7e6dc",
                     data: "99841",
                     like: "吃饭"
                 }, {
@@ -95,6 +97,11 @@
                     color: "#00AA88",
                     data: "1313",
                     like: "电影"
+                },{
+                    name: "ppp",
+                    color: "#8b2ef8",
+                    data: "1023",
+                    like: "kev"
                 },
                 ]
             }
@@ -135,7 +142,6 @@
 
     .right {
         border-radius: 5px;
-        background-color: rgba(255, 233, 23, 0.29);
     }
 
     .clearfix:before,
@@ -148,6 +154,9 @@
         clear: both;
     }
 
+    .right-item {
+        width: 750px;
+    }
     .box-card {
         width: 150px;
         float: left;
