@@ -85,6 +85,7 @@
                     url: this.jsonUrl,
                     method: 'get',
                 }).then(res => {
+                    this.jsondata = [];
                     let results = res.data;
                     let len = Object.keys(results).length;
                     for (var i = 0; i < len; i++) {
