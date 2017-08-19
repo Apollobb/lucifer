@@ -94,8 +94,8 @@
             this.$dragging.$on('dragged', ({value}) => {
                 let results = value.list;
                 this.jsonstr = {};
-                for (var i = 0, len = results.length; i < len; i++) {
-                    this.jsonstr[i] = results[i]
+                for (var i = 1, len = results.length; i < len; i++) {
+                    this.jsonstr[i] = results[i-1]
                 }
             });
         }
