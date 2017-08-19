@@ -5,11 +5,11 @@
             <el-col :span="4" class="left">
                 <div
                         class="left-item"
-                        v-for="item in jsondata"
+                        v-for="(item,index) in jsondata"
                         v-dragging="{ item: item, list: jsondata, group: 'item'}"
                         :key="item.name"
                 >
-                    <a>{{item.id}}</a>
+                    <a>{{index + 1}}、</a>
                     <el-button class="color-item">{{item.name}}</el-button>
                 </div>
             </el-col>
@@ -123,7 +123,7 @@
     }
 
     .left-item {
-        text-align: center;
+        text-align: left;
         padding: 3px 0;
     }
 
