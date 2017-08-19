@@ -76,6 +76,7 @@ export const routes = [
         children: [
             {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
             {path: 'upload', component: require('@/views/tools/upload'), name: '上传管理'},
+            {path: 'dragging', component: require('@/views/tools/dragging'), name: '拖拽编排'},
         ]
     },
     {

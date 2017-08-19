@@ -28,6 +28,10 @@ Vue.use(mavonEditor);
 import imgUpload from 'vue-image-crop-upload'
 Vue.use(imgUpload);
 
+/* 拖拽 */
+import VueDND from 'awe-dnd'
+Vue.use(VueDND);
+
 import NProgress from 'nprogress'; // Progress 进度条
 import 'nprogress/nprogress.css';// Progress 进度条 样式
 import 'normalize.css/normalize.css';// normalize.css 样式格式化
