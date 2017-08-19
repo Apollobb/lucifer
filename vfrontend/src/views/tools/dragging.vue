@@ -90,7 +90,7 @@
                 }).then(res => {
                     let results = res.data;
                     let len = Object.keys(results).length;
-                    for (var i = 0; i < len; i++) {
+                    for (var i = 1; i < len+1; i++) {
                         this.jsondata.push(results[i]);
                     }
                 });
