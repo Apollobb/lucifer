@@ -1,6 +1,21 @@
 <template>
     <div class="color-list">
-        <el-button class="showjson" type="info" @click="dialogJsonVisible=true">json数据</el-button>
+        <div class="headerbtn">
+            <el-upload
+                    class="uploadjson"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-success="handleSuccess"
+                    :on-remove="handleRemove"
+                    :file-list="fileList"
+                    :disabled="count>0?true:false">
+                <el-button v-if="count==0" type="danger">上传json</el-button>
+                <el-button v-else class="showjson" type="info"
+                           @click="count>0?dialogJsonVisible=true:dialogJsonVisible=false">查看json
+                </el-button>
+                <a v-if="count==0" slot="tip" class="el-upload__tip">只能上传.json文件，且不超过500kb</a>
+                <a v-else slot="tip" class="el-upload__tip">删除文件重新上传</a>
+            </el-upload>
+        </div>
         <el-row :gutter="20">
             <el-col :span="4" class="left">
                 <div
@@ -15,19 +30,20 @@
             </el-col>
             <el-col :span="16" :offset="2" class="right">
                 <div class="right-item">
-                <el-card class="box-card" v-for="item in jsondata" :key="item" :style="{'background-color':item.color}">
-                    <div slot="header" class="clearfix">
-                        <span style="line-height: 12px;">{{item.name}}</span>
-                    </div>
-                    <div class="text item">
-                        <ul>
-                            <li>{{item.data}}</li>
-                            <li>{{item.color}}</li>
-                            <li>{{item.like}}</li>
-                        </ul>
-                    </div>
-                </el-card>
-                    </div>
+                    <el-card class="box-card" v-for="item in jsondata" :key="item"
+                             :style="{'background-color':item.color}">
+                        <div slot="header" class="clearfix">
+                            <span style="line-height: 12px;">{{item.name}}</span>
+                        </div>
+                        <div class="text item">
+                            <ul>
+                                <li>{{item.data}}</li>
+                                <li>{{item.color}}</li>
+                                <li>{{item.like}}</li>
+                            </ul>
+                        </div>
+                    </el-card>
+                </div>
             </el-col>
         </el-row>
 
@@ -40,80 +56,50 @@
 </template>
 
 <script>
-    import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
-    import ElInput from "../../../node_modules/element-ui/packages/input/src/input.vue";
+    import fetch from 'utils/fetch';
 
     export default {
-        components: {
-            ElInput,
-            ElButton
-        },
         data() {
             return {
                 dialogJsonVisible: false,
                 jsonstr: {"data": "没有数据"},
-                jsondata: [{
-                    name: "aaa",
-                    color: "#FF88C2",
-                    data: "1991",
-                    like: "打球"
-                }, {
-                    name: "bbb",
-                    color: "#33FFAA",
-                    data: "1992",
-                    like: "游戏"
-                }, {
-                    name: "ccc",
-                    color: "#ff6011",
-                    data: "1993",
-                    like: "唱歌"
-                }, {
-                    name: "ddd",
-                    color: "#99FF33",
-                    data: "1994",
-                    like: "跳舞"
-                }, {
-                    name: "eee",
-                    color: "#5555FF",
-                    data: "1921",
-                    like: "游泳"
-                }, {
-                    name: "rrr",
-                    color: "#9955FF",
-                    data: "1931",
-                    like: "跑步"
-                }, {
-                    name: "ttt",
-                    color: "#faff0a",
-                    data: "5634",
-                    like: "旅行"
-                }, {
-                    name: "fff",
-                    color: "#d7e6dc",
-                    data: "99841",
-                    like: "吃饭"
-                }, {
-                    name: "ggg",
-                    color: "#00AA88",
-                    data: "1313",
-                    like: "电影"
-                },{
-                    name: "ppp",
-                    color: "#8b2ef8",
-                    data: "1023",
-                    like: "kev"
-                },
-                ]
+                fileList: [],
+                jsonUrl: '',
+                count: 0,
+                jsondata: [],
             }
         },
 
+        methods: {
+            handleSuccess(file, fileList) {
+                this.count += 1;
+                this.jsonUrl = fileList.url;
+                this.readJson()
+            },
+            handleRemove(file, fileList) {
+                this.count = 0;
+                this.jsonUrl = '';
+            },
+            readJson() {
+                fetch({
+                    url: this.jsonUrl,
+                    method: 'get',
+                }).then(res => {
+                    let results = res.data;
+                    let len = Object.keys(results).length;
+                    for (var i = 0; i < len; i++) {
+                        this.jsondata.push(results[i]);
+                    }
+                });
+            }
+        },
         mounted() {
             this.$dragging.$on('dragged', ({value}) => {
-                const results = value.list;
+                let results = value.list;
                 this.jsonstr = {};
                 for (var i = 0, len = results.length; i < len; i++) {
-                        this.jsonstr[i] = results[i]
-                    }
+                    this.jsonstr[i] = results[i]
+                }
             });
         }
     }
@@ -157,12 +143,22 @@
     .right-item {
         width: 750px;
     }
+
     .box-card {
         width: 150px;
         float: left;
     }
 
-    .showjson {
+    .headerbtn {
         margin-bottom: 20px;
     }
+
+    .showjson {
+        display: inline-block;
+    }
+
+    .uploadjson {
+        display: inline-block;
+    }
+
 </style>

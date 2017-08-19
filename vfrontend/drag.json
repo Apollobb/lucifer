@@ -1,0 +1,62 @@
+{
+  "0": {
+    "name": "bbb",
+    "color": "#33FFAA",
+    "data": "1992",
+    "like": "游戏"
+  },
+  "1": {
+    "name": "ccc",
+    "color": "#ff6011",
+    "data": "1993",
+    "like": "唱歌"
+  },
+  "2": {
+    "name": "aaa",
+    "color": "#FF88C2",
+    "data": "1991",
+    "like": "打球"
+  },
+  "3": {
+    "name": "ddd",
+    "color": "#99FF33",
+    "data": "1994",
+    "like": "跳舞"
+  },
+  "4": {
+    "name": "eee",
+    "color": "#5555FF",
+    "data": "1921",
+    "like": "游泳"
+  },
+  "5": {
+    "name": "rrr",
+    "color": "#9955FF",
+    "data": "1931",
+    "like": "跑步"
+  },
+  "6": {
+    "name": "ttt",
+    "color": "#faff0a",
+    "data": "5634",
+    "like": "旅行"
+  },
+  "7": {
+    "name": "fff",
+    "color": "#d7e6dc",
+    "data": "99841",
+    "like": "吃饭"
+  },
+  "8": {
+    "name": "ggg",
+    "color": "#00AA88",
+    "data": "1313",
+    "like": "电影"
+  },
+  "9": {
+    "name": "ppp",
+    "color": "#8b2ef8",
+    "data": "1023",
+    "like": "kev"
+  }
+}
