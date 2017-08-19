@@ -2,70 +2,70 @@
   "0": {
     "name": "安琪拉",
     "color": "#33FFAA",
-    "data": "1992",
+    "data": "1",
     "like": "游戏",
     "img": "142"
   },
   "1": {
     "name": "大乔",
     "color": "#ff6011",
-    "data": "1993",
+    "data": "2",
     "like": "唱歌",
     "img": "191"
   },
   "2": {
     "name": "蔡文姬",
     "color": "#FF88C2",
-    "data": "1991",
+    "data": "3",
     "like": "打球",
     "img": "184"
   },
   "3": {
     "name": "不知火舞",
     "color": "#99FF33",
-    "data": "1994",
+    "data": "3",
     "like": "跳舞",
     "img": "157"
   },
   "4": {
     "name": "妲己",
     "color": "#5555FF",
-    "data": "1921",
+    "data": "5",
     "like": "游泳",
     "img": "109"
   },
   "5": {
     "name": "阿珂",
     "color": "#9955FF",
-    "data": "1931",
+    "data": "6",
     "like": "跑步",
     "img": "116"
   },
   "6": {
     "name": "小乔",
     "color": "#faff0a",
-    "data": "5634",
+    "data": "7",
     "like": "旅行",
     "img": "106"
   },
   "7": {
     "name": "甄姬",
     "color": "#FF4949",
-    "data": "99841",
+    "data": "8",
     "like": "吃饭",
     "img": "127"
   },
   "8": {
     "name": "王昭君",
     "color": "#00AA88",
-    "data": "1313",
+    "data": "9",
     "like": "电影",
     "img": "152"
   },
   "9": {
     "name": "貂蝉",
     "color": "#8b2ef8",
-    "data": "1023",
+    "data": "10",
     "like": "kev",
     "img": "141"
   }

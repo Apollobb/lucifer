@@ -2,30 +2,30 @@
     <div class="color-list">
         <div class="headerbtn">
             <el-upload
-                    class="uploadjson"
+                    class="btnjson"
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :on-success="handleSuccess"
                     :on-remove="handleRemove"
                     :file-list="fileList"
                     :disabled="count>0?true:false">
                 <el-button v-if="count==0" type="danger">上传json</el-button>
-                <el-button v-else class="showjson" type="info"
-                           @click="count>0?dialogJsonVisible=true:dialogJsonVisible=false">查看json
-                </el-button>
-                <a v-if="count==0" slot="tip" class="el-upload__tip">只能上传.json文件，且不超过500kb</a>
-                <a v-else slot="tip" class="el-upload__tip">删除文件重新上传</a>
+                <el-button v-else type="info" @click="count>0?showjson=true:showjson=false">查看json</el-button>
+                <a v-if="count==0" slot="tip" class="el-upload__tip tips">只能上传.json文件，且不超过500kb</a>
+                <a v-else slot="tip" class="el-upload__tip tips">删除文件重新上传</a>
             </el-upload>
         </div>
         <el-row :gutter="20">
             <el-col :span="4" class="left">
-                <div
-                        class="left-item"
-                        v-for="(item,index) in jsondata"
-                        v-dragging="{ item: item, list: jsondata, group: 'item'}"
-                        :key="item.name"
-                >
-                    <a>{{index + 1}} </a>
-                    <el-button class="color-item">{{item.name}}</el-button>
+                <div class="left-item">
+                    <draggable v-model="jsondata" :options="{group:'people'}" @start="drag=true" @end="dragEnd">
+                        <div v-for="(item, index) in jsondata">
+                            <a>{{index + 1}} </a>
+                            <el-badge :value="item.data" class="item">
+                                <el-button class="color-item" :plain="true" type="info" size="small">{{item.name}}
+                                </el-button>
+                            </el-badge>
+                        </div>
+                    </draggable>
                 </div>
             </el-col>
             <el-col :span="16" :offset="2" class="right">
@@ -36,14 +36,15 @@
                             <span style="line-height: 12px;">{{item.name}}</span>
                         </div>
                         <div>
-                            <img :src="'http://game.gtimg.cn/images/yxzj/img201606/heroimg/' + item.img + '/' + item.img + '.jpg'" class="image">
+                            <img :src="'http://game.gtimg.cn/images/yxzj/img201606/heroimg/' + item.img + '/' + item.img + '.jpg'"
+                                 class="image">
                         </div>
                     </el-card>
                 </div>
             </el-col>
         </el-row>
 
-        <el-dialog title="查看json数据" :visible.sync="dialogJsonVisible">
+        <el-dialog title="查看json数据" :visible.sync="showjson">
             <code>
                 <pre>{{ jsonstr | prettyJson }}</pre>
             </code>
@@ -53,12 +54,17 @@
 
 <script>
     import fetch from 'utils/fetch';
+    import draggable from 'vuedraggable'
 
     export default {
+
+        components: {
+            draggable,
+        },
         data() {
             return {
-                dialogJsonVisible: false,
-                jsonstr: {"data": "没有数据"},
+                showjson: false,
+                jsonstr: {"data": "拖拽后生成数据"},
                 fileList: [],
                 jsonUrl: '',
                 count: 0,
@@ -74,8 +80,8 @@
             },
             handleRemove(file, fileList) {
                 this.count = 0;
-                this.jsonUrl = '';
                 this.jsondata = [];
+                this.jsonstr = {"data": "拖拽后生成数据"}
             },
             readJson() {
                 fetch({
@@ -88,16 +94,13 @@
                         this.jsondata.push(results[i]);
                     }
                 });
-            }
-        },
-        mounted() {
-            this.$dragging.$on('dragged', ({value}) => {
-                let results = value.list;
+            },
+            dragEnd() {
                 this.jsonstr = {};
-                for (var i = 1, len = results.length; i < len; i++) {
-                    this.jsonstr[i] = results[i-1]
+                for (var i = 1, len = this.jsondata.length + 1; i < len; i++) {
+                    this.jsonstr[i] = this.jsondata[i-1]
                 }
-            });
+            }
         }
     }
 </script>
@@ -145,6 +148,7 @@
         width: 150px;
         float: left;
     }
+
     .image {
         width: 100%;
         display: block;
@@ -154,12 +158,12 @@
         margin-bottom: 20px;
     }
 
-    .showjson {
+    .btnjson {
         display: inline-block;
     }
 
-    .uploadjson {
-        display: inline-block;
+    .tips {
+        margin-left: 5px;
     }
 
 </style>
