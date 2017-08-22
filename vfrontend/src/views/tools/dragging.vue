@@ -21,9 +21,8 @@
                     <draggable v-model="jsondata" :options="{group:'people'}" @start="drag=true" @end="dragEnd">
                         <div v-for="(item, index) in jsondata">
                             <a>{{index + 1}} </a>
-                            <el-badge :value="item.data" class="item">
+                            <el-badge :value="item.category" class="item">
                                 <el-button class="color-item" :plain="true" type="info" size="small">{{item.name}}
-
                                 </el-button>
                             </el-badge>
                         </div>
@@ -38,8 +37,7 @@
                             <span style="line-height: 12px;">{{item.name}}</span>
                         </div>
                         <div>
-                            <img :src="'http://game.gtimg.cn/images/yxzj/img201606/heroimg/' + item.img + '/' + item.img + '.jpg'"
-                                 class="image">
+                            <img :src="'http://172.16.31.202:1702/images/dtgames/h/' + item.pic" class="image">
                         </div>
                     </el-card>
                 </div>
@@ -98,11 +96,7 @@
                     url: this.jsonUrl,
                     method: 'get',
                 }).then(res => {
-                    let results = res.data;
-                    let len = Object.keys(results).length;
-                    for (var i = 1; i < len + 1; i++) {
-                        this.jsondata.push(results[i]);
-                    }
+                    this.jsondata = res.data;
                 });
             },
             dragEnd() {
