@@ -71,7 +71,7 @@ export const routes = [
         component: Layout,
         redirect: '/tools/index',
         name: '工具管理',
-        icon: 'upload',
+        icon: 'cogs',
         meta: {requiresAuth: true},
         children: [
             {path: 'duty', component: require('@/views/tools/duty'), name: '值班交接'},
