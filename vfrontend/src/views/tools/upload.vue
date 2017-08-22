@@ -22,13 +22,11 @@
                             placeholder="选择日期范围">
                     </el-date-picker>
                     <el-button class="filter-item" type="primary" icon="search" @click="searchClick">搜索
-
-
                     </el-button>
                 </div>
             </div>
             <div>
-                <el-table :data="tableData" @select="handleSelect" border style="width: 100%">
+                <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='username' label='上传用户' sortable></el-table-column>
                     <el-table-column prop='filename' label='文件名' sortable></el-table-column>
@@ -113,9 +111,16 @@
                 })
             },
 
-            getEdit(data) {
-                setTimeout(this.fetchData, 3000);
-                this.addForm = data;
+            handleSelectionChange(val) {
+                this.selectId = [];
+                for (var i = 0, len = val.length; i < len; i++) {
+                    this.selectId.push(val[i].id);
+                }
+                if(this.selectId.length>0){
+                    this.butstatus = false
+                } else {
+                    this.butstatus = true
+                }
             },
             handleIconClick() {
                 this.listQuery.username__contains = ''
@@ -132,30 +137,6 @@
             handleCurrentChange(val) {
                 this.listQuery.offset = val - 1;
                 this.fetchData();
-            },
-            handleSelect(val, row) {
-                Array.prototype.indexOf = function (val) {
-                    for (var i = 0; i < this.length; i++) {
-                        if (this[i] == val) return i;
-                    }
-                    return -1;
-                };
-                Array.prototype.remove = function (val) {
-                    var index = this.indexOf(val);
-                    if (index > -1) {
-                        this.splice(index, 1);
-                    }
-                };
-                if (val.length) {
-                    if (this.selectId.indexOf(row.id) == -1) {
-                        this.selectId.push(row.id);
-                    } else {
-                        this.selectId.remove(row.id);
-                    }
-                    this.butstatus = false;
-                } else {
-                    this.butstatus = true;
-                }
             },
             deleteForm() {
                 console.log(this.selectId);
