@@ -7,17 +7,15 @@
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="hover">
                 <div class="avatar-wrapper">
-                    <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+                    <img class="user-avatar" :src="UserInfo.avatar+'?imageView2/1/w/80/h/80'">
                     <i class="el-icon-caret-bottom"></i>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
                     <el-dropdown-item @click.native="changeava=true">
                         修改头像
-
                     </el-dropdown-item>
                     <el-dropdown-item @click.native="changepw=true">
                         修改密码
-
                     </el-dropdown-item>
                     <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span>
                     </el-dropdown-item>
@@ -55,7 +53,6 @@
     import avatarUpload from '../components/avatarUpload';
     import {changePassword} from 'api/auth'
 
-
     export default {
         components: {
             Levelbar,
@@ -88,6 +85,7 @@
                 }
             };
             return {
+                UserInfo: '',
                 ruleForm: {
                     new_password1: '',
                     new_password2: ''
@@ -109,10 +107,17 @@
         computed: {
             ...mapGetters([
                 'sidebar',
-                'avatar'
-            ])
+                'userinfo',
+            ]),
         },
+        created() {
+            this.getUserinfo();
+        },
+
         methods: {
+            getUserinfo() {
+                this.UserInfo = JSON.parse(this.userinfo)
+            },
             toggleSideBar() {
                 this.$store.dispatch('ToggleSideBar')
             },
@@ -144,7 +149,6 @@
                 });
             },
             resetForm(formName) {
-                console.log(this.avatar);
                 this.$refs[formName].resetFields();
             },
         }

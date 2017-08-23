@@ -5,44 +5,23 @@ const user = {
     state: {
         code: '',
         token: CookiesApi.getToken(),
-        uid: '',
         username: '',
-        email: '',
         islogin: false,
-        name: CookiesApi.getName(),
-        token_time: CookiesApi.getTokenTime(),
-        avatar: CookiesApi.getAvatar(),
-        roles: CookiesApi.getRoles(),
-        userinfo: ''
+        userinfo: CookiesApi.getUserinfo(),
     },
 
     mutations: {
         SET_CODE: (state, code) => {
             state.code = code;
         },
-        SET_UID: (state, uid) => {
-            state.uid = uid;
-        },
         SET_TOKEN: (state, token) => {
             state.token = token;
         },
         SET_USERNAME: (state, username) => {
-            state.username = username;
-        },
-        SET_EMAIL: (state, email) => {
-            state.email = email;
+            state.token = username;
         },
         SET_ISLOGIN: (state, islogin) => {
             state.islogin = islogin;
-        },
-        SET_NAME: (state, name) => {
-            state.name = name;
-        },
-        SET_AVATAR: (state, avatar) => {
-            state.avatar = avatar;
-        },
-        SET_ROLES: (state, roles) => {
-            state.roles = roles;
         },
         SET_USERINFO: (state, userinfo) => {
             state.userinfo = userinfo;
@@ -80,12 +59,8 @@ const user = {
         LogOut({commit, state}) {
             return new Promise((resolve, reject) => {
                 commit('SET_TOKEN', ''),
-                commit('SET_ROLES', []);
                 CookiesApi.removeToken();
-                CookiesApi.removeTokenTime();
-                CookiesApi.removeName();
-                CookiesApi.removeAvatar();
-                CookiesApi.removeRoles();
+                CookiesApi.removeUserinfo();
                 resolve();
             })
         },
@@ -95,6 +70,7 @@ const user = {
             return new Promise(resolve => {
                 commit('SET_TOKEN', '');
                 CookiesApi.removeToken();
+                CookiesApi.removeUserinfo();
                 resolve();
             })
         },
@@ -105,9 +81,7 @@ const user = {
                 getInfo(state.username).then(response => {
                     const data = response.data.results[0];
                     commit('SET_USERINFO', data);
-                    CookiesApi.setAvatar(data.avatar);
-                    CookiesApi.setName(data.name);
-                    CookiesApi.setRoles(data.roles);
+                    CookiesApi.setUserinfo(data);
                     resolve(response);
                 }).catch(error => {
                     reject(error);

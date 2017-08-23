@@ -39,11 +39,11 @@
             <el-col :span="6">
                 <el-card class="box-card">
                     <div slot="header" class="box-card-header">
-                        <pan-thumb class="panThumb" :image="avatar"> 你的权限:
-                            <span class="pan-info-roles" v-for="item in roles">{{item}}</span>
+                        <pan-thumb class="panThumb" :image="UserInfo.avatar"> 你的权限:
+                            <span class="pan-info-roles" v-for="item in UserInfo.roles">{{item}}</span>
                         </pan-thumb>
                     </div>
-                    <span class="display_name">{{name}}</span>
+                    <span class="display_name">{{UserInfo.name}}</span>
                     <div class="info-item">
                         <countTo class="info-item-num" :startVal='0' :endVal='statisticsData.article_count'
                                  :duration='3400'></countTo>
@@ -93,6 +93,7 @@
         components: {panThumb, countTo, pieChart, lineChart, barChart, todoList},
         data() {
             return {
+                UserInfo: '',
                 statisticsData: {
                     article_count: 1024,
                     comment_count: 102400,
@@ -104,10 +105,17 @@
         },
         computed: {
             ...mapGetters([
-                'name',
-                'avatar',
-                'roles'
+                'userinfo',
             ])
+        },
+        created() {
+            this.getUserInfo();
+        },
+
+        methods: {
+            getUserInfo() {
+                this.UserInfo = JSON.parse(this.userinfo)
+            }
         }
     }
 </script>

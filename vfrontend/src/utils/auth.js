@@ -5,6 +5,7 @@ const TokenTime = 'Admin-Token-Time';
 const Avatar = 'avatar';
 const Name = 'name';
 const Roles = 'roles';
+const Userinfo = 'userinfo';
 
 export function setToken(token) {
       return Cookies.set(TokenKey, token)
@@ -64,4 +65,16 @@ export function getRoles() {
 
 export function removeRoles() {
       return Cookies.remove(Roles)
+}
+
+export function setUserinfo(userinfo) {
+      return Cookies.set(Userinfo, userinfo)
+}
+
+export function getUserinfo() {
+      return Cookies.get(Userinfo)
+}
+
+export function removeUserinfo() {
+      return Cookies.remove(Userinfo)
 }

@@ -58,7 +58,9 @@
                     if (valid) {
                         this.loading = true;
                         this.Login(this.loginForm).then(response => {
-                            this.GetInfo();
+                            this.GetInfo().then( res =>{
+                                console.log(res);
+                            });
                             this.$router.push('/')
                         }).catch(error => {
                             console.log(error);

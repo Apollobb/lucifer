@@ -553,5 +553,225 @@
       "HOT",
       "NEW"
     ]
+  },
+    {
+    "eName": "Saiyan Battle",
+    "name": "赛亚烈战",
+    "id": "dragonball",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "dragonball.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Nightclub",
+    "name": "夜店之王",
+    "id": "nightclub5x20",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": "1",
+    "language": "zh_CN",
+    "pic": "nightclub5x20.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Basketball Master",
+    "name": "灌篮大师",
+    "id": "sd",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "sd.png"
+  },
+    {
+    "eName": "Saiyan Battle",
+    "name": "赛亚烈战",
+    "id": "dragonball",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "dragonball.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Nightclub",
+    "name": "夜店之王",
+    "id": "nightclub5x20",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": "1",
+    "language": "zh_CN",
+    "pic": "nightclub5x20.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Basketball Master",
+    "name": "灌篮大师",
+    "id": "sd",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "sd.png"
+  },
+    {
+    "eName": "Saiyan Battle",
+    "name": "赛亚烈战",
+    "id": "dragonball",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "dragonball.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Nightclub",
+    "name": "夜店之王",
+    "id": "nightclub5x20",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": "1",
+    "language": "zh_CN",
+    "pic": "nightclub5x20.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Basketball Master",
+    "name": "灌篮大师",
+    "id": "sd",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "sd.png"
+  },
+    {
+    "eName": "Saiyan Battle",
+    "name": "赛亚烈战",
+    "id": "dragonball",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "dragonball.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Nightclub",
+    "name": "夜店之王",
+    "id": "nightclub5x20",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": "1",
+    "language": "zh_CN",
+    "pic": "nightclub5x20.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Basketball Master",
+    "name": "灌篮大师",
+    "id": "sd",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "sd.png"
+  },
+    {
+    "eName": "Saiyan Battle",
+    "name": "赛亚烈战",
+    "id": "dragonball",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "dragonball.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Nightclub",
+    "name": "夜店之王",
+    "id": "nightclub5x20",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": "1",
+    "language": "zh_CN",
+    "pic": "nightclub5x20.png",
+    "tag": [
+      "HOT",
+      "NEW"
+    ]
+  },
+  {
+    "eName": "Basketball Master",
+    "name": "灌篮大师",
+    "id": "sd",
+    "category": "DT",
+    "subType": "DT-2",
+    "type": "SLO",
+    "line": "",
+    "state": 1,
+    "language": "zh_CN",
+    "pic": "sd.png"
   }
 ]
