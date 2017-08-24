@@ -5,7 +5,6 @@ const user = {
     state: {
         code: '',
         token: CookiesApi.getToken(),
-        username: '',
         islogin: false,
         userinfo: CookiesApi.getUserinfo(),
     },
@@ -16,9 +15,6 @@ const user = {
         },
         SET_TOKEN: (state, token) => {
             state.token = token;
-        },
-        SET_USERNAME: (state, username) => {
-            state.token = username;
         },
         SET_ISLOGIN: (state, islogin) => {
             state.islogin = islogin;
@@ -76,9 +72,9 @@ const user = {
         },
 
         // 获取用户信息
-        GetInfo({commit, state}) {
+        GetInfo({commit},username) {
             return new Promise((resolve, reject) => {
-                getInfo(state.username).then(response => {
+                getInfo(username).then(response => {
                     const data = response.data.results[0];
                     commit('SET_USERINFO', data);
                     CookiesApi.setUserinfo(data);

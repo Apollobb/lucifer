@@ -58,10 +58,8 @@
                     if (valid) {
                         this.loading = true;
                         this.Login(this.loginForm).then(response => {
-                            this.GetInfo().then( res =>{
-                                console.log(res);
-                            });
-                            this.$router.push('/')
+                            this.GetInfo(this.loginForm.username);
+                            setTimeout(this.$router.push('/'), 3000);
                         }).catch(error => {
                             console.log(error);
                         });
