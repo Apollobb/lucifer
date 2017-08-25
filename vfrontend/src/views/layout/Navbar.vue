@@ -160,6 +160,9 @@
         height: 50px;
         line-height: 50px;
         border-radius: 0px !important;
+        /*position:fixed;*/
+        /*top:0;*/
+        /*z-index: 999;*/
         .hamburger-container {
             line-height: 58px;
             height: 50px;

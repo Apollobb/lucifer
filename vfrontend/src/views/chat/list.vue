@@ -41,7 +41,8 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
     .list {
         li {
-            list-style:none;
+            list-style-type: none;
+            margin-left: -40px;
             padding: 12px 15px;
             border-bottom: 1px solid #292C33;
             cursor: pointer;

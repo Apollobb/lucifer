@@ -41,7 +41,6 @@ const user = {
                     CookiesApi.setToken(response.data.token);
                     CookiesApi.setTokenTime(cur_date);
                     commit('SET_TOKEN', response.data.token);
-                    commit('SET_USERNAME', userInfo.username);
                     commit('SET_ISLOGIN', true);
                     commit('SET_TOKEN_TIME', cur_date);
                     resolve();
@@ -72,7 +71,7 @@ const user = {
         },
 
         // 获取用户信息
-        GetInfo({commit},username) {
+        getUserInfo({commit},username) {
             return new Promise((resolve, reject) => {
                 getInfo(username).then(response => {
                     const data = response.data.results[0];

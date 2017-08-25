@@ -41,6 +41,8 @@
         overflow-y: scroll;
         li {
             margin-bottom: 15px;
+            list-style-type: none;
+            margin-left: -40px;
         }
         .time {
             margin: 7px 0;

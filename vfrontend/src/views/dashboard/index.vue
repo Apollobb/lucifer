@@ -39,22 +39,13 @@
             <el-col :span="6">
                 <el-card class="box-card">
                     <div slot="header" class="box-card-header">
-                        <pan-thumb class="panThumb" :image="UserInfo.avatar"> 你的权限:
-                            <span class="pan-info-roles" v-for="item in UserInfo.roles">{{item}}</span>
-                        </pan-thumb>
-                    </div>
-                    <span class="display_name">{{UserInfo.name}}</span>
-                    <div class="info-item">
-                        <countTo class="info-item-num" :startVal='0' :endVal='statisticsData.article_count'
-                                 :duration='3400'></countTo>
-                        <span class="info-item-text">文章</span>
-                        <icon name="edit" class="wscn-icon"></icon>
+
                     </div>
                     <div class="info-item">
-                        <countTo class="info-item-num" :startVal='0' :endVal='statisticsData.pageviews_count'
-                                 :duration='3600'></countTo>
-                        <span class="info-item-text">浏览量</span>
-                        <icon name="eye" class="wscn-icon"></icon>
+
+                    </div>
+                    <div class="info-item">
+
                     </div>
                 </el-card>
             </el-col>
@@ -81,42 +72,18 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
-    import panThumb from 'components/PanThumb';
     import pieChart from './pieChart';
     import barChart from './barChart';
     import lineChart from './lineChart';
     import countTo from 'vue-count-to';
     import todoList from 'components/TodoList';
     export default {
-        name: 'dashboard-editor',
-        components: {panThumb, countTo, pieChart, lineChart, barChart, todoList},
+        name: 'dashboard',
+        components: {countTo, pieChart, lineChart, barChart, todoList},
         data() {
             return {
-                UserInfo: '',
-                statisticsData: {
-                    article_count: 1024,
-                    comment_count: 102400,
-                    latest_article: [],
-                    month_article_count: 28,
-                    pageviews_count: 1024
                 }
             }
-        },
-        computed: {
-            ...mapGetters([
-                'userinfo',
-            ])
-        },
-        created() {
-            this.getUserInfo();
-        },
-
-        methods: {
-            getUserInfo() {
-                this.UserInfo = JSON.parse(this.userinfo)
-            }
-        }
     }
 </script>
 
@@ -129,19 +96,6 @@
         .box-card-header {
             position: relative;
             height: 160px;
-        }
-        .panThumb {
-            z-index: 100;
-            height: 150px;
-            width: 150px;
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            margin: auto;
-        }
-        .display_name {
-            font-size: 30px;
-            display: block;
         }
         .info-item {
             display: inline-block;

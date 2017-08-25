@@ -67,7 +67,7 @@
                 fileList: [],
                 jsonUrl: '',
                 count: 0,
-                jsondata: [],
+                jsondata: []
             }
         },
 

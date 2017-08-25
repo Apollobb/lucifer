@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store'
-import {getToken, setToken, removeToken, getTokenTime, setTokenTime, removeTokenTime} from 'utils/auth';
+import * as CookiesApi from 'utils/auth'
 // in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
@@ -120,6 +120,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.state.isLogin) {
             _checkToken().then(res => {
+                store.dispatch("getUserInfo");
                 next();
             }, function () {
                 next({
@@ -128,6 +129,7 @@ router.beforeEach((to, from, next) => {
             });
         } else {
             _checkToken().then(function () {
+                store.dispatch("getUserInfo");
                 next();
             }, function () {
                 next({
@@ -145,17 +147,17 @@ router.beforeEach((to, from, next) => {
  * */
 function _checkToken() {
     return new Promise(function (resolve, reject) {
-        const token = getToken();
-        const token_time = getTokenTime();
+        const token = CookiesApi.getToken();
+        const token_time = CookiesApi.getTokenTime();
         const now_time = new Date().getTime();  // 毫秒数，token过期时间为 2小时
         if (token && (now_time - token_time) < 1000 * 60 * 60 * 2) {
             // 设置全局请求的token， 参考 https://segmentfault.com/q/1010000008595567/a-1020000008596744
-            setToken(token);
-            setTokenTime(token_time);
+            CookiesApi.setToken(token);
+            CookiesApi.setTokenTime(token_time);
             resolve();
         } else {
-            removeToken();
-            removeTokenTime();
+            CookiesApi.removeToken();
+            CookiesApi.removeTokenTime();
             reject();
         }
     })

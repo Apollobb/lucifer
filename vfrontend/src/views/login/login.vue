@@ -52,14 +52,13 @@
         },
 
         methods: {
-            ...mapActions(['Login', 'GetInfo']),
+            ...mapActions(['Login']),
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
                         this.loading = true;
                         this.Login(this.loginForm).then(response => {
-                            this.GetInfo(this.loginForm.username);
-                            setTimeout(this.$router.push('/'), 3000);
+                            this.$router.push('/');
                         }).catch(error => {
                             console.log(error);
                         });
