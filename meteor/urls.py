@@ -6,7 +6,6 @@ from django.contrib import admin
 from meteor import settings
 from django.conf.urls.static import static
 from rest_framework_jwt.views import obtain_jwt_token
-from api.users.views import CreateUserView
 from rest_auth.views import PasswordChangeView
 from api.router import router
 
@@ -17,7 +16,6 @@ urlpatterns = [
                   url(r'^api/', include(router.urls)),
 
                   # 用户认证
-                  url(r'^api/register/', CreateUserView.as_view(), name='register'),
                   url(r'^api/changepasswd/', PasswordChangeView.as_view(), name='changepasswd'),
                   url(r'^api-token-auth/', obtain_jwt_token, name='rest_framework_token'),
                   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
