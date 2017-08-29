@@ -22,7 +22,6 @@
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
                                 <el-button type="text" @click="handleEdit(scope.row)">{{ scope.row.username }}
-
                                 </el-button>
                             </div>
                         </template>
@@ -31,7 +30,13 @@
                     <el-table-column prop='email' label='邮箱'></el-table-column>
                     <el-table-column prop='group' label='所在组' sortable></el-table-column>
                     <el-table-column prop='roles' label='角色' sortable></el-table-column>
-                    <el-table-column prop='avatar' label='头像'></el-table-column>
+                    <el-table-column prop='avatar' label='头像'>
+                        <template scope="scope">
+                            <div slot="reference" class="name-wrapper" style="text-align: center">
+                                <img :src="'upload' + scope.row.avatar"/>
+                            </div>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="table-footer">

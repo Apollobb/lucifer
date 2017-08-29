@@ -3,6 +3,7 @@
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from tools.models import Upload
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -31,7 +32,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=32, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, blank=True)
     name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'中文名')
-    avatar = models.CharField(max_length=201, default='http://obbqb7m24.bkt.clouddn.com/avatar.jpg', blank=True, null=True, verbose_name=u'头像')
+    avatar = models.ForeignKey(Upload, blank=True, null=True, verbose_name=u'头像')
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'部门或组')
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')
     is_active = models.BooleanField(default=True)

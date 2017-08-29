@@ -2,10 +2,12 @@
 # author: itimor
 
 from users.models import User, Group, Role
+from tools.models import Upload
 from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
+    avatar = serializers.SlugRelatedField(queryset=Upload.objects.all(), slug_field='filepath')
     group = serializers.SlugRelatedField(queryset=Group.objects.all(), slug_field='name')
     roles = serializers.SlugRelatedField(queryset=Role.objects.all(), slug_field='name')
     class Meta:
@@ -25,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.name = validated_data.get('name', instance.name)
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.group = validated_data.get('group', instance.group)
-        instance.roles = validated_data.get('avatar', instance.roles)
+        instance.roles = validated_data.get('roles', instance.roles)
         instance.is_active = validated_data.get('is_active', instance.is_active)
         try:
             instance.set_password(validated_data['password'])

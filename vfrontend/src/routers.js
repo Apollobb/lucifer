@@ -66,17 +66,17 @@ export const routes = [
             {path: 'runcmd', component: require('@/views/ansible/runcmd'), name: '执行命令'},
         ]
     },
-    {
-        path: '/chat',
-        component: Layout,
-        redirect: '/chat/index',
-        name: '聊天管理',
-        icon: 'wechat',
-        meta: {requiresAuth: true},
-        children: [
-            {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
-        ]
-    },
+    // {
+    //     path: '/chat',
+    //     component: Layout,
+    //     redirect: '/chat/index',
+    //     name: '聊天管理',
+    //     icon: 'wechat',
+    //     meta: {requiresAuth: true},
+    //     children: [
+    //         {path: 'chat', component: require('@/views/chat/index'), name: '聊天'},
+    //     ]
+    // },
     {
         path: '/tools',
         component: Layout,

@@ -7,7 +7,7 @@
             <screenfull class='screenfull'></screenfull>
             <el-dropdown class="avatar-container" trigger="hover">
                 <div class="avatar-wrapper">
-                    <img class="user-avatar" :src="UserInfo.avatar+'?imageView2/1/w/80/h/80'">
+                    <img class="user-avatar" :src="'upload' + avatar+'?imageView2/1/w/80/h/80'">
                     <i class="el-icon-caret-bottom"></i>
                 </div>
                 <el-dropdown-menu class="user-dropdown" slot="dropdown">
@@ -85,7 +85,7 @@
                 }
             };
             return {
-                UserInfo: '',
+                avatar: '',
                 ruleForm: {
                     new_password1: '',
                     new_password2: ''
@@ -116,7 +116,7 @@
 
         methods: {
             getUserinfo() {
-                this.UserInfo = JSON.parse(this.userinfo)
+                this.avatar = JSON.parse(this.userinfo).avatar
             },
             toggleSideBar() {
                 this.$store.dispatch('ToggleSideBar')

@@ -22,6 +22,7 @@ def path_and_rename(path):
         ext = os.path.splitext(filename)[1]
         filename = "%s-%s%s" % (instance.username, instance.pid, ext)
         archive = instance.archive.split('/')
+        print archive
         if len(archive)>2:
             return os.path.join(path, archive[1], archive[2], filename)
         else:
