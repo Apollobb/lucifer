@@ -2,9 +2,6 @@
 # author: itimor
 
 import sys
-import json
-import urllib
-from datetime import datetime
 from subprocess import check_output
 
 def _execute(cmd):

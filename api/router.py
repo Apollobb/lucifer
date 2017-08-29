@@ -10,7 +10,7 @@ from api.tools.views import DutyViewSet, UploadViewSet
 router = DefaultRouter()
 router.register(r'hosts', HostViewSet)
 router.register(r'hostgroups', HostGroupViewSet)
-router.register(r'salt', SaltServerViewSet)
+router.register(r'ansible', SaltServerViewSet)
 router.register(r'upload', UploadViewSet)
 router.register(r'jobs', JobsViewSet)
 router.register(r'jobgroups', JobGroupViewSet)
