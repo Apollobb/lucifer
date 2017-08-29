@@ -50,6 +50,7 @@
                     is_active: '',
                     group: '',
                     roles: '',
+                    avatar: null,
                     password: '',
                 },
                 rules: {
@@ -98,7 +99,7 @@
                         return false;
                     }
                 });
-                this.$emit('getDialogStatus', false);
+                this.$emit('DialogStatus', false);
             },
 
             resetForm(formName) {

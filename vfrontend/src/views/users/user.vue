@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div>
-                <el-table :data="tableData" @selection-change="handleSelectionChange" order style="width: 100%">
+                <el-table :data="tableData" @selection-change="handleSelectionChange" border style="width: 100%">
                     <el-table-column type="selection"></el-table-column>
                     <el-table-column prop='username' label='用户名' sortable>
                         <template scope="scope">
@@ -33,7 +33,7 @@
                     <el-table-column prop='avatar' label='头像'>
                         <template scope="scope">
                             <div slot="reference" class="name-wrapper" style="text-align: center">
-                                <img :src="'upload' + scope.row.avatar"/>
+                                <img :src="'upload' + scope.row.avatar" height="50"/>
                             </div>
                         </template>
                     </el-table-column>
@@ -57,10 +57,10 @@
                 </div>
             </div>
         </el-card>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="addForm" size="small">
+        <el-dialog title="新建用户" :visible.sync="addForm" size="small">
             <add-user @DialogStatus="getDialogStatus"></add-user>
         </el-dialog>
-        <el-dialog :title="textMap[dialogStatus]" :visible.sync="editForm" size="small">
+        <el-dialog title="编辑用户" :visible.sync="editForm" size="small">
             <edit-user :rowdata="rowdata" @DialogStatus="getDialogStatus"></edit-user>
         </el-dialog>
     </div>
@@ -88,13 +88,6 @@
                 rowdata: {},
                 selectId: [],
                 butstatus: true,
-                getDialogStatus: false,
-                dialogStatus: '',
-                textMap: {
-                    create: '新建',
-                    edit: '编辑',
-                    run: '构建'
-                }
             }
         },
 
@@ -116,8 +109,7 @@
                 })
             },
 
-            DialogStatus(data) {
-                console.log(data);
+            getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
             },
@@ -127,7 +119,7 @@
                 for (var i = 0, len = val.length; i < len; i++) {
                     this.selectId.push(val[i].id);
                 }
-                if(this.selectId.length>0){
+                if (this.selectId.length > 0) {
                     this.butstatus = false
                 } else {
                     this.butstatus = true
@@ -136,13 +128,12 @@
 
             handleCreate() {
                 this.reseRowdata();
-                this.dialogStatus = 'create';
                 this.addForm = true;
                 setTimeout(this.fetchData, 1000);
             },
             handleEdit(row) {
                 this.editForm = true;
-                this.rowdata = row
+                this.rowdata = row;
                 setTimeout(this.fetchData, 1000);
             },
 
@@ -157,7 +148,7 @@
                 this.offset = val - 1;
                 this.fetchData();
             },
-            deleteForm(){
+            deleteForm() {
                 for (var i = 0, len = this.selectId.length; i < len; i++) {
                     deleteUser(this.selectId[i]).then(response => {
                         delete this.selectId[i]

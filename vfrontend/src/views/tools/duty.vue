@@ -49,8 +49,8 @@
                     <el-table-column prop='images' label='截图'>
                         <template scope="scope">
                             <div v-for="item in scope.row.images" :key="item">
-                                <img :src="'http://127.0.0.1:8000/upload' + item" height="50"
-                                     @click="bigPhoto('http://127.0.0.1:8000/upload' + item)">
+                                <img :src="'upload' + item" height="50"
+                                     @click="bigPhoto('upload' + item)">
                             </div>
                         </template>
                     </el-table-column>
