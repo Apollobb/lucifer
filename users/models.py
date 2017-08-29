@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     username = models.CharField(max_length=32, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, blank=True)
-    name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'中文名')
+    name = models.CharField(max_length=100, null=True, blank=True, verbose_name=u'中文名')
     avatar = models.ForeignKey(Upload, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'头像')
     group = models.ForeignKey('Group', on_delete=models.SET_NULL, null=True, blank=True, verbose_name=u'部门或组')
     create_date = models.DateField(auto_now=True, verbose_name=u'创建时间')

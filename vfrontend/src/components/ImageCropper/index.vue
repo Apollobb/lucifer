@@ -106,7 +106,9 @@
     /* eslint-disable */
     import {effectRipple, data2blob} from './utils';
     import fetch from 'utils/fetch';
+    import {postUpload} from 'api/tool'
     import langBag from './lang';
+
     const mimes = {
         'jpg': 'image/jpeg',
         'png': 'image/png',
@@ -161,13 +163,13 @@
         },
         data() {
             let that = this,
-                    {
-                            langType,
-                            width,
-                            height
-                    } = that,
-                    isSupported = true,
-                    lang = langBag[langType] ? langBag[langType] : lang['zh'];
+                {
+                    langType,
+                    width,
+                    height
+                } = that,
+                isSupported = true,
+                lang = langBag[langType] ? langBag[langType] : lang['zh'];
 
             if (typeof FormData != 'function') {
                 isSupported = false;
@@ -175,7 +177,7 @@
             return {
                 show: true,
                 // 图片的mime
-                mime:mimes['jpg'],
+                mime: mimes['jpg'],
                 // 语言包
                 lang,
                 // 浏览器是否支持该控件
@@ -234,7 +236,7 @@
             // 进度条样式
             progressStyle() {
                 let {
-                        progress
+                    progress
                 } = this;
                 return {
                     width: progress + '%'
@@ -243,8 +245,8 @@
             // 原图样式
             sourceImgStyle() {
                 let {
-                        scale,
-                        sourceImgMasking
+                    scale,
+                    sourceImgMasking
                 } = this;
                 return {
                     top: scale.y + sourceImgMasking.y + 'px',
@@ -256,18 +258,18 @@
             // 原图蒙版属性
             sourceImgMasking() {
                 let {
-                                width,
-                                height,
-                                ratio,
-                                sourceImgContainer
-                        } = this,
-                        sic = sourceImgContainer,
-                        sicRatio = sic.width / sic.height, // 原图容器宽高比
-                        x = 0,
-                        y = 0,
-                        w = sic.width,
-                        h = sic.height,
-                        scale = 1;
+                        width,
+                        height,
+                        ratio,
+                        sourceImgContainer
+                    } = this,
+                    sic = sourceImgContainer,
+                    sicRatio = sic.width / sic.height, // 原图容器宽高比
+                    x = 0,
+                    y = 0,
+                    w = sic.width,
+                    h = sic.height,
+                    scale = 1;
                 if (ratio < sicRatio) {
                     scale = sic.height / height;
                     w = sic.height * ratio;
@@ -289,9 +291,9 @@
             // 原图遮罩样式
             sourceImgShadeStyle() {
                 let sic = this.sourceImgContainer,
-                        sim = this.sourceImgMasking,
-                        w = sim.width == sic.width ? sim.width : (sic.width - sim.width) / 2,
-                        h = sim.height == sic.height ? sim.height : (sic.height - sim.height) / 2;
+                    sim = this.sourceImgMasking,
+                    w = sim.width == sic.width ? sim.width : (sic.width - sim.width) / 2,
+                    h = sim.height == sic.height ? sim.height : (sic.height - sim.height) / 2;
                 return {
                     width: w + 'px',
                     height: h + 'px'
@@ -299,15 +301,15 @@
             },
             previewStyle() {
                 let {
-                                width,
-                                height,
-                                ratio,
-                                previewContainer
-                        } = this,
-                        pc = previewContainer,
-                        w = pc.width,
-                        h = pc.height,
-                        pcRatio = w / h;
+                        width,
+                        height,
+                        ratio,
+                        previewContainer
+                    } = this,
+                    pc = previewContainer,
+                    w = pc.width,
+                    h = pc.height,
+                    pcRatio = w / h;
                 if (ratio < pcRatio) {
                     w = pc.height * ratio;
                 }
@@ -367,17 +369,17 @@
             // 检测选择的文件是否合适
             checkFile(file) {
                 let that = this,
-                        {
-                                lang,
-                                maxSize
-                        } = that;
+                    {
+                        lang,
+                        maxSize
+                    } = that;
                 // 仅限图片
                 if (file.type.indexOf('image') === -1) {
                     that.hasError = true;
                     that.errorMsg = lang.error.onlyImg;
                     return false;
                 }
-                this.mime=file.type;
+                this.mime = file.type;
                 // 超出大小
                 if (file.size / 1024 > maxSize) {
                     that.hasError = true;
@@ -398,7 +400,7 @@
             // 设置图片源
             setSourceImg(file) {
                 let that = this,
-                        fr = new FileReader();
+                    fr = new FileReader();
                 fr.onload = function (e) {
                     that.sourceImgUrl = fr.result;
                     that.startCrop();
@@ -408,26 +410,26 @@
             // 剪裁前准备工作
             startCrop() {
                 let that = this,
-                        {
-                                width,
-                                height,
-                                ratio,
-                                scale,
-                                sourceImgUrl,
-                                sourceImgMasking,
-                                lang
-                        } = that,
-                        sim = sourceImgMasking,
-                        img = new Image();
+                    {
+                        width,
+                        height,
+                        ratio,
+                        scale,
+                        sourceImgUrl,
+                        sourceImgMasking,
+                        lang
+                    } = that,
+                    sim = sourceImgMasking,
+                    img = new Image();
                 img.src = sourceImgUrl;
                 img.onload = function () {
                     let nWidth = img.naturalWidth,
-                            nHeight = img.naturalHeight,
-                            nRatio = nWidth / nHeight,
-                            w = sim.width,
-                            h = sim.height,
-                            x = 0,
-                            y = 0;
+                        nHeight = img.naturalHeight,
+                        nRatio = nWidth / nHeight,
+                        w = sim.width,
+                        h = sim.height,
+                        x = 0,
+                        y = 0;
                     // 图片像素不达标
 //                    if (nWidth < width || nHeight < height) {
 //                        that.hasError = true;
@@ -461,10 +463,10 @@
             // 鼠标按下图片准备移动
             imgStartMove(e) {
                 let {
-                                sourceImgMouseDown,
-                                scale
-                        } = this,
-                        simd = sourceImgMouseDown;
+                        sourceImgMouseDown,
+                        scale
+                    } = this,
+                    simd = sourceImgMouseDown;
                 simd.mX = e.screenX;
                 simd.mY = e.screenY;
                 simd.x = scale.x;
@@ -474,23 +476,23 @@
             // 鼠标按下状态下移动，图片移动
             imgMove(e) {
                 let {
-                                sourceImgMouseDown: {
-                                        on,
-                                        mX,
-                                        mY,
-                                        x,
-                                        y
-                                },
-                                scale,
-                                sourceImgMasking
-                        } = this,
-                        sim = sourceImgMasking,
-                        nX = e.screenX,
-                        nY = e.screenY,
-                        dX = nX - mX,
-                        dY = nY - mY,
-                        rX = x + dX,
-                        rY = y + dY;
+                        sourceImgMouseDown: {
+                            on,
+                            mX,
+                            mY,
+                            x,
+                            y
+                        },
+                        scale,
+                        sourceImgMasking
+                    } = this,
+                    sim = sourceImgMasking,
+                    nX = e.screenX,
+                    nY = e.screenY,
+                    dX = nX - mX,
+                    dY = nY - mY,
+                    rX = x + dX,
+                    rY = y + dY;
                 if (!on) return;
                 if (rX > 0) {
                     rX = 0;
@@ -510,10 +512,11 @@
             // 按钮按下开始放大
             startZoomAdd(e) {
                 let that = this,
-                        {
-                                scale
-                        } = that;
+                    {
+                        scale
+                    } = that;
                 scale.zoomAddOn = true;
+
                 function zoom() {
                     if (scale.zoomAddOn) {
                         let range = scale.range >= 100 ? 100 : ++scale.range;
@@ -533,10 +536,11 @@
             // 按钮按下开始缩小
             startZoomSub(e) {
                 let that = this,
-                        {
-                                scale
-                        } = that;
+                    {
+                        scale
+                    } = that;
                 scale.zoomSubOn = true;
+
                 function zoom() {
                     if (scale.zoomSubOn) {
                         let range = scale.range <= 0 ? 0 : --scale.range;
@@ -552,7 +556,7 @@
             // 按钮松开或移开取消缩小
             endZoomSub(e) {
                 let {
-                        scale
+                    scale
                 } = this;
                 scale.zoomSubOn = false;
             },
@@ -562,32 +566,32 @@
             // 缩放原图
             zoomImg(newRange) {
                 let that = this,
-                        {
-                                sourceImgMasking,
-                                sourceImgMouseDown,
-                                scale
-                        } = this,
-                        {
-                                maxWidth,
-                                maxHeight,
-                                minWidth,
-                                minHeight,
-                                width,
-                                height,
-                                x,
-                                y,
-                                range
-                        } = scale,
-                        sim = sourceImgMasking,
-                        // 蒙版宽高
-                        sWidth = sim.width,
-                        sHeight = sim.height,
-                        // 新宽高
-                        nWidth = minWidth + (maxWidth - minWidth) * newRange / 100,
-                        nHeight = minHeight + (maxHeight - minHeight) * newRange / 100,
-                        // 新坐标（根据蒙版中心点缩放）
-                        nX = sWidth / 2 - (nWidth / width) * (sWidth / 2 - x),
-                        nY = sHeight / 2 - (nHeight / height) * (sHeight / 2 - y);
+                    {
+                        sourceImgMasking,
+                        sourceImgMouseDown,
+                        scale
+                    } = this,
+                    {
+                        maxWidth,
+                        maxHeight,
+                        minWidth,
+                        minHeight,
+                        width,
+                        height,
+                        x,
+                        y,
+                        range
+                    } = scale,
+                    sim = sourceImgMasking,
+                    // 蒙版宽高
+                    sWidth = sim.width,
+                    sHeight = sim.height,
+                    // 新宽高
+                    nWidth = minWidth + (maxWidth - minWidth) * newRange / 100,
+                    nHeight = minHeight + (maxHeight - minHeight) * newRange / 100,
+                    // 新坐标（根据蒙版中心点缩放）
+                    nX = sWidth / 2 - (nWidth / width) * (sWidth / 2 - x),
+                    nY = sHeight / 2 - (nHeight / height) * (sHeight / 2 - y);
                 // 判断新坐标是否超过蒙版限制
                 if (nX > 0) {
                     nX = 0;
@@ -616,21 +620,21 @@
             // 生成需求图片
             createImg(e) {
                 let that = this,
-                        {
-                                mime,
-                                sourceImg,
-                                scale: {
-                                        x,
-                                        y,
-                                        width,
-                                        height
-                                },
-                                sourceImgMasking: {
-                                        scale
-                                }
-                        } = that,
-                        canvas = that.$refs.canvas,
-                        ctx = canvas.getContext('2d');
+                    {
+                        mime,
+                        sourceImg,
+                        scale: {
+                            x,
+                            y,
+                            width,
+                            height
+                        },
+                        sourceImgMasking: {
+                            scale
+                        }
+                    } = that,
+                    canvas = that.$refs.canvas,
+                    ctx = canvas.getContext('2d');
                 if (e) {
                     // 取消鼠标按下移动状态
                     that.sourceImgMouseDown.on = false;
@@ -640,53 +644,38 @@
             },
             // 上传图片
             upload() {
-            let that = this,
-                {
-                    lang,
-                    imgFormat,
-                    mime,
-                    url,
-                    params,
-                    headers,
-                    field,
-                    ki,
-                    createImgUrl
-                } = this,
-                fmData = new FormData();
-            fmData.append(field, data2blob(createImgUrl, mime), field + '.' + imgFormat);
-            // 添加其他参数
-            if (typeof params == 'object' && params) {
-                Object.keys(params).forEach((k) => {
-                    fmData.append(k, params[k]);
-                })
-            }
-            // 监听进度回调
-            function uploadProgress (event) {
-                console.log(event)
-                if (event.lengthComputable) {
-                    that.progress = 100 * Math.round(event.loaded) / event.total;
-                }
-            };
-            // 上传文件
-            that.reset();
-            that.loading = 1;
-            that.setStep(3);
-            that.$emit('crop-success', createImgUrl, field, ki);
-            fetch({
-                url,
-                method: 'post',
-                data: fmData
-            }).then(resData=>{
-                that.loading = 2;
-                that.$emit('crop-upload-success', resData.data);
-            }).catch(err=>{
-                if (that.value) {
+                let that = this,
+                    {
+                        lang,
+                        imgFormat,
+                        mime,
+                        field,
+                        ki,
+                        createImgUrl
+                    } = this,
+                    formData = new FormData();
+                let imgtime = new Date().getTime();
+                formData.append('username', 'avatar');
+                formData.append('file', data2blob(createImgUrl, mime));
+                formData.append('pid', imgtime);
+                formData.append('type', imgFormat);
+                formData.append('archive', '/users/avatar');
+                // 上传文件
+                that.reset();
+                that.loading = 1;
+                that.setStep(3);
+                that.$emit('crop-success', createImgUrl, field, ki);
+                postUpload(formData).then(resData => {
+                    that.loading = 2;
+                    that.$emit('crop-upload-success', resData.data);
+                }).catch(err => {
+                    if (that.value) {
                         that.loading = 3;
                         that.hasError = true;
                         that.errorMsg = lang.fail;
                         that.$emit('crop-upload-fail', err, field, ki);
                     }
-            });
+                });
             }
         }
     }

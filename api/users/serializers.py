@@ -8,8 +8,8 @@ from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SlugRelatedField(queryset=Upload.objects.all(), slug_field='filepath', allow_null=True)
-    group = serializers.SlugRelatedField(queryset=Group.objects.all(), slug_field='name')
-    roles = serializers.SlugRelatedField(queryset=Role.objects.all(), slug_field='name')
+    group = serializers.SlugRelatedField(queryset=Group.objects.all(), slug_field='name', allow_null=True)
+    roles = serializers.SlugRelatedField(queryset=Role.objects.all(), slug_field='name', allow_null=True)
     class Meta:
         model = User
         fields = ('url', 'id', 'username', 'email', 'name', 'avatar', 'group', 'is_active', 'roles', 'password')

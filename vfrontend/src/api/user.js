@@ -3,7 +3,6 @@ import apiURL from '@/config'
 
 //users
 export function postUser(data) {
-    console.log(data);
     return fetch({
         url: apiURL.users,
         method: 'post',

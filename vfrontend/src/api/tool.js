@@ -39,6 +39,7 @@ export function deleteDuty(id) {
 
 //upload
 export function postUpload(data) {
+    console.log(data);
     return fetch({
         url: apiURL.uploads,
         method: 'post',
