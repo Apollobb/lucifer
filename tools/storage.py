@@ -20,7 +20,11 @@ class FileStorage(FileSystemStorage):
 def path_and_rename(path):
     def wrapper(instance, filename):
         ext = os.path.splitext(filename)[1]
-        filename = "%s-%s%s" % (instance.username, instance.pid, ext)
+        if ext:
+            filename = "%s-%s%s" % (instance.username, instance.pid, ext)
+        else:
+            filename = "%s-%s%s" % (instance.username, instance.pid, '.png')
+
         archive = instance.archive.split('/')
         if len(archive)>2:
             return os.path.join(path, archive[1], archive[2], filename)

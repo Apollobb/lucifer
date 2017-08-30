@@ -42,7 +42,10 @@ class Upload(models.Model):
     def save(self, *args, **kwargs):
         self.size = '{}'.format(convert_size(self.file.size))
         ext = os.path.splitext(self.file.name)[1]
-        self.filename = '{}-{}{}'.format(self.username, self.pid, ext)
+        if ext:
+            self.filename = '{}-{}{}'.format(self.username, self.pid, ext)
+        else:
+            self.filename = '{}-{}{}'.format(self.username, self.pid, '.png')
         self.filepath = '{}/{}'.format(self.archive, self.filename)
         super(Upload, self).save(*args, **kwargs)
 

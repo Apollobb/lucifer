@@ -1,10 +1,11 @@
 <template>
     <div class="components-container">
-        <pan-thumb :image='image'></pan-thumb>
+        <pan-thumb :image="image"></pan-thumb>
 
         <el-button class="upload" type="primary" icon="upload"
                    style="position: absolute;bottom: 15px;margin-left: 40px;"
                    @click="imagecropperShow=true">修改头像
+
         </el-button>
 
 
@@ -17,25 +18,41 @@
 <script>
     import ImageCropper from 'components/ImageCropper';
     import PanThumb from 'components/PanThumb';
-    import {mapGetters} from 'vuex';
+    import {patchUser} from 'api/user';
+
 
     export default {
         components: {ImageCropper, PanThumb},
+
+        props: ['userinfo'],
         data() {
             return {
                 imagecropperShow: false,
                 imagecropperKey: 0,
-                image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
+                image: 'upload' + this.userinfo.avatar
             }
         },
-        computed: {
-            ...mapGetters(['avatar'])
-        },
+
         methods: {
             cropSuccess(resData) {
+                console.log(resData);
                 this.imagecropperShow = false;
                 this.imagecropperKey = this.imagecropperKey + 1;
-                this.image = resData.files.avatar;
+                this.image = resData.filepath;
+                const data = {
+                    avatar: resData.filepath
+                };
+                patchUser(this.userinfo.id, data).then(response => {
+                    if (response.statusText = 'ok') {
+                        this.$message({
+                            type: 'success',
+                            message: '恭喜你，更新成功'
+                        });
+                    }
+                }).catch(error => {
+                    this.$message.error('更新失败');
+                    console.log(error);
+                });
             },
             close() {
                 this.imagecropperShow = false;
