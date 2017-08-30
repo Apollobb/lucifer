@@ -7,14 +7,14 @@
  * @returns {boolean}
  */
 export function effectRipple(e, arg_opts) {
-    let opts = Object.assign({
+    var opts = Object.assign({
             ele: e.target, // 波纹作用元素
             type: 'hit', // hit点击位置扩散　center中心点扩展
             bgc: 'rgba(0, 0, 0, 0.15)' // 波纹颜色
         }, arg_opts),
         target = opts.ele;
     if (target) {
-        let rect = target.getBoundingClientRect(),
+        var rect = target.getBoundingClientRect(),
             ripple = target.querySelector('.e-ripple');
         if (!ripple) {
             ripple = document.createElement('span');
@@ -55,4 +55,4 @@ export function data2blob(data, mime) {
     }
     // canvas.toDataURL 返回的默认格式就是 image/png
     return new Blob([ia], {type: mime});
-};
+}

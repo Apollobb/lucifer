@@ -49,8 +49,8 @@
                     <el-table-column prop='images' label='截图'>
                         <template scope="scope">
                             <div v-for="item in scope.row.images" :key="item">
-                                <img :src="'upload' + item" height="50"
-                                     @click="bigPhoto('upload' + item)">
+                                <img :src="'http://127.0.0.1:8000/upload' + item" height="50"
+                                     @click="bigPhoto('http://127.0.0.1:8000/upload' + item)">
                             </div>
                         </template>
                     </el-table-column>
@@ -96,7 +96,6 @@
     import {LIMIT} from '@/config'
     import addDuty from './addduty.vue'
     import format from '@/utils/dateformat'
-
     export default {
         components: {addDuty},
         data() {
@@ -131,12 +130,10 @@
                 },
             }
         },
-
         computed: {},
         created() {
             this.fetchData();
         },
-
         methods: {
             fetchData() {
                 getDutyList(this.listQuery).then(response => {
@@ -144,11 +141,9 @@
                     this.tabletotal = response.data.count;
                 })
             },
-
             getDialogStatus(data) {
                 this.addForm = data;
             },
-
             handleSelectionChange(val) {
                 this.selectId = [];
                 for (var i = 0, len = val.length; i < len; i++) {
@@ -160,7 +155,6 @@
                     this.butstatus = true
                 }
             },
-
             handleIconClick() {
                 this.listQuery.username__contains = ''
             },
@@ -185,7 +179,6 @@
                 }
                 setTimeout(this.fetchData, 3000);
             },
-
             showImg(id) {
                 getUploadList(this.parms, id).then(res => {
                     console.log(res.data.file);
@@ -208,32 +201,26 @@
     .head-lavel {
         padding-bottom: 50px;
     }
-
     .table-button {
         padding: 10px 0;
         float: left;
     }
-
     .table-search {
         float: right;
         padding: 10px 0;
     }
-
     .table-pagination {
         padding: 10px 0;
         float: right;
     }
-
     .photo-align {
         clear: both;
         display: block;
         margin: auto;
     }
-
     .content-align {
         text-align: center;
     }
-
     .showimg {
         padding: 1px 10px;
     }

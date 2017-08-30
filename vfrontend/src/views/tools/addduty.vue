@@ -49,7 +49,6 @@
 </template>
 <script>
     import {postUpload, postDuty} from 'api/tool'
-
     export default {
         props: ['shiftOptions'],
         data() {
@@ -141,5 +140,4 @@
 </script>
 
 <style>
-
 </style>

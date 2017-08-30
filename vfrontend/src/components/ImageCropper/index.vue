@@ -654,6 +654,7 @@
                         createImgUrl
                     } = this,
                     formData = new FormData();
+                console.log(data2blob(createImgUrl, mime));
                 let imgtime = new Date().getTime();
                 formData.append('username', 'avatar');
                 formData.append('file', data2blob(createImgUrl, mime));
