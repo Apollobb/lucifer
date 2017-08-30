@@ -7,11 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "mock": "node mock/server.js ",
-    "mockdev": "npm-run-all --parallel mock dev",
-    "build:prod": "cross-env NODE_ENV=production node build/build.js",
-    "build:sit": "cross-env NODE_ENV=sit node build/build.js",
-    "build:sit-preview": "cross-env NODE_ENV=sit npm_config_preview=true  npm_config_report=true node build/build.js",
+    "build": "node build/build.js",
     "lint": "eslint --npext .js,.vue src"
   },
   "dependencies": {

@@ -35,6 +35,7 @@ export function deleteUser(id) {
 
 //groups
 export function postGroup(data) {
+    console.log(data);
     return fetch({
         url: apiURL.groups,
         method: 'post',

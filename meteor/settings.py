@@ -154,6 +154,7 @@ JWT_AUTH = {
 AUTH_USER_MODEL = "users.User"
 
 CORS_ORIGIN_ALLOW_ALL = True
+APPEND_SLASH=True
 
 LOGGING = {
     'version': 1,

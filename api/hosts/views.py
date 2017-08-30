@@ -6,7 +6,6 @@ from hosts.models import Host, HostGroup, SaltServer
 from serializers import HostSerializer, HostGroupSerializer, SaltServerSerializer
 from filters import HostFilter
 
-
 class HostViewSet(viewsets.ModelViewSet):
     queryset = Host.objects.all()
     serializer_class = HostSerializer

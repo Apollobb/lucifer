@@ -10,8 +10,6 @@ from rest_auth.views import PasswordChangeView
 from api.router import router
 from django.views.generic.base import TemplateView
 
-
-
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^api/', include(router.urls)),

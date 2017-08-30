@@ -19,7 +19,7 @@
     import ImageCropper from 'components/ImageCropper';
     import PanThumb from 'components/PanThumb';
     import {patchUser} from 'api/user';
-
+    import store from 'store'
 
     export default {
         components: {ImageCropper, PanThumb},
@@ -53,6 +53,7 @@
                     this.$message.error('更新失败');
                     console.log(error);
                 });
+                store.dispatch("getUserInfo");
             },
             close() {
                 this.imagecropperShow = false;
