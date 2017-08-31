@@ -155,6 +155,7 @@
             getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
+                this.fetchData();
             },
 
             handleCreate() {

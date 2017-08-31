@@ -111,6 +111,7 @@
                         message: '恭喜你，删除成功',
                         type: 'success'
                     });
+                    this.fetchData();
                 }).catch(error => {
                     this.$message.error('删除失败');
                     console.log(error);

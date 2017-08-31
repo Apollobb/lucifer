@@ -143,6 +143,7 @@
             },
             getDialogStatus(data) {
                 this.addForm = data;
+                this.fetchData();
             },
             handleSelectionChange(val) {
                 this.selectId = [];

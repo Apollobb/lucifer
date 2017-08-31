@@ -112,6 +112,7 @@
             getDialogStatus(data) {
                 this.editForm = data;
                 this.addForm = data;
+                this.fetchData();
             },
 
             handleSelectionChange(val) {

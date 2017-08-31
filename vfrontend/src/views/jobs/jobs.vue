@@ -143,6 +143,7 @@
                 this.editForm = data;
                 this.addForm = data;
                 this.runForm = data;
+                this.fetchData();
             },
 
             handleCreate() {
