@@ -10,6 +10,10 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
 import 'assets/custom-theme/index.css'; // 换肤版本element-ui css
 
+/* vue光粒子 */
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
+
 /* icon */
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'

@@ -38,7 +38,7 @@
                 console.log(resData);
                 this.imagecropperShow = false;
                 this.imagecropperKey = this.imagecropperKey + 1;
-                this.image = resData.file;
+                //this.image = resData.file;
                 const data = {
                     avatar: resData.filepath
                 };
