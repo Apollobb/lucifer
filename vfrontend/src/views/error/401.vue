@@ -4,11 +4,10 @@
     <el-row>
       <el-col :span="12">
         <h1 class="text-jumbo text-ginormous">Oops!</h1>
-        gif来源<a href='https://zh.airbnb.com/' target='_blank'>airbnb</a> 页面
-        <h2>你没有权限去该页面</h2>
-        <h6>如有不满请联系你领导</h6>
+        <h2 style="color: white">龙母 说没有权限去该页面</h2>
+        <h6 style="color: #dedede">如有不满请联系雪诺</h6>
         <ul class="list-unstyled">
-          <li>或者你可以去:</li>
+          <li style="color: #58ff28">或者你可以去:</li>
           <li class="link-type">
             <router-link to="/dashboard">回首页</router-link>
           </li>
@@ -17,7 +16,7 @@
         </ul>
       </el-col>
       <el-col :span="12">
-        <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
+        <img :src="longmu" height="428" alt="龙母壮骨颗粒">
       </el-col>
     </el-row>
 
@@ -29,10 +28,11 @@
 
 <script>
     import errGif from 'assets/401.gif';
+    import longmu from 'assets/long.png';
     export default {
       data() {
         return {
-          errGif: errGif + '?' + +new Date(),
+          longmu: longmu + '?' + +new Date(),
           ewizardClap: 'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646',
           dialogVisible: false
         }
@@ -68,7 +68,7 @@
     .text-jumbo {
       font-size: 60px;
       font-weight: 700;
-      color: #484848;
+      color: #ff1324;
     }
     .list-unstyled {
       font-size: 14px;
