@@ -3,8 +3,8 @@
 
 from rest_framework import viewsets
 from tools.models import Duty, Upload
-from serializers import DutySerializer, UploadSerializer
-from filters import DutyFilter, UploadFilter
+from api.tools.serializers import DutySerializer, UploadSerializer
+from api.tools.filters import DutyFilter, UploadFilter
 
 
 class DutyViewSet(viewsets.ModelViewSet):

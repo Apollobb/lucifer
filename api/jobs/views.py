@@ -3,8 +3,8 @@
 
 from rest_framework import viewsets
 from jobs.models import Jobs, JobGroup
-from serializers import JobsSerializer, JobGroupSerializer
-from filters import JobsFilter
+from api.jobs.serializers import JobsSerializer, JobGroupSerializer
+from api.jobs.filters import JobsFilter
 
 
 class JobsViewSet(viewsets.ModelViewSet):

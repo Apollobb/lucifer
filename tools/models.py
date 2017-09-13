@@ -2,8 +2,8 @@
 # author: itimor
 
 from django.db import models
-from filesize import convert_size
-from storage import FileStorage, path_and_rename
+from .filesize import convert_size
+from .storage import FileStorage, path_and_rename
 import os
 
 SHIFT = (

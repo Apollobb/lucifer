@@ -3,8 +3,8 @@
 
 from rest_framework import viewsets
 from hosts.models import Host, HostGroup, SaltServer
-from serializers import HostSerializer, HostGroupSerializer, SaltServerSerializer
-from filters import HostFilter
+from api.hosts.serializers import HostSerializer, HostGroupSerializer, SaltServerSerializer
+from api.hosts.filters import HostFilter
 
 class HostViewSet(viewsets.ModelViewSet):
     queryset = Host.objects.all()

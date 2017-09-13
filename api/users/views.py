@@ -3,8 +3,8 @@
 
 from users.models import Group, User, Role
 from rest_framework import viewsets
-from serializers import UserSerializer, GroupSerializer, RoleSerializer
-from filters import UserFilter
+from api.users.serializers import UserSerializer, GroupSerializer, RoleSerializer
+from api.users.filters import UserFilter
 
 
 class UserViewSet(viewsets.ModelViewSet):
