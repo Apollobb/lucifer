@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'hosts',
+    'salts',
     'jobs',
     'users',
     'tools',

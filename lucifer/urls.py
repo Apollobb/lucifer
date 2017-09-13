@@ -3,16 +3,23 @@
 
 from django.conf.urls import url, include
 from django.contrib import admin
-from lucifer import settings
 from django.conf.urls.static import static
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_auth.views import PasswordChangeView
-from api.router import router
 from django.views.generic.base import TemplateView
+
+from lucifer import settings
+from lucifer.routerApi import router
+
+from salts.views import cmdrun_list, cmdrun_detail
 
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^api/', include(router.urls)),
+
+                  # salt cmdrun
+                  url(r'^api/cmdrun_list/$', cmdrun_list),
+                  url(r'^api/cmdrun_detail/$', cmdrun_detail),
 
                   # 用户认证
                   url(r'^api/changepasswd/', PasswordChangeView.as_view(), name='changepasswd'),

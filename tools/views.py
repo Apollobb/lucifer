@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
+from tools.filters import DutyFilter, UploadFilter
 from rest_framework import viewsets
+
 from tools.models import Duty, Upload
-from api.tools.serializers import DutySerializer, UploadSerializer
-from api.tools.filters import DutyFilter, UploadFilter
+from tools.serializers import DutySerializer, UploadSerializer
 
 
 class DutyViewSet(viewsets.ModelViewSet):

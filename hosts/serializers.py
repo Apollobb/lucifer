@@ -2,7 +2,7 @@
 # author: itimor
 
 from rest_framework import serializers
-from hosts.models import Host, HostGroup, SaltServer
+from hosts.models import Host, HostGroup
 
 
 class HostSerializer(serializers.ModelSerializer):
@@ -17,13 +17,3 @@ class HostGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = HostGroup
         fields = ['url', 'id', 'name', 'desc']
-
-
-class SaltServerSerializer(serializers.ModelSerializer):
-    ip = serializers.SlugRelatedField(queryset=Host.objects.all(), slug_field='hostname')
-
-    class Meta:
-        model = SaltServer
-        fields = ['url', 'ip', 'port', 'apiurl', 'username', 'password']
-        read_only_fields = ('apiurl',)
-

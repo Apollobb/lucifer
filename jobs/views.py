@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
+from jobs.serializers import JobsSerializer, JobGroupSerializer
 from rest_framework import viewsets
+
+from jobs.filters import JobsFilter
 from jobs.models import Jobs, JobGroup
-from api.jobs.serializers import JobsSerializer, JobGroupSerializer
-from api.jobs.filters import JobsFilter
 
 
 class JobsViewSet(viewsets.ModelViewSet):
