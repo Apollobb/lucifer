@@ -11,15 +11,14 @@ from django.views.generic.base import TemplateView
 from lucifer import settings
 from lucifer.routerApi import router
 
-from salts.views import cmdrun_list, cmdrun_detail
+from salts.views import cmdrun_list
 
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^api/', include(router.urls)),
 
                   # salt cmdrun
-                  url(r'^api/cmdrun_list/$', cmdrun_list),
-                  url(r'^api/cmdrun_detail/$', cmdrun_detail),
+                  url(r'^api/cmdrun/$', cmdrun_list),
 
                   # 用户认证
                   url(r'^api/changepasswd/', PasswordChangeView.as_view(), name='changepasswd'),

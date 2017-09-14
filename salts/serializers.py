@@ -15,8 +15,7 @@ class SaltServerSerializer(serializers.ModelSerializer):
         read_only_fields = ('apiurl',)
 
 class SaltCmdrunSerializer(serializers.ModelSerializer):
-    ips = serializers.SlugRelatedField(many=True, queryset=Host.objects.all(), slug_field='hostname')
+    hosts = serializers.SlugRelatedField(many=True, queryset=Host.objects.all(), slug_field='hostname')
     class Meta:
         model = SaltCmdrun
-        fields = ['id', 'ips', 'cmd', 'result']
-        read_only_fields = ('result',)
+        fields = ['id', 'hosts', 'cmd']
