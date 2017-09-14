@@ -47,11 +47,8 @@ def cmdrun_list(request):
 
     elif request.method == 'POST':
         cmd = request.data['cmd']
-        print(request.data)
         results = execute(cmd)
-        print results.split('\n')
         cur_results = results.split('\n')
-        print cur_results
         serializer = SaltCmdrunSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
