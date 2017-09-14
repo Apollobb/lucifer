@@ -25,7 +25,7 @@ class SaltServer(models.Model):
 
 
 class SaltCmdrun(models.Model):
-    cmd = models.CharField(max_length=20, verbose_name=u'命令')
+    cmd = models.CharField(max_length=500, verbose_name=u'命令')
     ips = models.ManyToManyField(Host, null=True, blank=True, verbose_name=u'主机')
     result = models.CharField(max_length=50, verbose_name=u'结果')
 

@@ -2,7 +2,8 @@
 # author: itimor
 
 import sys
-from subprocess import check_output
+import shlex
+import subprocess
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -17,16 +18,18 @@ def execute(cmd):
     '''
     execute cmd
     '''
-    result = {}
+    commands = shlex.split(cmd)
     try:
-        stdout = check_output(cmd)
+        stdout = subprocess.check_output(commands)
         stderr = ''
     except:
         stdout = ''
-        stderr = str(sys.exc_info())
-    result['stdout'] = stdout
-    result['stderr'] = stderr
-    return result
+        stderr = str(sys.exc_info()[1])
+
+    if len(stderr):
+        return stderr
+    else:
+        return stdout
 
 
 class SaltServerViewSet(viewsets.ModelViewSet):
@@ -39,13 +42,19 @@ def cmdrun_list(request):
     """
     展示所有存在的snippet, 或建立新的snippet
     """
+
     if request.method == 'GET':
         cmdrun = SaltCmdrun.objects.all()
         serializer = SaltCmdrunSerializer(cmdrun, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = SaltCmdrunSerializer(data=request.DATA)
+        cmd = request.data['cmd']
+        results = execute(cmd)
+        print results
+        p = SaltCmdrun(result=results)
+        p.save()
+        serializer = SaltCmdrunSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
