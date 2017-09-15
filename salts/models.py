@@ -3,6 +3,7 @@
 
 from django.db import models
 from hosts.models import Host
+from users.models import User
 
 
 class SaltServer(models.Model):
@@ -25,6 +26,7 @@ class SaltServer(models.Model):
 
 
 class SaltCmdrun(models.Model):
+    user = models.ForeignKey(User, verbose_name=u'用户')
     cmd = models.CharField(max_length=500, verbose_name=u'命令')
     hosts = models.ManyToManyField(Host, null=True, blank=True, verbose_name=u'主机')
 

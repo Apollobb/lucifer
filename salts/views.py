@@ -32,9 +32,14 @@ class SaltServerViewSet(viewsets.ModelViewSet):
     serializer_class = SaltServerSerializer
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def cmdrun(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        cmdrun = SaltCmdrun.objects.all()
+        serializer = SaltCmdrunSerializer(cmdrun, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
         cmd = request.data['cmd']
         results = run(cmd)
         serializer = SaltCmdrunSerializer(data=request.data)

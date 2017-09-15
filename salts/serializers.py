@@ -4,6 +4,7 @@
 from rest_framework import serializers
 from salts.models import SaltServer, SaltCmdrun
 from hosts.models import Host
+from users.models import User
 
 
 class SaltServerSerializer(serializers.ModelSerializer):
@@ -15,7 +16,8 @@ class SaltServerSerializer(serializers.ModelSerializer):
         read_only_fields = ('apiurl',)
 
 class SaltCmdrunSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='username')
     hosts = serializers.SlugRelatedField(many=True, queryset=Host.objects.all(), slug_field='hostname')
     class Meta:
         model = SaltCmdrun
-        fields = ['id', 'hosts', 'cmd']
+        fields = ['id', 'user', 'hosts', 'cmd']
