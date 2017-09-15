@@ -7,12 +7,12 @@ import time
 def timeout(func):
     def wrapper(*args, **kwargs):
         s_time = datetime.datetime.now()
-        print ('func decorator runing at %s' % s_time)
+        print (f'func decorator runing at {s_time}')
         func(*args, **kwargs)
         e_time = datetime.datetime.now()
-        print ('func decorator ending at %s' % e_time)
+        print (f'func decorator ending at {e_time}')
         const_time = (e_time - s_time).seconds
-        print("func ececute const time %s seconds" % const_time)
+        print(f'func ececute const time {const_time} seconds.')
     return wrapper
 
 # 类装饰器
@@ -22,10 +22,10 @@ class Timeout(object):
 
     def __call__(self, *args, **kwargs):
         s_time = datetime.datetime.now()
-        print ('class decorator runing at %s' % s_time)
+        print (f'class decorator runing at {s_time}')
         self._func(*args, **kwargs)
         e_time = datetime.datetime.now()
-        print ('class decorator ending at %s' % e_time)
+        print (f'class decorator ending at {e_time}')
 
 @timeout
 @Timeout
