@@ -3,6 +3,7 @@
 
 import sys
 import subprocess
+from utils.timeout import timeout
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -12,6 +13,7 @@ from rest_framework.response import Response
 from salts.models import SaltServer, SaltCmdrun
 from salts.serializers import SaltServerSerializer, SaltCmdrunSerializer
 
+@timeout(4)
 def run(cmd):
     try:
         output = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -19,8 +21,7 @@ def run(cmd):
         stderr = ''
     except:
         stdout = ''
-        stderr = str(sys.exc_info()[1])
-
+        stderr = str(sys.exc_info())
     if len(stderr):
         return stderr
     else:
