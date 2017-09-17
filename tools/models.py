@@ -20,7 +20,7 @@ class Duty(models.Model):
     images = models.ManyToManyField('Upload', null=True, blank=True, verbose_name=u'图片')
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 
     class Meta:
@@ -49,7 +49,7 @@ class Upload(models.Model):
         self.filepath = '{}/{}'.format(self.archive, self.filename)
         super(Upload, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.filepath
 
     class Meta:

@@ -34,7 +34,7 @@ class Host(models.Model):
     disk = models.CharField(u"硬盘信息", max_length=255, null=True, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.hostname
 
     class Meta:
@@ -46,7 +46,7 @@ class HostGroup(models.Model):
     name = models.CharField(u"组名", max_length=30, unique=True)
     desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:

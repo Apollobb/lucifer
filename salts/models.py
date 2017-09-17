@@ -13,7 +13,7 @@ class SaltServer(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'用户名')
     password = models.CharField(max_length=50, verbose_name=u'密码')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.ip
 
     def save(self, *args, **kwargs):

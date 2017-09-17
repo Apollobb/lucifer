@@ -58,7 +58,7 @@ class Group(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name=u'部门')
     desc = models.CharField(max_length=64, null=True, blank=True, verbose_name=u'描述')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -71,7 +71,7 @@ class Role(models.Model):
     cnname = models.CharField(max_length=64, unique=True, verbose_name=u'中文名')
     desc = models.CharField(max_length=64, null=True, blank=True, verbose_name=u'描述')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:

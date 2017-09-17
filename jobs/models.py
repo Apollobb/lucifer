@@ -29,7 +29,7 @@ class Jobs(models.Model):
     cost_time = models.DateTimeField(u'发布耗时', null=True)
     desc = models.CharField(u"项目描述", max_length=100, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -41,7 +41,7 @@ class JobGroup(models.Model):
     name = models.CharField(u"组名", max_length=30, unique=True)
     desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:

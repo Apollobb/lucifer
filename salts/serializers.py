@@ -6,10 +6,8 @@ from salts.models import SaltServer, SaltCmdrun
 from hosts.models import Host
 from users.models import User
 
-
 class SaltServerSerializer(serializers.ModelSerializer):
     ip = serializers.SlugRelatedField(queryset=Host.objects.all(), slug_field='hostname')
-
     class Meta:
         model = SaltServer
         fields = ['url', 'id', 'ip', 'port', 'apiurl', 'username', 'password']
@@ -20,4 +18,10 @@ class SaltCmdrunSerializer(serializers.ModelSerializer):
     hosts = serializers.SlugRelatedField(many=True, queryset=Host.objects.all(), slug_field='hostname')
     class Meta:
         model = SaltCmdrun
-        fields = ['id', 'user', 'hosts', 'cmd']
+        fields = ['url', 'id', 'user', 'hosts', 'cmd']
+
+    def create(self, validated_data):
+        print(validated_data)
+        instance = SaltCmdrun.objects.create(**validated_data)
+        print(instance)
+        return instance
