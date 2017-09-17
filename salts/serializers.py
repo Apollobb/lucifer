@@ -19,9 +19,3 @@ class SaltCmdrunSerializer(serializers.ModelSerializer):
     class Meta:
         model = SaltCmdrun
         fields = ['url', 'id', 'user', 'hosts', 'cmd']
-
-    def create(self, validated_data):
-        print(validated_data)
-        instance = SaltCmdrun.objects.create(**validated_data)
-        print(instance)
-        return instance

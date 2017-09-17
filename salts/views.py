@@ -8,10 +8,11 @@ from utils.timeout import timeout
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import api_view
 
 from salts.models import SaltServer, SaltCmdrun
 from salts.serializers import SaltServerSerializer, SaltCmdrunSerializer
+from salts.filters import SaltCmdrunFilter
 
 @timeout(4)
 def run(cmd):
@@ -36,15 +37,15 @@ class SaltServerViewSet(viewsets.ModelViewSet):
 class SaltCmdrunViewSet(viewsets.ModelViewSet):
     queryset = SaltCmdrun.objects.all()
     serializer_class = SaltCmdrunSerializer
-    search_fields = ('cmd',)
+    filter_class = SaltCmdrunFilter
 
 
-        # cmd = self.request.data['cmd']
-        # results = run(cmd)
-        # print(results)
-        # serializer = SaltCmdrunSerializer(data=request.data)
-        #
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(results, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@ api_view(['POST'])
+def cmdrun(request):
+    cmd = request.data['cmd']
+    results = run(cmd)
+    serializer = SaltCmdrunSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(results, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
