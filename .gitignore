@@ -7,3 +7,5 @@ upload/
 migrations/
 yarn-debug.log*
 yarn-error.log*
+nohup.out
+dump.rdb
