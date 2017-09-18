@@ -17,8 +17,8 @@ from salts.filters import SaltCmdrunFilter
 @timeout(4)
 def run(cmd):
     try:
-        output = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        stdout = output.stdout.readlines()
+        stdout = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        #stdout = output.stdout.readlines()
         stderr = ''
     except:
         stdout = ''
@@ -42,10 +42,12 @@ class SaltCmdrunViewSet(viewsets.ModelViewSet):
 
 @ api_view(['POST'])
 def cmdrun(request):
-    cmd = request.data['cmd']
-    results = run(cmd)
     serializer = SaltCmdrunSerializer(data=request.data)
+
     if serializer.is_valid():
         serializer.save()
+
+        cmd = request.data['cmd']
+        results = run(cmd).stdout.readlines()
         return Response(results, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
