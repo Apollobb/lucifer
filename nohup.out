@@ -1,0 +1,14 @@
+13296:C 18 Sep 14:24:15.126 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13296:C 18 Sep 14:24:15.126 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=13296, just started
+13296:C 18 Sep 14:24:15.126 # Warning: no config file specified, using the default config. In order to specify a config file use /usr/local/redis-4.0.1/src/redis-server /path/to/redis.conf
+13296:M 18 Sep 14:24:15.127 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+13296:M 18 Sep 14:24:15.128 * Running mode=standalone, port=6379.
+13296:M 18 Sep 14:24:15.129 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+13296:M 18 Sep 14:24:15.129 # Server initialized
+13296:M 18 Sep 14:24:15.129 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+13296:M 18 Sep 14:24:15.129 * Ready to accept connections
+13296:signal-handler (1505715860) Received SIGINT scheduling shutdown...
+13296:M 18 Sep 14:24:20.279 # User requested shutdown...
+13296:M 18 Sep 14:24:20.279 * Saving the final RDB snapshot before exiting.
+13296:M 18 Sep 14:24:20.295 * DB saved on disk
+13296:M 18 Sep 14:24:20.295 # Redis is now ready to exit, bye bye...

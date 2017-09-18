@@ -18,6 +18,7 @@ urlpatterns = [
                   url(r'^api/', include(router.urls)),
 
                   url(r'^api/postcmdrun/$', cmdrun),
+                  url(r'^channels-api/', include('channels_api.urls')),
 
                   # 用户认证
                   url(r'^api/changepasswd/', PasswordChangeView.as_view(), name='changepasswd'),
