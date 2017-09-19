@@ -8,6 +8,8 @@ from utils.timeout import timeout
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework import mixins
+from rest_framework import generics
 
 from salts.models import SaltServer, SaltCmdrun
 from salts.serializers import SaltServerSerializer, SaltCmdrunSerializer
@@ -35,10 +37,8 @@ class SaltServerViewSet(viewsets.ModelViewSet):
 class CmdrunViewSet(viewsets.ModelViewSet):
     queryset = SaltCmdrun.objects.all()
     serializer_class = SaltCmdrunSerializer
-    #filter_class = SaltCmdrunFilter
 
-from rest_framework import mixins
-from rest_framework import generics
+
 class SaltCmdrunView(mixins.ListModelMixin,
                       mixins.CreateModelMixin,
                       generics.GenericAPIView):
