@@ -11,13 +11,13 @@ from django.views.generic.base import TemplateView
 from lucifer import settings
 from lucifer.routerApi import router
 
-from salts.views import cmdrun
+from salts.views import SaltCmdrunView
 
 urlpatterns = [
                   url(r'^admin/', admin.site.urls),
                   url(r'^api/', include(router.urls)),
 
-                  url(r'^api/postcmdrun/$', cmdrun),
+                  url(r'^api/saltcmdrun/$', SaltCmdrunView.as_view()),
                   url(r'^channels-api/', include('channels_api.urls')),
 
                   # 用户认证

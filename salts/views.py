@@ -34,20 +34,30 @@ class SaltServerViewSet(viewsets.ModelViewSet):
     serializer_class = SaltServerSerializer
 
 
-class SaltCmdrunViewSet(viewsets.ModelViewSet):
+class CmdrunViewSet(viewsets.ModelViewSet):
     queryset = SaltCmdrun.objects.all()
     serializer_class = SaltCmdrunSerializer
     filter_class = SaltCmdrunFilter
 
+from rest_framework import mixins
+from rest_framework import generics
+class SaltCmdrunView(mixins.ListModelMixin,
+                      mixins.CreateModelMixin,
+                      generics.GenericAPIView):
+    queryset = SaltCmdrun.objects.all()
+    serializer_class = SaltCmdrunSerializer
+    filter_class = SaltCmdrunFilter
 
-@ api_view(['POST'])
-def cmdrun(request):
-    serializer = SaltCmdrunSerializer(data=request.data)
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
-    if serializer.is_valid():
-        serializer.save()
+    def post(self, request, *args, **kwargs):
+        serializer = SaltCmdrunSerializer(data=request.data)
 
-        cmd = request.data['cmd']
-        results = run(cmd).stdout.readlines()
-        return Response(results, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save()
+
+            cmd = request.data['cmd']
+            results = run(cmd).stdout.readlines()
+            return Response(results, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-def ws_message(message):
-    message.reply_channel.send({
-        "text": message.content['text'],
-    })
+from channels.generic.websockets import WebsocketDemultiplexer
+from salts.bindings import SaltCmdrunBinding
+
+class CmdrunDemultiplexer(WebsocketDemultiplexer):
+
+    consumers = {
+      'cmdrun': SaltCmdrunBinding.consumer
+    }
