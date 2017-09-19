@@ -8,7 +8,6 @@ from utils.timeout import timeout
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 from salts.models import SaltServer, SaltCmdrun
 from salts.serializers import SaltServerSerializer, SaltCmdrunSerializer
@@ -18,7 +17,6 @@ from salts.filters import SaltCmdrunFilter
 def run(cmd):
     try:
         stdout = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        #stdout = output.stdout.readlines()
         stderr = ''
     except:
         stdout = ''
@@ -37,7 +35,7 @@ class SaltServerViewSet(viewsets.ModelViewSet):
 class CmdrunViewSet(viewsets.ModelViewSet):
     queryset = SaltCmdrun.objects.all()
     serializer_class = SaltCmdrunSerializer
-    filter_class = SaltCmdrunFilter
+    #filter_class = SaltCmdrunFilter
 
 from rest_framework import mixins
 from rest_framework import generics
