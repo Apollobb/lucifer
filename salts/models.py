@@ -33,3 +33,15 @@ class SaltCmdrun(models.Model):
     class Meta:
         verbose_name = u'Salt cmdrun'
         verbose_name_plural = u'Salt cmdrun'
+
+class SaltState(models.Model):
+    user = models.ForeignKey(User, verbose_name=u'用户')
+    sls = models.CharField(max_length=500, verbose_name=u'sls文件名')
+    hosts = models.ManyToManyField(Host, null=True, blank=True, verbose_name=u'主机')
+    log_file = models.CharField(max_length=32, verbose_name=u'日志文件')
+    create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
+
+
+    class Meta:
+        verbose_name = u'Salt state'
+        verbose_name_plural = u'Salt state'

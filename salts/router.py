@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from channels.routing import route, route_class
-from .consumers import CmdrunConsumer
+from channels.routing import route_class
+from .consumers import CmdrunConsumer, SaltInstallConsumer
 
-cmdrun_routing = [
-    route_class(CmdrunConsumer),
+salt_routing = [
+    route_class(CmdrunConsumer, path='/cmdrun/'),
+    route_class(SaltInstallConsumer, path='/state_install/'),
 ]

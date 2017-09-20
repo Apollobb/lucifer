@@ -2,8 +2,8 @@
 # author: itimor
 
 from channels.routing import route, include
-from salts.router import cmdrun_routing
+from salts.router import salt_routing
 
 channel_routing = [
-    include(cmdrun_routing, path='^/cmdrun'),
+    include(salt_routing, path='^/salt'),
 ]
