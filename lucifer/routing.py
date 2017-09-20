@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from channels.routing import route, route_class
-from salts.consumers import CmdrunDemultiplexer
+from channels.routing import route, include
+from salts.router import cmdrun_routing
 
 channel_routing = [
-    route_class(CmdrunDemultiplexer)
+    include(cmdrun_routing, path='^/cmdrun'),
 ]
