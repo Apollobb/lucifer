@@ -22,13 +22,10 @@ class CmdrunConsumer(WebsocketConsumer):
         user = request['user']
         cmd = request['cmd']
 
-        result = run(cmd).stdout.readline()  # 获取内容
-
-        while True:
+        results = run(cmd).stdout
+        for result in results:
             if result:  # 把内容发送到前端
-                print(result)
                 self.send(text=result.decode('utf-8'), bytes=bytes)
-            time.sleep(1)
 
     def disconnect(self, message, **kwargs):
         pass
