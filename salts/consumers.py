@@ -10,9 +10,6 @@ from channels.generic.websockets import WebsocketConsumer
 class CmdrunConsumer(WebsocketConsumer):
     http_user = True
 
-    def connection_groups(self, **kwargs):
-        return ["cmdrun"]
-
     def connect(self, message, **kwargs):
         self.message.reply_channel.send({"accept": True})
 
@@ -28,15 +25,9 @@ class CmdrunConsumer(WebsocketConsumer):
             if result:  # 把内容发送到前端
                 self.send(text=result.decode('utf-8'), bytes=bytes)
 
-    def disconnect(self, message, **kwargs):
-        pass
-
 
 class SaltInstallConsumer(WebsocketConsumer):
     http_user = True
-
-    def connection_groups(self, **kwargs):
-        return ["state_install"]
 
     def connect(self, message, **kwargs):
         self.message.reply_channel.send({"accept": True})
@@ -57,11 +48,8 @@ class SaltInstallConsumer(WebsocketConsumer):
             fn.write('{} {}\n'.format(time.time(),log_file))
 
 
-        results = run('tail -f {}'.format(salt_log)).stdout
-        print(results)
+        results = run('cat {}'.format(salt_log)).stdout
         for result in results:
+            print(result)
             if result:  # 把内容发送到前端
                 self.send(text=result.decode('utf-8'), bytes=bytes)
-
-    def disconnect(self, message, **kwargs):
-        pass
