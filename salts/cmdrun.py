@@ -10,7 +10,7 @@ def run(cmd):
         stderr = ''
     except:
         stdout = ''
-        stderr = str(sys.exc_info())
+        stderr = str(sys.exc_info()[1])
     if len(stderr):
         return stderr
     else:
