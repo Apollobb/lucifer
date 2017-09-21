@@ -21,7 +21,6 @@ class CmdrunConsumer(WebsocketConsumer):
         hosts = request['hosts']
         user = request['user']
         cmd = request['cmd']
-        print(request)
 
         results = run(cmd).stdout
         for result in results:
