@@ -41,15 +41,14 @@ class SaltInstallConsumer(WebsocketConsumer):
         sls = request['sls']
         log_file = request['log_file']
 
-        soft_log = salt_log + log_file
+        soft_log = '{}{}'.format(salt_log, log_file)
         with open(soft_log, 'w+') as fn:
             fn.write('{} {}\n'.format(time.time(),user))
             fn.write('{} {}\n'.format(time.time(),hosts))
             fn.write('{} {}\n'.format(time.time(),sls))
             fn.write('{} {}\n'.format(time.time(),log_file))
 
-
-        results = run('cat {}'.format(salt_log)).stdout
+        results = run('cat {}'.format(soft_log)).stdout
         for result in results:
             if result:  # 把内容发送到前端
                 self.send(text=result.decode('utf-8'), bytes=bytes)
