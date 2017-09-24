@@ -6,6 +6,7 @@ from django.http import HttpResponse
 
 from salts.cmdrun import run
 import json
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 GROUP_NAME = 'cmdrun'
@@ -32,7 +33,5 @@ def ws_receive(message):
     cmd = request['cmd']
 
     results = run(cmd)
-    print(cmd)
     for result in results:
-        Group(GROUP_NAME).send({'text':result.decode('utf-8')})
-        print(result)
+        Group(GROUP_NAME).send({'text':result.decode('utf-8')}, True)  #

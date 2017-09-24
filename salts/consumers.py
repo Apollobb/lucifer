@@ -13,6 +13,9 @@ os.popen(f'mkdir -p {salt_log}')
 
 
 class CmdrunConsumer(WebsocketConsumer):
+    def connect(self, message, **kwargs):
+        self.message.reply_channel.send({"accept": True})
+
     def receive(self, text=None, bytes=None, **kwargs):
         request = json.loads(text)
         hosts = request['hosts']
@@ -21,7 +24,9 @@ class CmdrunConsumer(WebsocketConsumer):
 
         results = run(cmd)
         for result in results:
-            self.send(text=result.decode('utf-8'))
+            print(result)
+            self.send({'text': result.decode('utf-8'), 'accept': True})
+            #self.send(text=result.decode('utf-8'), bytes=bytes)
 
 
 class SaltInstallConsumer(WebsocketConsumer):
