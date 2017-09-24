@@ -6,12 +6,12 @@ import subprocess
 
 def run(cmd):
     try:
-        results = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stderr = ''
     except:
-        results = ''
+        stdout = ''
         stderr = str(sys.exc_info()[1])
     if len(stderr):
         return stderr
     else:
-        return results.stdout
+        return stdout

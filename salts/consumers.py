@@ -3,66 +3,37 @@
 
 from salts.cmdrun import run
 import json
-from datetime import datetime
 import os
-from channels.generic.websockets import WebsocketConsumer
-
 
 salt_log = '/tmp/salt/'
 os.popen(f'mkdir -p {salt_log}')
 
 
-class CmdrunConsumer(WebsocketConsumer):
-    def connect(self, message, **kwargs):
-        self.message.reply_channel.send({"accept": True})
+def cmdrun_receive(message):
+    text = message.content['text']
+    request = json.loads(text)
+    cmd = request['cmd']
 
-    def receive(self, text=None, bytes=None, **kwargs):
-        request = json.loads(text)
-        hosts = request['hosts']
-        user = request['user']
-        cmd = request['cmd']
-
-        results = run(cmd)
-        for result in results:
-            print(result)
-            self.send({'text': result.decode('utf-8'), 'accept': True})
-            #self.send(text=result.decode('utf-8'), bytes=bytes)
+    results = run(cmd).stdout
+    for result in results:
+        message.reply_channel.send({'text':result.decode('utf-8')}, True)
 
 
-class SaltInstallConsumer(WebsocketConsumer):
-    def receive(self, text=None, bytes=None, **kwargs):
-        request = json.loads(text)
-        hosts = request['hosts']
-        user = request['user']
-        sls = request['sls']
-        log_file = request['log_file']
+def cmdlog_receive(message):
+    text = message.content['text']
+    request = json.loads(text)
+    cmd = request['cmd']
 
-        soft_log = '{}{}'.format(salt_log, log_file)
-        with open(soft_log, 'w+') as fn:
-            fn.write(f'{datetime.now()} {user}\n')
-            fn.write(f'{datetime.now()} {hosts}\n')
-            fn.write(f'{datetime.now()} {sls}\n')
-            fn.write(f'{datetime.now()} {log_file}\n')
+    results = run(cmd).stdout
+    for result in results:
+        message.reply_channel.send({'text':result.decode('utf-8')}, True)
 
-        results = run(f'cat {soft_log}').stdout
-        for result in results:
-            if result:  # 把内容发送到前端
-                self.send(text=result.decode('utf-8'), bytes=bytes)
+def viewfile_receive(message):
+    text = message.content['text']
+    request = json.loads(text)
+    filename = request['filename']
 
-class ViewFileConsumer(WebsocketConsumer):
-    def receive(self, text=None, bytes=None, **kwargs):
-        request = json.loads(text)
-        action = request['action']
-        hosts = request['data']['hosts']
-        user = request['data']['user']
-        filename = request['data']['filename']
-
-        file_path = f'/etc/sysconfig/{filename}'
-        results = run(f'cat {file_path}').stdout
-        for result in results:
-            if result:  # 把内容发送到前端
-                self.send(text=result.decode('utf-8'), bytes=bytes)
-        if action == 'edit':
-            with open(file_path, 'w+') as fn:
-                fn.write(f'{datetime.now()} {user}\n')
-                fn.write(f'{datetime.now()} {hosts}\n')
+    cmd = f'cat {filename}'
+    results = run(cmd).stdout
+    for result in results:
+        message.reply_channel.send({'text':result.decode('utf-8')}, True)

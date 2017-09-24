@@ -199,7 +199,6 @@ CHANNEL_LAYERS = {
             "hosts": ['redis://{}:{}'.format(REDIS_OPTIONS['HOST'],
                                              REDIS_OPTIONS['PORT'])]
         },
-       #"ROUTING": "lucifer.routing.channel_routing"
-        "ROUTING": "salts.routing.channel_routing"
+       "ROUTING": "lucifer.routing.channel_routing"
     }
 }
