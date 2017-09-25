@@ -193,12 +193,12 @@ USE_REDIS = True
 # Channel settings
 CHANNEL_LAYERS = {
     "default": {
-        'BACKEND': 'asgiref.inmemory.ChannelLayer',
-        # "BACKEND": "asgi_redis.RedisChannelLayer",
-        # "CONFIG": {
-        #     "hosts": ['redis://{}:{}'.format(REDIS_OPTIONS['HOST'],
-        #                                      REDIS_OPTIONS['PORT'])]
-        # },
+        #'BACKEND': 'asgiref.inmemory.ChannelLayer',    #如果使用这个，消息变多时，会读不出来
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://{}:{}'.format(REDIS_OPTIONS['HOST'],
+                                             REDIS_OPTIONS['PORT'])]
+        },
        "ROUTING": "lucifer.routing.channel_routing"
     }
 }

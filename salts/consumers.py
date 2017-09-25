@@ -37,6 +37,7 @@ def editfile_receive(message):
         cmd = 'cat {}'.format(filename)
         results = run(cmd).stdout
         for result in results:
+            print(result)
             message.reply_channel.send({'text':result.decode('utf-8')}, True)
     else:
         results = request['results']
