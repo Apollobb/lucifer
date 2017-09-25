@@ -40,5 +40,5 @@ def editfile_receive(message):
             message.reply_channel.send({'text':result.decode('utf-8')}, True)
     else:
         results = request['results']
-        cmd = f'echo {results}>{filename}'
-        run(cmd)
+        with open(filename,'w') as fn:
+            fn.write(results)
