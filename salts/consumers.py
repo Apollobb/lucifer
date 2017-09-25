@@ -6,7 +6,7 @@ import json
 import os
 
 salt_log = '/tmp/salt/'
-os.popen(f'mkdir -p {salt_log}')
+os.popen('mkdir -p {}'.format(salt_log))
 
 
 def cmdrun_receive(message):
@@ -34,7 +34,7 @@ def editfile_receive(message):
     filename = request['filename']
 
     if text['stream'] == 'read':
-        cmd = f'cat {filename}'
+        cmd = 'cat {}'.format(filename)
         results = run(cmd).stdout
         for result in results:
             message.reply_channel.send({'text':result.decode('utf-8')}, True)
