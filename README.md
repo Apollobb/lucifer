@@ -1,19 +1,23 @@
-# 开发日记
+# Lucifer运维平台 #
 
-## 问题
-- [x] 图像展示问题解决，
-- [ ] 前端 `Dialog`弹出框，嵌入 `el-form` 组件时，关闭弹出框，数据还在表单内，数据绑定应该有问题
-> 这个感觉是 这个的问题， Object.assign
-- [ ] dns页面添加
-- [ ] 前端执行系统命令，尝试用channels，但是目前还没搞明白这东西
-- [ ] 上传头像，更改头像，头像裁剪组件
-- [ ] 菜单权限问题，增加一个菜单管理列表，根据用户权限动态显示菜单， 参考:
-> 1、 [根据需求动态加载路由](https://blog.yqiu.net/2017/07/06/vue-dynamic-load-router/)
+[![python](https://img.shields.io/badge/python-2.7.X-brightgreen.svg)](https://www.python.org/)
+[![django](https://img.shields.io/badge/django-1.11.4-brightgreen.svg)](https://www.djangoproject.com/)
+[![django-rest-framework](https://img.shields.io/badge/djangorestframework-3.6.3-brightgreen.svg)](http://www.django-rest-framework.org/)
+[![django-rest-framework-jwt](https://img.shields.io/badge/django-rest-framework-jwt-1.11.4-brightgreen.svg)](https://github.com/GetBlimp/django-rest-framework-jwt)
+[![django-channels](https://img.shields.io/badge/django-channels-1.11.4-brightgreen.svg)](https://channels.readthedocs.io/en/stable/)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/itimor/lucifer-frontend/blob/master/LICENSE)
 
-> 2、 [vue-router2.2.0新增特性addRoutes实现路由动态加载，菜单动态加载，运用于后台管理系统，路由数据取自数据库](http://blog.csdn.net/s8460049/article/details/61190709)
+**本项目是lucifer运维平台的后端**
 
-- [ ] markdown显示问题
-- [ ] 日期 格式化 过滤
-- [ ] 提交duty时 上传图片
-- [ ] 表格全选bug
-- [x] 点击图片放大问题
+**注意：该项目支持python2.7X和python3.X**
+
+
+## 功能
+- 登录/注销
+- 权限验证
+- 主机管理
+- 用户管理
+- 角色管理
+- 权限管理
+- 远程执行命令
+- 远程修改配置
