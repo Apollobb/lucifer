@@ -43,7 +43,7 @@ LICENSE
     python manage.py runserver 0.0.0.0:8000
 
 ```
-浏览器访问API http://localhost:8000/api/，若前端项目已经部署好，可以直接访问前端
+浏览器访问API `http://localhost:8000/api/`， 若前端项目已经部署好，可以直接访问前端
 
 ## 效果图
 
