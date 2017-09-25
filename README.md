@@ -48,10 +48,10 @@ LICENSE
 ## 效果图
 
 ### 登录
-![api](https://github.com/itimor/lucifer-frontend/blob/master/statics/images/api.png)
+![api](https://github.com/itimor/lucifer/blob/master/statics/images/api.png)
 
 ### 前端部分
-![realtime](https://github.com/itimor/lucifer-frontend/blob/master/statics/images/realtime.gif)
+![realtime](https://github.com/itimor/lucifer/blob/master/statics/images/realtime.gif)
 
 ## 目录结构
 ```shell
