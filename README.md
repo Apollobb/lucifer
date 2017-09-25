@@ -47,10 +47,10 @@ LICENSE
 
 ## 效果图
 
-### 登录
+### api界面
 ![api](https://github.com/itimor/lucifer/blob/master/statics/images/api.png)
 
-### 前端部分
+### 前端界面
 ![realtime](https://github.com/itimor/lucifer/blob/master/statics/images/realtime.gif)
 
 ## 目录结构
