@@ -28,12 +28,17 @@ def cmdlog_receive(message):
     for result in results:
         message.reply_channel.send({'text':result.decode('utf-8')}, True)
 
-def viewfile_receive(message):
-    text = message.content['text']
-    request = json.loads(text)
+def editfile_receive(message):
+    text = json.loads(message.content['text'])
+    request = text['data']
     filename = request['filename']
 
-    cmd = f'cat {filename}'
-    results = run(cmd).stdout
-    for result in results:
-        message.reply_channel.send({'text':result.decode('utf-8')}, True)
+    if text['stream'] == 'read':
+        cmd = f'cat {filename}'
+        results = run(cmd).stdout
+        for result in results:
+            message.reply_channel.send({'text':result.decode('utf-8')}, True)
+    else:
+        results = request['results']
+        cmd = f'echo {results}>{filename}'
+        run(cmd)
