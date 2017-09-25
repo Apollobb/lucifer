@@ -12,9 +12,9 @@
 
 **注意：该项目支持python2.7X和python3.X**
 
-**注意：该项目主要提供api接口数据，访问正常页面请配和使用前端项目** [前段地址点我](https://github.com/itimor/lucifer-frontend.git)
+**注意：Lucifer运维平台使用 `django rest framework` 提供的restful API功能进行开发，后端主要提供api数据支持，前端负责路由和页面渲染，访问正常页面请配和使用前端项目** [前段地址点我](https://github.com/itimor/lucifer-frontend.git)
 
-LICENSE
+## 功能
 - 登录/注销
 - 权限验证
 - 主机管理
