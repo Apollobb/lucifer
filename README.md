@@ -8,11 +8,11 @@
 [![django-channels](https://img.shields.io/badge/channels-1.1.8-brightgreen.svg)](https://channels.readthedocs.io/en/stable/)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/itimor/lucifer-frontend/blob/master/LICENSE)
 
-**Lucifer运维平台是采用的前后端分离开发，本项目是lucifer运维平台的后端**
+**Lucifer运维平台是采用的前后端分离开发，本项目是lucifer运维平台的后端** [点我到前端](https://github.com/itimor/lucifer-frontend.git)
 
 **注意：该项目支持python2.7X和python3.X**
 
-**注意：Lucifer运维平台使用 `django rest framework` 提供的restful API功能进行开发，后端主要提供api数据支持，前端负责路由和页面渲染，访问正常页面请配和使用前端项目** [点我到前端](https://github.com/itimor/lucifer-frontend.git)
+**注意：Lucifer运维平台使用 `django rest framework` 提供的restful API功能进行开发，后端主要提供api数据支持，前端负责路由和页面渲染，访问正常页面请配和使用前端项目** 
 
 ## 功能
 - 登录/注销
