@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from salts.cmdrun import run
 import json
 import os
+from salts.cmdrun import run
+from salts.models import SaltCmdrun
 
 salt_log = '/tmp/salt/'
 os.popen('mkdir -p {}'.format(salt_log))
@@ -12,7 +13,12 @@ os.popen('mkdir -p {}'.format(salt_log))
 def cmdrun_receive(message):
     text = message.content['text']
     request = json.loads(text)
+    user = request['user']
+    hosts = request['hosts']
     cmd = request['cmd']
+
+    cmdrun = SaltCmdrun(user=user, hosts=hosts, cmd=cmd)
+    cmdrun.save()
 
     results = run(cmd).stdout
     for result in results:
