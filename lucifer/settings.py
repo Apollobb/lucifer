@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'jobs',
     'users',
     'tools',
+    'permessions',
     'channels',
-    'channels_api',
 ]
 
 MIDDLEWARE = [

@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from tools.filters import DutyFilter, UploadFilter
 from rest_framework import viewsets
 
-from tools.models import Duty, Upload
-from tools.serializers import DutySerializer, UploadSerializer
+from permessions.models import MethodChoices, Permessions
+from permessions.serializers import MethodChoicesSerializer, PermessionsSerializer
+from permessions.filters import PermessionsFilter
 
 
-class DutyViewSet(viewsets.ModelViewSet):
-    queryset = Duty.objects.all()
-    serializer_class = DutySerializer
-    filter_class = DutyFilter
+class MethodChoicesViewSet(viewsets.ModelViewSet):
+    queryset = MethodChoices.objects.all()
+    serializer_class = MethodChoicesSerializer
 
 
-class UploadViewSet(viewsets.ModelViewSet):
-    queryset = Upload.objects.all()
-    serializer_class = UploadSerializer
-    filter_class = UploadFilter
+class PermessionsViewSet(viewsets.ModelViewSet):
+    queryset = Permessions.objects.all()
+    serializer_class = PermessionsSerializer
+    filter_class = PermessionsFilter

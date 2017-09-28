@@ -2,21 +2,13 @@
 # author: itimor
 
 from django_filters import rest_framework as filters
-from tools.models import Duty, Upload
+from permessions.models import Permessions
 
-class DutyFilter(filters.FilterSet):
+class PermessionsFilter(filters.FilterSet):
     class Meta:
-        model = Duty
+        model = Permessions
         fields = {
             'id': ['exact'],
-            'username': ['exact', 'contains'],
-            'shift': ['exact'],
-            'create_time': ['exact', 'contains'],
-        }
-
-class UploadFilter(filters.FilterSet):
-    class Meta:
-        model = Upload
-        fields = {
-            'id': ['exact'],
+            'name': ['exact'],
+            'code': ['exact'],
         }

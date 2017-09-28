@@ -8,6 +8,7 @@ from jobs.views import JobsViewSet, JobGroupViewSet
 from salts.views import SaltServerViewSet, SaltCmdrunViewSet, SaltStateViewSet
 from tools.views import DutyViewSet, UploadViewSet
 from users.views import UserViewSet, GroupViewSet, RoleViewSet
+from permessions.views import MethodChoicesViewSet, PermessionsViewSet
 
 router = DefaultRouter()
 router.register(r'hosts', HostViewSet)
@@ -22,3 +23,5 @@ router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'roles', RoleViewSet)
 router.register(r'dutys', DutyViewSet)
+router.register(r'methods', MethodChoicesViewSet)
+router.register(r'perms', PermessionsViewSet)

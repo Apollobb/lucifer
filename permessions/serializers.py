@@ -2,18 +2,16 @@
 # author: itimor
 
 from rest_framework import serializers
-from tools.models import Duty, Upload
+from permessions.models import MethodChoices, Permessions
 
-
-class UploadSerializer(serializers.ModelSerializer):
+class PermessionsSerializer(serializers.ModelSerializer):
+    choices = serializers.SlugRelatedField(many=True, queryset=MethodChoices.objects.all(), slug_field='code')
     class Meta:
-        model = Upload
-        fields = ['url', 'id', 'pid', 'username', 'file', 'filename', 'filepath', 'archive', 'type', 'size', 'date']
+        model = Permessions
+        fields = ['url', 'id', 'name', 'apiuri', 'code', 'choices']
 
 
-class DutySerializer(serializers.ModelSerializer):
-    images = serializers.SlugRelatedField(many=True, queryset=Upload.objects.all(), slug_field='filepath')
+class MethodChoicesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Duty
-        fields = ['url', 'id', 'username', 'shift', 'content', 'images', 'create_time']
-        read_only_fields = ('create_time', )
+        model = MethodChoices
+        fields = ['url', 'id', 'name', 'code']
