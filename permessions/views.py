@@ -3,9 +3,9 @@
 
 from rest_framework import viewsets
 
-from permessions.models import MethodChoices, Permessions
-from permessions.serializers import MethodChoicesSerializer, PermessionsSerializer
-from permessions.filters import PermessionsFilter
+from permessions.models import MethodChoices, ApiPermessions
+from permessions.serializers import MethodChoicesSerializer, ApiPermessionsSerializer
+from permessions.filters import ApiPermessionsFilter
 
 
 class MethodChoicesViewSet(viewsets.ModelViewSet):
@@ -13,7 +13,8 @@ class MethodChoicesViewSet(viewsets.ModelViewSet):
     serializer_class = MethodChoicesSerializer
 
 
-class PermessionsViewSet(viewsets.ModelViewSet):
-    queryset = Permessions.objects.all()
-    serializer_class = PermessionsSerializer
-    filter_class = PermessionsFilter
+class ApiPermessionsViewSet(viewsets.ModelViewSet):
+    queryset = ApiPermessions.objects.all()
+    serializer_class = ApiPermessionsSerializer
+    filter_class = ApiPermessionsFilter
+

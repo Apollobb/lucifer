@@ -3,7 +3,7 @@
 
 from django.db import models
 from .filesize import convert_size
-from .storage import FileStorage, path_and_rename
+from .storage import PathAndRename
 import os
 
 SHIFT = (
@@ -27,11 +27,12 @@ class Duty(models.Model):
         verbose_name = u'值班交接'
         verbose_name_plural = u'值班交接'
 
+path_and_rename = PathAndRename("./")
 
 class Upload(models.Model):
     username = models.CharField(max_length=20, verbose_name=u'上传用户')
     pid = models.IntegerField(u'图片id', null=True, blank=True)
-    file = models.FileField(upload_to=path_and_rename('./'), blank=True, verbose_name=u'上传文件')
+    file = models.FileField(upload_to=path_and_rename, blank=True, verbose_name=u'上传文件')
     archive = models.CharField(max_length=101, default=u'其他', null=True, blank=True, verbose_name=u'文件归档')
     filename = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件名')
     filepath = models.CharField(max_length=201, null=True, blank=True, verbose_name=u'文件路径')

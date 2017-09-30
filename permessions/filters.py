@@ -2,11 +2,11 @@
 # author: itimor
 
 from django_filters import rest_framework as filters
-from permessions.models import Permessions
+from permessions.models import ApiPermessions
 
-class PermessionsFilter(filters.FilterSet):
+class ApiPermessionsFilter(filters.FilterSet):
     class Meta:
-        model = Permessions
+        model = ApiPermessions
         fields = {
             'id': ['exact'],
             'name': ['exact'],

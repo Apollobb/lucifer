@@ -1,21 +1,29 @@
 # -*- coding: utf-8 -*-
 # author: itimor
 
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
 import os
+from django.utils.deconstruct import deconstructible
 
-class FileStorage(FileSystemStorage):
-    def _save(self, name=settings.MEDIA_ROOT, content=settings.MEDIA_URL):
-        def wrapper(instance, filename):
-            ext = os.path.splitext(filename)[1]
+@deconstructible
+class PathAndRename(object):
+
+    def __init__(self, sub_path):
+        self.path = sub_path
+
+    def __call__(self, instance, filename):
+        ext = os.path.splitext(filename)[1]
+        if ext:
             filename = "%s-%s%s" % (instance.username, instance.pid, ext)
-            archive = instance.archive.split('/')
-            if len(archive) > 1:
-                path_and_rename = os.path.join(archive[0], archive[1], filename)
-            else:
-                path_and_rename = os.path.join(archive[0], filename)
-            return super(FileStorage, self)._save(path_and_rename, content)
+        else:
+            filename = "%s-%s%s" % (instance.username, instance.pid, '.png')
+
+        archive = instance.archive.split('/')
+        if len(archive)>2:
+            return os.path.join(path, archive[1], archive[2], filename)
+        else:
+            return os.path.join(path, archive[1], filename)
+
+
 
 def path_and_rename(path):
     def wrapper(instance, filename):
