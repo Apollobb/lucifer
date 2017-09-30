@@ -2,17 +2,11 @@
 # author: itimor
 
 from rest_framework import serializers
-from permessions.models import MethodChoices, ApiPermessions
-
-
-class MethodChoicesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MethodChoices
-        fields = ['url', 'id', 'name', 'code']
+from permessions.models import METHOD_CHOICES, ApiPermessions
 
 
 class ApiPermessionsSerializer(serializers.ModelSerializer):
-    choices = serializers.SlugRelatedField(many=True, queryset=MethodChoices.objects.all(), slug_field='code')
+    choices = serializers.MultipleChoiceField(choices=METHOD_CHOICES, default='get')
     class Meta:
         model = ApiPermessions
         fields = ['url', 'id', 'name', 'user', 'apiuri', 'code', 'choices']

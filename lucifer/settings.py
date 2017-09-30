@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users',
     'tools',
     'permessions',
+    'multiselectfield',
     'channels',
 ]
 
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'lucifer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #'DIRS': [],
+        # 'DIRS': [],
         'DIRS': [os.path.join(BASE_DIR, 'vfrontend/dist')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -193,12 +194,12 @@ USE_REDIS = True
 # Channel settings
 CHANNEL_LAYERS = {
     "default": {
-        #'BACKEND': 'asgiref.inmemory.ChannelLayer',    #如果使用这个，消息变多时，会读不出来
+        # 'BACKEND': 'asgiref.inmemory.ChannelLayer',    #如果使用这个，消息变多时，会读不出来
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
             "hosts": ['redis://{}:{}'.format(REDIS_OPTIONS['HOST'],
                                              REDIS_OPTIONS['PORT'])]
         },
-       "ROUTING": "lucifer.routing.channel_routing"
+        "ROUTING": "lucifer.routing.channel_routing"
     }
 }
