@@ -9,7 +9,7 @@ class UserPerms(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         apiperm = ApiPermessions.objects.get(user=request.user)
 
-        print(request.build_absolute_uri)
+        print(request.path)
         if request.method in permissions.SAFE_METHODS:
             return True
 
