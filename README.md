@@ -6,7 +6,7 @@
 [![django-rest-framework](https://img.shields.io/badge/djangorestframework-3.6.3-brightgreen.svg)](http://www.django-rest-framework.org/)
 [![django-rest-framework-jwt](https://img.shields.io/badge/djangorestframeworkjwt-1.11.0-brightgreen.svg)](https://github.com/GetBlimp/django-rest-framework-jwt)
 [![django-channels](https://img.shields.io/badge/channels-1.1.8-brightgreen.svg)](https://channels.readthedocs.io/en/stable/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/itimor/lucifer-frontend/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/itimor/lucifer/blob/master/LICENSE)
 
 **Lucifer运维平台是采用的前后端分离开发，本项目是lucifer运维平台的后端** [点我到前端](https://github.com/itimor/lucifer-frontend.git)
 
